@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: f078ec15cfbd9bf43a62cec9c987b59a,
+  m_Shader: {fileID: -6465566751694194690, guid: 00ecee73b739a1142916638a2ca32304,
     type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
@@ -154,13 +154,15 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Amplitude: 1
+    - _Amplitude_1: 1
+    - _Amplitude_2: 0
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _Crest_Falloff: 2.47
     - _Crest_Offset: 1
-    - _Crest_Size: 4.09
+    - _Crest_Size: 10.14
     - _CullMode: 0
     - _CullModeForward: 0
     - _Cutoff: 0.5
@@ -186,13 +188,15 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _Extra_Expersion: 0.03
+    - _Extra_Expersion: 0.13
     - _Foam_Bands: 1
-    - _Foam_Edge_Hardness: 0.91
+    - _Foam_Edge_Hardness: 1.3
     - _Foam_Falloff: 0.72
     - _Foam_Removal: 0.21
     - _Foam_Width: 0.21
-    - _Frequency: 0.1
+    - _Frequency: 0.6
+    - _Frequency_1: 0.2
+    - _Frequency_2: 0
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -227,19 +231,23 @@ Material:
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _RippleSpeed: 0.01
-    - _RippleStrength: 0.2
-    - _RippleTling: 0.1
-    - _Secondary_Frequency: 0.4
-    - _Secondary_Speed: 4
+    - _RippleStrength: 0.24
+    - _RippleTling: -0.49
+    - _Secondary_Frequency: 1000
+    - _Secondary_Speed: 1
     - _Smoothness: 0.9
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 1.13
+    - _Speed: 0.3
+    - _Speed_1: 0.3
+    - _Speed_2: 0.1
     - _SrcBlend: 1
-    - _Steepness: 1.61
+    - _Steepness: 1
+    - _Steepness_1: 1
+    - _Steepness_2: 0.4
     - _StencilRef: 0
     - _StencilRefDepth: 0
     - _StencilRefDistortionVec: 4
@@ -276,8 +284,8 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Water_Edge_Opacity: 0.296
-    - _Water_Opacity: 0.353
+    - _Water_Edge_Opacity: 0.682
+    - _Water_Opacity: 0.634
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
@@ -286,10 +294,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 0.10034709, g: 0.5188679, b: 0.44390893, a: 0}
-    - _Color_02: {r: 0.0030704818, g: 0.068173654, b: 0.21698111, a: 1}
+    - _Color_01: {r: 0.11213955, g: 0.3773585, b: 0.3303035, a: 0}
+    - _Color_02: {r: 0.061187267, g: 0.11199797, b: 0.23584908, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
+    - _Direction_1: {r: 1, g: 0, b: 0, a: 0}
+    - _Direction_2: {r: 1, g: 0.5, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
@@ -297,7 +307,7 @@ Material:
     - _Foam_Color: {r: 0.9811321, g: 0.955125, b: 0.86543256, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
-    - _Secondary_Direction: {r: 0, g: 1, b: 0, a: 0}
+    - _Secondary_Direction: {r: 1, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
