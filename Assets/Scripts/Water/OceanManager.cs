@@ -20,5 +20,10 @@ public class OceanManagerEditor : Editor
         {
             oceanManager.TileManager.GenerateTiles();
         }
+        
+        if (GUILayout.Button("Reset Tiles"))
+        {
+            oceanManager.TileManager.ResetTiles();
+        }
     }
 }

@@ -39,8 +39,10 @@ public class OceanTileManager : MonoBehaviour
     {
         for (int i = 0; i < _tiles.Count; i++)
         {
-            DestroyImmediate(_tiles[i]);
+            DestroyImmediate(_tiles[i].gameObject);
         }
+        
+        Debug.Log("ghi");
         
         _tiles.Clear();
     }
