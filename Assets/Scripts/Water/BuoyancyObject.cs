@@ -242,17 +242,13 @@ public class BuoyancyObject : MonoBehaviour
         for (int i = 0; i < voxels.Count; i++)
         {
             var wp = transform.TransformPoint(voxels[i]);
-            Vector3 waterPos = Ocean.Instance.GetWaterHeightAtPosition(wp, Time.fixedTime);
+            float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(wp);
             
-            Debug.Log(waterPos.x);
-            Debug.Log(waterPos.z);
-
             Vector3 force = Vector3.zero;
+            //    var velocity = rigidBody.GetPointVelocity(wp);
+       //    var localDampingForce = -velocity * DAMPFER * rigidBody.mass;
 
-            var velocity = rigidBody.GetPointVelocity(wp);
-            var localDampingForce = -velocity * DAMPFER * rigidBody.mass;
-            
-            float k = wp.y - waterPos.y;
+            float k = wp.y - waterHeight;
             
             if (k > 1)
             {
@@ -265,13 +261,13 @@ public class BuoyancyObject : MonoBehaviour
             }
 
 
-            var waterPos1 = waterPos + new Vector3(1, 0, 0);
-            var waterPos2 = waterPos + new Vector3(0, 0, 1);
-            var surfaceNormal = (Vector3.Cross(waterPos2 - waterPos, waterPos1 - waterPos)).normalized;
+          //  var waterPos1 = waterPos + new Vector3(1, 0, 0);
+         //   var waterPos2 = waterPos + new Vector3(0, 0, 1);
+          //  var surfaceNormal = (Vector3.Cross(waterPos2 - waterPos, waterPos1 - waterPos)).normalized;
 
-            force.x += surfaceNormal.x * NormalForce * rigidBody.mass;
-            force.z += surfaceNormal.z * NormalForce * rigidBody.mass;
-            Debug.DrawRay(waterPos, surfaceNormal * 5, Color.green);
+          //  force.x += surfaceNormal.x * NormalForce * rigidBody.mass;
+          //  force.z += surfaceNormal.z * NormalForce * rigidBody.mass;
+          //  Debug.DrawRay(waterPos, surfaceNormal * 5, Color.green);
             
             currentForces[i] = force;
             rigidBody.AddForceAtPosition(force, wp, ForceMode.Acceleration);
@@ -306,5 +302,6 @@ public class BuoyancyObject : MonoBehaviour
             Gizmos.DrawRay(force[0], (force[1] / rigidBody.mass) * bounceMaxSize * 0.25f);
         }
     }
+    
 }
 

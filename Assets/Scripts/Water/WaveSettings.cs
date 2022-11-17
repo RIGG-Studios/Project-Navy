@@ -9,8 +9,14 @@ public class WaveSettings : ScriptableObject
     public float frequency = 0.6f;
     public float speed = 0.5f;
     public float steepness = 0.5f;
-    public Vector2 direction;
+    public WaveDirectionData[] direction = new WaveDirectionData[3];
 
+    [System.Serializable]
+    public struct WaveDirectionData
+    {
+        public string shaderID;
+        public Vector2 direction;
+    }
 
     private void OnValidate()
     {

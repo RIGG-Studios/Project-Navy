@@ -42,9 +42,12 @@ public class Ocean : MonoBehaviour
         oceanMaterial.SetFloat("_Steepness", waveSettings.steepness);
         oceanMaterial.SetFloat("_Frequency", waveSettings.frequency);
         oceanMaterial.SetFloat("_Speed", waveSettings.speed);
-        oceanMaterial.SetVector("_Direction", waveSettings.direction);
-        
-        
+
+        foreach (WaveSettings.WaveDirectionData waveDirections in waveSettings.direction)
+        {
+         //   oceanMaterial.SetVector(waveDirections.shaderID, waveDirections.direction);
+        }
+
         //ocean
         oceanMaterial.SetColor("_Color 01",  oceanSettings.color1);
         oceanMaterial.SetColor("_Color 02",  oceanSettings.color2);
@@ -56,26 +59,32 @@ public class Ocean : MonoBehaviour
 
     }
 
-    public Vector3 GetWaterHeightAtPosition(Vector3 pos, float time)
+    public float GetWaterHeightAtPosition(Vector3 pos)
+    {
+        float height = 0.0f;
+        
+        foreach (WaveSettings.WaveDirectionData waveDirections in waveSettings.direction)
+        {
+            height += CalculateWaveHeight(pos, waveDirections.direction);
+        }
+
+        return height;
+    }
+
+    private float CalculateWaveHeight(Vector3 pos, Vector2 direction)
     {
         float waveAmp = waveSettings.amplitude * waveSettings.steepness;
 
-        Vector2 dir = -1f * waveSettings.direction;
+        direction.Normalize();
+        Vector2 dir = -1f * direction;
         dir *= waveSettings.frequency;
 
-        float t = waveSettings.speed * time;
+        float speed = waveSettings.speed * Time.time;
 
-        float dot = Vector2.Dot(pos, dir);
-        float sum = t + dot;
-        float height = waveAmp * dir.y;
+        float dot = Vector2.Dot(dir,new Vector2(pos.x, pos.z));
+        float total = speed + dot;
 
-        float cosine = Mathf.Cos(sum);
-        float y =  cosine * height;
-
-        float x = (waveAmp * dir.x) * cosine;
-        float z = Mathf.Sin(sum) * waveSettings.amplitude;
-
-        return new Vector3(x, y, z);
+        return Mathf.Cos(total) * (waveAmp * direction.y);
     }
 
     private void Update()

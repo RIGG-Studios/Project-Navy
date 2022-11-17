@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb03aff2ae5b0f45a2ca32dfc5fab0a, type: 3}
   m_Name: Default Waves
   m_EditorClassIdentifier: 
-  amplitude: 0.35
+  amplitude: 1
   frequency: 0.1
   speed: 0.5
   steepness: 2
-  direction: {x: 1, y: 1}
+  direction:
+  - shaderID: _Direction
+    direction: {x: 1, y: -1}
+  - shaderID: _Direction_2
+    direction: {x: -1, y: 0}
+  - shaderID: _Direction_3
+    direction: {x: 0, y: -1}
