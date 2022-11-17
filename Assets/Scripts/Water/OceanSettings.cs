@@ -21,6 +21,7 @@ public class OceanSettings : ScriptableObject
         {
             Ocean.Instance = FindObjectOfType<Ocean>();
         }
+        
         Ocean.Instance.UpdateShaderProperties();
     }
 }

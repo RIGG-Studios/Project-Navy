@@ -14,12 +14,12 @@ public class UnderWaterCamera : MonoBehaviour
     
     private void Update()
     {
-        float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position, Time.deltaTime);
+        Vector3 waterHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position, Time.time);
 
-        float diff = (transform.position.y - waterHeight);
-
+        float diff = (transform.position.y - waterHeight.y);
         depthText.text = diff.ToString(CultureInfo.InvariantCulture);
-        if (transform.position.y < waterHeight)
+        
+        if (transform.position.y < waterHeight.y)
         {
             underwaterPostProcessing.SetActive(true);
             defaultPostProcessing.SetActive(false);

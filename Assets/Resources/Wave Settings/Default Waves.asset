@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Waves
   m_EditorClassIdentifier: 
   amplitude: 0.35
-  frequency: 0.21
-  speed: 2
-  steepness: 1.06
-  direction: {x: 0.5, y: 1}
+  frequency: 0.1
+  speed: 0.5
+  steepness: 2
+  direction: {x: 1, y: 1}

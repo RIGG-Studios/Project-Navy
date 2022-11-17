@@ -11,7 +11,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/FreeCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Water/Editor/OceanEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Water/OceanManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Water/OceanSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Water/WaveSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Utility.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/WaveHeightMap.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -74,7 +77,7 @@
       <workItem from="1668578611655" duration="3310000" />
       <workItem from="1668629695409" duration="2382000" />
       <workItem from="1668632858791" duration="22000" />
-      <workItem from="1668633033413" duration="2064000" />
+      <workItem from="1668633033413" duration="16523000" />
     </task>
     <servers />
   </component>

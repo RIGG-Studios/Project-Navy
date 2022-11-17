@@ -6,16 +6,21 @@ public class Ocean : MonoBehaviour
 {
     public static Ocean Instance;
 
-        [Header("MATERIAL SETTINGS")] 
+    [Header("MATERIAL SETTINGS")] 
     
     [SerializeField] private Material oceanMaterial;
-    
+
     [Header("SHADER SETTINGS")]
-    
+        
     [SerializeField] private bool executeInEditor = true;
     [SerializeField] private OceanSettings oceanSettings;
     [SerializeField] private WaveSettings waveSettings;
 
+    [Header("OCEAN SETTINGS")] 
+    [SerializeField] private Transform waterMesh;
+    [SerializeField] private float updateDistance = 10f;
+
+    
     private void Awake()
     {
         Instance = this;
@@ -51,7 +56,7 @@ public class Ocean : MonoBehaviour
 
     }
 
-    public float GetWaterHeightAtPosition(Vector3 pos, float time)
+    public Vector3 GetWaterHeightAtPosition(Vector3 pos, float time)
     {
         float waveAmp = waveSettings.amplitude * waveSettings.steepness;
 
@@ -62,9 +67,52 @@ public class Ocean : MonoBehaviour
 
         float dot = Vector2.Dot(pos, dir);
         float sum = t + dot;
-        float y = waveAmp * -dir.y;
+        float height = waveAmp * dir.y;
 
         float cosine = Mathf.Cos(sum);
-        return cosine * y;
+        float y =  cosine * height;
+
+        float x = (waveAmp * dir.x) * cosine;
+        float z = Mathf.Sin(sum) * waveSettings.amplitude;
+
+        return new Vector3(x, y, z);
+    }
+
+    private void Update()
+    {
+        UpdateWaterMeshPosition(Camera.main, waterMesh);
+    }
+
+    public void UpdateWaterMeshPosition(Camera cam, Transform waterMeshTransform)
+    {
+        if (cam != null && waterMeshTransform != null)
+        {
+            if (!IsCanRendererForCurrentCamera()) 
+                return;
+            
+            
+            var pos = waterMeshTransform.position;
+            var camPos = cam.transform.position;
+
+            var relativeToCamPos = new Vector3(camPos.x, pos.y, camPos.z);
+            
+            
+            if (Vector3.Distance(pos, relativeToCamPos) >= updateDistance)
+            {
+                waterMeshTransform.position = relativeToCamPos;
+            }
+        }
+    }
+
+    bool IsCanRendererForCurrentCamera()
+    {
+        if (Application.isPlaying)
+        {
+            return Camera.main.cameraType == CameraType.Game;
+        }
+        else
+        {
+            return Camera.main.cameraType == CameraType.SceneView;
+        }
     }
 }

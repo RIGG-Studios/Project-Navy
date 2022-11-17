@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: f078ec15cfbd9bf43a62cec9c987b59a,
+  m_Shader: {fileID: -6465566751694194690, guid: 3867ea527228a90468af183be27ca39f,
     type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
@@ -62,8 +62,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Foam_Texture:
-        m_Texture: {fileID: 2800000, guid: 5cbf7069e8f25e349aa4f7e19ba8d756, type: 3}
-        m_Scale: {x: 7, y: 7}
+        m_Texture: {fileID: 2800000, guid: 3f373d88a3e2f4a4480764fa62b555cf, type: 3}
+        m_Scale: {x: 16, y: 16}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
@@ -98,7 +98,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_02:
-        m_Texture: {fileID: 2800000, guid: e60c9a2c81ed24a4ab8e0fe81db6869f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 800e061692ff7a84e887f439d3364410, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -158,9 +158,9 @@ Material:
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
-    - _Crest_Falloff: 3.18
-    - _Crest_Offset: 0
-    - _Crest_Size: 4.09
+    - _Crest_Falloff: 2.66
+    - _Crest_Offset: 2.27
+    - _Crest_Size: 1.58
     - _CullMode: 0
     - _CullModeForward: 0
     - _Cutoff: 0.5
@@ -186,13 +186,13 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _Extra_Expersion: 0.38
+    - _Extra_Expersion: 0.41
     - _Foam_Bands: 1
-    - _Foam_Edge_Hardness: 0.63
+    - _Foam_Edge_Hardness: 0.37
     - _Foam_Falloff: 3.78
     - _Foam_Removal: 0.21
-    - _Foam_Width: 0.21
-    - _Frequency: 0.21
+    - _Foam_Width: 3.87
+    - _Frequency: 0.1
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -227,8 +227,8 @@ Material:
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _RippleSpeed: 0.01
-    - _RippleStrength: 0.2
-    - _RippleTling: 0.1
+    - _RippleStrength: 0.05
+    - _RippleTling: 0.09
     - _Secondary_Frequency: 0.4
     - _Secondary_Speed: 1
     - _Smoothness: 0.9
@@ -237,9 +237,9 @@ Material:
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 2
+    - _Speed: 0.5
     - _SrcBlend: 1
-    - _Steepness: 1.06
+    - _Steepness: 2
     - _StencilRef: 0
     - _StencilRefDepth: 0
     - _StencilRefDistortionVec: 4
@@ -276,8 +276,8 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Water_Edge_Opacity: 0.83
-    - _Water_Opacity: 0.94
+    - _Water_Edge_Opacity: 0.862
+    - _Water_Opacity: 0.964
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
@@ -286,10 +286,12 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 0.106158756, g: 0.3962264, b: 0.34149668, a: 0}
-    - _Color_02: {r: 0.094695605, g: 0.12019484, b: 0.3301887, a: 1}
+    - _Color_01: {r: 0.08624065, g: 0.3584906, b: 0.28454614, a: 0}
+    - _Color_02: {r: 0.11280705, g: 0.18337883, b: 0.3679245, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: 0.5, g: 1, b: 0, a: 0}
+    - _Direction: {r: 1, g: 1, b: 0, a: 0}
+    - _Direction_1: {r: 1, g: -1, b: 0, a: 0}
+    - _Direction_2: {r: 0, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
@@ -297,7 +299,7 @@ Material:
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
-    - _Secondary_Direction: {r: 0, g: 1, b: 0, a: 0}
+    - _Secondary_Direction: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
