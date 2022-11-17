@@ -7354,7 +7354,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "37957466e6884128b5ab2294911c99cf",
     "m_Id": 0,
-    "m_DisplayName": "Direction (1)",
+    "m_DisplayName": "Direction_2",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -11051,9 +11051,9 @@
     "m_Guid": {
         "m_GuidSerialized": "e3f0b6dc-7066-4fb8-a5bb-6635d29bc967"
     },
-    "m_Name": "Direction (1)",
+    "m_Name": "Direction_2",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Direction (1)",
+    "m_RefNameGeneratedByDisplayName": "Direction_2",
     "m_DefaultReferenceName": "_Direction_1",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -14145,7 +14145,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "a257417fc4dc4490b4004e26d1beac09",
     "m_Id": 0,
-    "m_DisplayName": "Direction (2)",
+    "m_DisplayName": "Direction_3",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -19848,10 +19848,10 @@
     "m_Guid": {
         "m_GuidSerialized": "4c0a4264-16a7-4575-b24c-78a37ffd0f68"
     },
-    "m_Name": "Direction (2)",
+    "m_Name": "Direction_3",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Direction (2)",
-    "m_DefaultReferenceName": "_Direction_2",
+    "m_RefNameGeneratedByDisplayName": "Direction_3",
+    "m_DefaultReferenceName": "_Direction_3",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

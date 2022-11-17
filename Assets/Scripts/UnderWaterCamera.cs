@@ -17,7 +17,7 @@ public class UnderWaterCamera : MonoBehaviour
         float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position);
 
         float diff = (transform.position.y - waterHeight);
-        Debug.Log(waterHeight);
+        
         depthText.text = diff.ToString(CultureInfo.InvariantCulture);
         
         if (transform.position.y < waterHeight)

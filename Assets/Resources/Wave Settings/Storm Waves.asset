@@ -16,4 +16,8 @@ MonoBehaviour:
   frequency: 0.1
   speed: 1
   steepness: 5
-  direction: {x: 1, y: 1}
+  direction:
+  - shaderID: 
+    direction: {x: 0, y: 0}
+  - shaderID: 
+    direction: {x: 0, y: 0}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BuoyancyObject : MonoBehaviour
 {
@@ -10,79 +11,75 @@ public class BuoyancyObject : MonoBehaviour
     public Transform OvverideCenterOfMass;
 
     public float intensity;
-    [Range(100, 1000)] public float Density = 450;
-    [Range(1, 6)] public int SlicesPerAxisX = 2;
-    [Range(1, 6)] public int SlicesPerAxisY = 2;
-    [Range(1, 6)] public int SlicesPerAxisZ = 2;
+    [FormerlySerializedAs("Density")] [Range(100, 1000)] public float density = 450;
+    [Range(1, 6)] public int slicesPerAxisX = 2;
+    [Range(1, 6)] public int slicesPerAxisY = 2;
+    [Range(1, 6)] public int slicesPerAxisZ = 2;
     public bool isConcave = false;
 
-    [Range(2, 32)] public int VoxelsLimit = 16;
-    public float AngularDrag = 0.25f;
-    public float Drag = 0.25f;
-    [Range(0, 1)] public float NormalForce = 0.2f;
+    [FormerlySerializedAs("VoxelsLimit")] [Range(2, 32)] public int voxelsLimit = 16;
+    [FormerlySerializedAs("AngularDrag")] public float angularDrag = 0.25f;
+    [FormerlySerializedAs("Drag")] public float drag = 0.25f;
     public bool DebugForces = false;
 
+    
     private const float DAMPFER = 0.5f;
     private const float WATER_DENSITY = 1000;
 
-    private Vector3 localArchimedesForce;
-    private List<Vector3> voxels;
-    private Vector3[] currentForces;
-    private bool isMeshCollider;
-    private List<Vector3[]> debugForces; // For drawing force gizmos
+    private Vector3 _localArchimedesForce;
+    private List<Vector3> _voxels;
+    private Vector3[] _currentForces;
+    private bool _isMeshCollider;
+    private List<Vector3[]> _debugForces;
 
-    private Rigidbody rigidBody;
-    private Collider collider;
+    private Rigidbody _rigidBody;
+    private Collider _collider;
 
-    float bounceMaxSize;
+    float _bounceMaxSize;
 
     public enum ModelSourceEnum
     {
         Collider,
         Mesh
     }
-
-    /// <summary>
-    /// Provides initialization.
-    /// </summary>
+    
     private void OnEnable()
     {
-        debugForces = new List<Vector3[]>(); // For drawing force gizmos
+        _debugForces = new List<Vector3[]>(); 
 
-        rigidBody = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        _rigidBody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
 
 
-        // Store original rotation and position
-        var originalRotation = transform.rotation;
-        var originalPosition = transform.position;
+        Quaternion originalRotation = transform.rotation;
+        Vector3 originalPosition = transform.position;
         transform.rotation = Quaternion.identity;
         transform.position = Vector3.zero;
-        var bounds = collider.bounds;
-        bounceMaxSize = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+        var bounds = _collider.bounds;
+        _bounceMaxSize = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
 
-        isMeshCollider = GetComponent<MeshCollider>() != null;
+        _isMeshCollider = GetComponent<MeshCollider>() != null;
 
 
         if (OvverideCenterOfMass)
-            rigidBody.centerOfMass = transform.InverseTransformPoint(OvverideCenterOfMass.transform.position);
+            _rigidBody.centerOfMass = transform.InverseTransformPoint(OvverideCenterOfMass.transform.position);
         //else rigidBody.centerOfMass = new Vector3(0, -bounds.extents.y * 0f, 0) + transform.InverseTransformPoint(bounds.center);
 
-        rigidBody.angularDrag = AngularDrag;
-        rigidBody.drag = Drag;
-        voxels = SliceIntoVoxels(isMeshCollider && isConcave);
-        currentForces = new Vector3[voxels.Count];
-        // Restore original rotation and position
+        _rigidBody.angularDrag = angularDrag;
+        _rigidBody.drag = drag;
+        _voxels = SliceIntoVoxels(_isMeshCollider && isConcave);
+        _currentForces = new Vector3[_voxels.Count];
+        
         transform.rotation = originalRotation;
         transform.position = originalPosition;
 
-        float volume = rigidBody.mass / Density;
+        float volume = _rigidBody.mass / density;
 
-        WeldPoints(voxels, VoxelsLimit);
+        WeldPoints(_voxels, voxelsLimit);
 
         float archimedesForceMagnitude = WATER_DENSITY * Mathf.Abs(Physics.gravity.y) * volume;
-        localArchimedesForce = new Vector3(0, archimedesForceMagnitude, 0) / voxels.Count;
-        Debug.Log(localArchimedesForce);
+        _localArchimedesForce = new Vector3(0, archimedesForceMagnitude, 0) / _voxels.Count;
+        Debug.Log(_localArchimedesForce);
     }
     
 
@@ -105,7 +102,7 @@ public class BuoyancyObject : MonoBehaviour
 
     private List<Vector3> SliceIntoVoxels(bool concave)
     {
-        var points = new List<Vector3>(SlicesPerAxisX * SlicesPerAxisY * SlicesPerAxisZ);
+        var points = new List<Vector3>(slicesPerAxisX * slicesPerAxisY * slicesPerAxisZ);
 
         var bounds = GetCurrentBounds();
 
@@ -115,18 +112,16 @@ public class BuoyancyObject : MonoBehaviour
 
             var convexValue = meshCol.convex;
             meshCol.convex = false;
-
-            // Concave slicing
-
-            for (int ix = 0; ix < SlicesPerAxisX; ix++)
+            
+            for (int ix = 0; ix < slicesPerAxisX; ix++)
             {
-                for (int iy = 0; iy < SlicesPerAxisY; iy++)
+                for (int iy = 0; iy < slicesPerAxisY; iy++)
                 {
-                    for (int iz = 0; iz < SlicesPerAxisZ; iz++)
+                    for (int iz = 0; iz < slicesPerAxisZ; iz++)
                     {
-                        float x = bounds.min.x + bounds.size.x / SlicesPerAxisX * (0.5f + ix);
-                        float y = bounds.min.y + bounds.size.y / SlicesPerAxisY * (0.5f + iy);
-                        float z = bounds.min.z + bounds.size.z / SlicesPerAxisZ * (0.5f + iz);
+                        float x = bounds.min.x + bounds.size.x / slicesPerAxisX * (0.5f + ix);
+                        float y = bounds.min.y + bounds.size.y / slicesPerAxisY * (0.5f + iy);
+                        float z = bounds.min.z + bounds.size.z / slicesPerAxisZ * (0.5f + iz);
 
                         var p = transform.InverseTransformPoint(new Vector3(x, y, z));
 
@@ -147,17 +142,15 @@ public class BuoyancyObject : MonoBehaviour
         }
         else
         {
-            // Convex slicing
-
-            for (int ix = 0; ix < SlicesPerAxisX; ix++)
+            for (int ix = 0; ix < slicesPerAxisX; ix++)
             {
-                for (int iy = 0; iy < SlicesPerAxisY; iy++)
+                for (int iy = 0; iy < slicesPerAxisY; iy++)
                 {
-                    for (int iz = 0; iz < SlicesPerAxisZ; iz++)
+                    for (int iz = 0; iz < slicesPerAxisZ; iz++)
                     {
-                        float x = bounds.min.x + bounds.size.x / SlicesPerAxisX * (0.5f + ix);
-                        float y = bounds.min.y + bounds.size.y / SlicesPerAxisY * (0.5f + iy);
-                        float z = bounds.min.z + bounds.size.z / SlicesPerAxisZ * (0.5f + iz);
+                        float x = bounds.min.x + bounds.size.x / slicesPerAxisX * (0.5f + ix);
+                        float y = bounds.min.y + bounds.size.y / slicesPerAxisY * (0.5f + iy);
+                        float z = bounds.min.z + bounds.size.z / slicesPerAxisZ * (0.5f + iz);
 
                         var p = transform.InverseTransformPoint(new Vector3(x, y, z));
 
@@ -170,7 +163,7 @@ public class BuoyancyObject : MonoBehaviour
         return points;
     }
 
-    private static bool PointIsInsideMeshCollider(Collider c, Vector3 p)
+    private bool PointIsInsideMeshCollider(Collider c, Vector3 p)
     {
         Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
 
@@ -228,7 +221,7 @@ public class BuoyancyObject : MonoBehaviour
 
             var mixed = (list[first] + list[second]) * 0.5f;
             list.RemoveAt(
-                second); // the second index is always greater that the first => removing the second item first
+                second); 
             list.RemoveAt(first);
             list.Add(mixed);
         }
@@ -237,16 +230,14 @@ public class BuoyancyObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (DebugForces) debugForces.Clear(); // For drawing force gizmos
+        if (DebugForces) _debugForces.Clear();
 
-        for (int i = 0; i < voxels.Count; i++)
+        for (int i = 0; i < _voxels.Count; i++)
         {
-            var wp = transform.TransformPoint(voxels[i]);
+            Vector3 wp = transform.TransformPoint(_voxels[i]);
             float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(wp);
             
             Vector3 force = Vector3.zero;
-            //    var velocity = rigidBody.GetPointVelocity(wp);
-       //    var localDampingForce = -velocity * DAMPFER * rigidBody.mass;
 
             float k = wp.y - waterHeight;
             
@@ -257,22 +248,13 @@ public class BuoyancyObject : MonoBehaviour
             else if (k < 0)
             {
                 k = 0;
-                force = -Physics.gravity * intensity;
+                force =  -Physics.gravity * intensity;
             }
 
+            _currentForces[i] = force;
+            _rigidBody.AddForceAtPosition(force, wp, ForceMode.Acceleration);
 
-          //  var waterPos1 = waterPos + new Vector3(1, 0, 0);
-         //   var waterPos2 = waterPos + new Vector3(0, 0, 1);
-          //  var surfaceNormal = (Vector3.Cross(waterPos2 - waterPos, waterPos1 - waterPos)).normalized;
-
-          //  force.x += surfaceNormal.x * NormalForce * rigidBody.mass;
-          //  force.z += surfaceNormal.z * NormalForce * rigidBody.mass;
-          //  Debug.DrawRay(waterPos, surfaceNormal * 5, Color.green);
-            
-            currentForces[i] = force;
-            rigidBody.AddForceAtPosition(force, wp, ForceMode.Acceleration);
-
-            if (DebugForces) debugForces.Add(new[] { wp, force }); // For drawing force gizmos
+            if (DebugForces) _debugForces.Add(new[] { wp, force }); 
 
         }
     }
@@ -281,25 +263,25 @@ public class BuoyancyObject : MonoBehaviour
     {
         if (!DebugForces) return;
 
-        if (voxels == null || debugForces == null)
+        if (_voxels == null || _debugForces == null)
         {
             return;
         }
 
-        float gizmoSize = 0.02f * bounceMaxSize;
+        float gizmoSize = 0.02f * _bounceMaxSize;
         Gizmos.color = Color.yellow;
 
-        foreach (var p in voxels)
+        foreach (var p in _voxels)
         {
             Gizmos.DrawCube(transform.TransformPoint(p), new Vector3(gizmoSize, gizmoSize, gizmoSize));
         }
 
         Gizmos.color = Color.cyan;
 
-        foreach (var force in debugForces)
+        foreach (var force in _debugForces)
         {
             Gizmos.DrawCube(force[0], new Vector3(gizmoSize, gizmoSize, gizmoSize));
-            Gizmos.DrawRay(force[0], (force[1] / rigidBody.mass) * bounceMaxSize * 0.25f);
+            Gizmos.DrawRay(force[0], (force[1] / _rigidBody.mass) * _bounceMaxSize * 0.25f);
         }
     }
     

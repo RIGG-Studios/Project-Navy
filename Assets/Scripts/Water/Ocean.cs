@@ -94,22 +94,20 @@ public class Ocean : MonoBehaviour
 
     public void UpdateWaterMeshPosition(Camera cam, Transform waterMeshTransform)
     {
-        if (cam != null && waterMeshTransform != null)
-        {
-            if (!IsCanRendererForCurrentCamera()) 
-                return;
+        if (cam == null || waterMeshTransform == null)
+            return;
+        
+        if (!IsCanRendererForCurrentCamera()) 
+            return;
             
-            
-            var pos = waterMeshTransform.position;
-            var camPos = cam.transform.position;
+        Vector3 pos = waterMeshTransform.position;
+        Vector3 camPos = cam.transform.position;
 
-            var relativeToCamPos = new Vector3(camPos.x, pos.y, camPos.z);
-            
-            
-            if (Vector3.Distance(pos, relativeToCamPos) >= updateDistance)
-            {
-                waterMeshTransform.position = relativeToCamPos;
-            }
+        Vector3 relativeToCamPos = new Vector3(camPos.x, pos.y, camPos.z);
+        
+        if (Vector3.Distance(pos, relativeToCamPos) >= updateDistance)
+        {
+            waterMeshTransform.position = relativeToCamPos;
         }
     }
 

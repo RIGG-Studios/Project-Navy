@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 1
   frequency: 0.1
-  speed: 0.5
+  speed: 0.3
   steepness: 2
   direction:
   - shaderID: _Direction
