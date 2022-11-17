@@ -13,6 +13,10 @@ public class OceanTileManager : MonoBehaviour
 
     private List<OceanTile> _tiles = new List<OceanTile>();
 
+    private MeshFilter _meshFilter;
+    private bool _setup;
+    
+
     private void Start()
     {
         GenerateTiles();
@@ -41,8 +45,6 @@ public class OceanTileManager : MonoBehaviour
         {
             DestroyImmediate(_tiles[i].gameObject);
         }
-        
-        Debug.Log("ghi");
         
         _tiles.Clear();
     }

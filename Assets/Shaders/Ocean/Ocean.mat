@@ -63,7 +63,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Foam_Texture:
         m_Texture: {fileID: 2800000, guid: 5cbf7069e8f25e349aa4f7e19ba8d756, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 7, y: 7}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
@@ -159,7 +159,7 @@ Material:
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _Crest_Falloff: 3.18
-    - _Crest_Offset: 1
+    - _Crest_Offset: 0
     - _Crest_Size: 4.09
     - _CullMode: 0
     - _CullModeForward: 0
@@ -186,9 +186,9 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _Extra_Expersion: 0.18
+    - _Extra_Expersion: 0.38
     - _Foam_Bands: 1
-    - _Foam_Edge_Hardness: 0.85
+    - _Foam_Edge_Hardness: 0.63
     - _Foam_Falloff: 3.78
     - _Foam_Removal: 0.21
     - _Foam_Width: 0.21
@@ -223,7 +223,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _Refraction_Strength: 0.15
+    - _Refraction_Strength: 0.42
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _RippleSpeed: 0.01
@@ -276,8 +276,8 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Water_Edge_Opacity: 0.55
-    - _Water_Opacity: 0.89
+    - _Water_Edge_Opacity: 0.83
+    - _Water_Opacity: 0.94
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
@@ -286,8 +286,8 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 0.08187966, g: 0.4716981, b: 0.401825, a: 0}
-    - _Color_02: {r: 0.015806329, g: 0.07820894, b: 0.2264151, a: 1}
+    - _Color_01: {r: 0.106158756, g: 0.3962264, b: 0.34149668, a: 0}
+    - _Color_02: {r: 0.094695605, g: 0.12019484, b: 0.3301887, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _Direction: {r: 0.5, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

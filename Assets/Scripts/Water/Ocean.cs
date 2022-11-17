@@ -40,7 +40,6 @@ public class Ocean : MonoBehaviour
         oceanMaterial.SetVector("_Direction", waveSettings.direction);
         
         
-        Debug.Log(oceanMaterial);
         //ocean
         oceanMaterial.SetColor("_Color 01",  oceanSettings.color1);
         oceanMaterial.SetColor("_Color 02",  oceanSettings.color2);
@@ -61,12 +60,11 @@ public class Ocean : MonoBehaviour
 
         float t = waveSettings.speed * time;
 
-        float dot = Vector3.Dot(pos, dir);
+        float dot = Vector2.Dot(pos, dir);
         float sum = t + dot;
-        float y = waveAmp * dir.y;
+        float y = waveAmp * -dir.y;
 
         float cosine = Mathf.Cos(sum);
-
         return cosine * y;
     }
 }

@@ -21,18 +21,15 @@ public class BuoyancyObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-    //    _rigidbody.AddForceAtPosition(Physics.gravity, transform.position, ForceMode.Acceleration);
-        
         float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(transform.position, Time.time);
-   //     Debug.Log(waterHeight);
         if (transform.position.y < waterHeight)
         {
             float displacement = Mathf.Clamp01((waterHeight - transform.position.y / deptBeforeSubmerged) * displacementAmount);
-            Vector3 force = new Vector3(0.0f, Mathf.Abs(Physics.gravity.y) * displacement, 0.0f);
+            Vector3 force = new Vector3(0.0f, Mathf.Abs(Physics.gravity.y), 0.0f);
+            Debug.Log(force);
             _rigidbody.AddForceAtPosition(force * this.force, transform.position, ForceMode.Acceleration);
-            _rigidbody.AddForce(-_rigidbody.velocity * (displacement * waterDrag * Time.fixedDeltaTime), ForceMode.VelocityChange);
-            _rigidbody.AddTorque(-_rigidbody.angularVelocity * (displacement * waterAngularDrag * Time.fixedDeltaTime), ForceMode.VelocityChange);
-
+          //  _rigidbody.AddForce(-_rigidbody.velocity * (displacement * waterDrag * Time.fixedDeltaTime), ForceMode.VelocityChange);
+          //  _rigidbody.AddTorque(-_rigidbody.angularVelocity * (displacement * waterAngularDrag * Time.fixedDeltaTime), ForceMode.VelocityChange);
         }
     }
 }
