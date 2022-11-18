@@ -14,12 +14,21 @@ public class Ocean : MonoBehaviour
         
     [SerializeField] private bool executeInEditor = true;
     [SerializeField] private OceanSettings oceanSettings;
+
+    [SerializeField] private WaveDirectionData[] waveData = new WaveDirectionData[3];
     [SerializeField] private WaveSettings waveSettings;
 
     [Header("OCEAN SETTINGS")] 
     [SerializeField] private Transform waterMesh;
     [SerializeField] private float updateDistance = 10f;
 
+    
+    [System.Serializable]
+    public struct WaveDirectionData
+    {
+        public string shaderID;
+        public Vector2 direction;
+    }
     
     private void Awake()
     {
@@ -43,9 +52,9 @@ public class Ocean : MonoBehaviour
         oceanMaterial.SetFloat("_Frequency", waveSettings.frequency);
         oceanMaterial.SetFloat("_Speed", waveSettings.speed);
 
-        foreach (WaveSettings.WaveDirectionData waveDirections in waveSettings.direction)
+        foreach (WaveDirectionData waveDirections in waveData)
         {
-         //   oceanMaterial.SetVector(waveDirections.shaderID, waveDirections.direction);
+            oceanMaterial.SetVector(waveDirections.shaderID, waveDirections.direction);
         }
 
         //ocean
@@ -62,8 +71,8 @@ public class Ocean : MonoBehaviour
     public float GetWaterHeightAtPosition(Vector3 pos)
     {
         float height = 0.0f;
-        
-        foreach (WaveSettings.WaveDirectionData waveDirections in waveSettings.direction)
+
+        foreach (WaveDirectionData waveDirections in waveData)
         {
             height += CalculateWaveHeight(pos, waveDirections.direction);
         }
