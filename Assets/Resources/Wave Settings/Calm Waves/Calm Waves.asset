@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b3f9b0ba7eb554f8d0a546e762a975, type: 3}
+  m_Name: Calm Waves
+  m_EditorClassIdentifier: 
+  waves:
+  - {fileID: 11400000, guid: 510d9194201b68648a67da2b625c2abc, type: 2}
+  - {fileID: 11400000, guid: 6bfa8cfa249d94a4e99d355dd5ea0c50, type: 2}
+  - {fileID: 11400000, guid: e8e620e6efc19f341b60eb394a1ebc05, type: 2}

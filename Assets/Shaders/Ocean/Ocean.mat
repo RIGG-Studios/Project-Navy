@@ -8,19 +8,20 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: 3867ea527228a90468af183be27ca39f,
+  m_Shader: {fileID: -6465566751694194690, guid: 2f75788f3feaba4418bae38a79a6c5fa,
     type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
+  - _TESSELLATION_PHONG
   m_InvalidKeywords:
   - _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3006
+  m_CustomRenderQueue: 3050
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
@@ -62,8 +63,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Foam_Texture:
-        m_Texture: {fileID: 2800000, guid: 3f373d88a3e2f4a4480764fa62b555cf, type: 3}
-        m_Scale: {x: 4, y: 4}
+        m_Texture: {fileID: 2800000, guid: 5cbf7069e8f25e349aa4f7e19ba8d756, type: 3}
+        m_Scale: {x: 6, y: 6}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
@@ -139,6 +140,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_431AA8EF: 9
+    - Vector1_4B1628F4: 0
+    - Vector1_5B84CDB7: 9
+    - Vector1_76F34D1B: 0.5
+    - Vector1_7EAA09FD: 1.4
+    - Vector1_9C650A25: 1
+    - Vector1_C9F53F9: 1
+    - Vector1_F0AF1EEC: 0.12
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -153,19 +162,25 @@ Material:
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
-    - _Amplitude: 1
+    - _Amplitude: 0.8
+    - _Amplitude_1: 0.39
+    - _Amplitude_2: 0.32
     - _Anisotropy: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
+    - _CrestFalloff: 6.36
+    - _CrestOffset: 1.48
+    - _CrestSize: 4.63
     - _Crest_Falloff: 2.66
-    - _Crest_Offset: 0
-    - _Crest_Size: 0.82
+    - _Crest_Offset: -1
+    - _Crest_Size: 0.34
     - _CullMode: 0
     - _CullModeForward: 0
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
     - _DepthStrength: 1.04
+    - _DepthWaveIntensity: -0.005
     - _DetailAlbedoScale: 1
     - _DetailNormalScale: 1
     - _DetailSmoothnessScale: 1
@@ -174,6 +189,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
+    - _Distance: 50
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
@@ -186,13 +202,21 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _Extra_Expersion: 0.13
+    - _ExtraExpersion: 0.27
+    - _Extra_Expersion: -1.43
+    - _FoamBands: 5
+    - _FoamEdgeHardness: 0.82
+    - _FoamFalloff: 2.28
+    - _FoamRemoval: 0.21
+    - _FoamWidth: 7.71
     - _Foam_Bands: 5
-    - _Foam_Edge_Hardness: 1
+    - _Foam_Edge_Hardness: 1.5
     - _Foam_Falloff: 2.28
     - _Foam_Removal: 0.21
     - _Foam_Width: 7.71
-    - _Frequency: 0.1
+    - _Frequency: 0.06
+    - _Frequency_1: 0.55
+    - _Frequency_2: 0.4
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -223,6 +247,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
+    - _RefractionStrength: 0.5
     - _Refraction_Strength: 0.42
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
@@ -237,9 +262,13 @@ Material:
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
-    - _Speed: 0.5
+    - _Speed: 1
+    - _Speed_1: 2
+    - _Speed_2: 0.35
     - _SrcBlend: 1
-    - _Steepness: 1
+    - _Steepness: 3
+    - _Steepness_1: 3
+    - _Steepness_2: 3
     - _StencilRef: 0
     - _StencilRefDepth: 0
     - _StencilRefDistortionVec: 4
@@ -258,7 +287,7 @@ Material:
     - _TessellationFactorMinDistance: 20
     - _TessellationFactorTriangleSize: 100
     - _TessellationMaxDisplacement: 50
-    - _TessellationMode: 0
+    - _TessellationMode: 1
     - _TessellationShapeFactor: 0.75
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
@@ -268,7 +297,7 @@ Material:
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
-    - _TransparentSortPriority: 6
+    - _TransparentSortPriority: 50
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 1
     - _UVBase: 0
@@ -276,27 +305,37 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Water_Edge_Opacity: 0.645
-    - _Water_Opacity: 0.715
+    - _WaterEdgeOpacity: 0.957
+    - _WaterOpacity: 0.913
+    - _Water_Edge_Opacity: 0.636
+    - _Water_Opacity: 0.75
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
+    - Vector3_110DB033: {r: 0.09, g: 0, b: 0.06, a: 0}
+    - Vector3_13778AA8: {r: -0.2, g: 0, b: 0.12, a: 0}
+    - Vector3_8495EC90: {r: 0.04, g: 0, b: -0.08, a: 0}
+    - Vector3_BB5DA054: {r: -0.04, g: 0, b: 0.1, a: 0}
+    - Vector4_2DF06505: {r: 1, g: 1, b: 1, a: 0.5}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color_01: {r: 0.3786935, g: 0.6981132, b: 0.6182583, a: 0}
-    - _Color_02: {r: 0.11280705, g: 0.18337883, b: 0.3679245, a: 1}
+    - _Color01: {r: 0.19272871, g: 0.35530996, b: 0.6698113, a: 0}
+    - _Color02: {r: 0, g: 0.12757386, b: 0.33962262, a: 0}
+    - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
+    - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: 0, g: -1, b: 0, a: 0}
-    - _Direction_1: {r: 1, g: 0, b: 0, a: 0}
-    - _Direction_2: {r: 1, g: 0, b: 0, a: 0}
+    - _Direction: {r: -1, g: -1, b: -1, a: 0}
+    - _Direction_1: {r: 1, g: -1, b: -1, a: 0}
+    - _Direction_2: {r: 1, g: 1, b: 1, a: 0}
     - _Direction_3: {r: -1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
