@@ -11,6 +11,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/FreeCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/ScriptableObjects/SOWeapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Damage/IDamagable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/OceanGlobalData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/PlayerNetwork.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking/ShipNetworking.cs" root0="FORCE_HIGHLIGHTING" />
@@ -90,7 +91,7 @@
       <workItem from="1668632858791" duration="22000" />
       <workItem from="1668633033413" duration="16523000" />
       <workItem from="1668905825953" duration="14774000" />
-      <workItem from="1669010398538" duration="4043000" />
+      <workItem from="1669010398538" duration="5661000" />
     </task>
     <servers />
   </component>

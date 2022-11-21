@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class NetworkConnection : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject sceneCamera;
 
     private void Awake()
@@ -58,7 +57,8 @@ public class NetworkConnection : MonoBehaviourPunCallbacks
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " Has joined the room!");
 
-        PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+       // PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+       GameManager.Instance.SpawnPlayerShip();
         sceneCamera.SetActive(false);
     }
 }
