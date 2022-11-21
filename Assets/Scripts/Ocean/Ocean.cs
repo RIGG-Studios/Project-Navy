@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,33 +16,32 @@ public class Ocean : MonoBehaviour
     [Header("SHADER SETTINGS")]
         
     [SerializeField] private bool executeInEditor = true;
-    [SerializeField] private bool blendBetweenPresets = true;
     [SerializeField] private OceanPresets oceanPreset;
-
-    [Header("OCEAN SETTINGS")] 
-    [SerializeField] private Transform waterMesh;
-    [SerializeField] private float updateDistance = 10f;
     
-    public readonly string ShallowWaterColorID = "_Color01";
-    public readonly string DeepWaterColorID = "_Color02";
-    public readonly string FoamColorID = "_FoamColor";
-
-    public readonly string ExtraDispersionID = "_ExtraExpersion";
-    public readonly string FoamEdgeHardnessID = "_FoamEdgeHardness";
-    public readonly string CrestSizeID = "_CrestSize";
-    public readonly string CrestOffsetID = "_CrestOffset";
-
-    public readonly string FoamFalloffID = "_FoamFalloff";
-    public readonly string FoamWidthID = "_FoamWidth";
-    public readonly string FoamRemovalID = "_FoamRemoval";
-    public readonly string FoamBandsID = "_FoamBands";
-
-
+    
+    private const string ShallowWaterColorID = "_Color01";
+    private const string DeepWaterColorID = "_Color02";
+    private const string FoamColorID = "_FoamColor";
+    private const string ExtraDispersionID = "_ExtraExpersion";
+    private const string FoamEdgeHardnessID = "_FoamEdgeHardness";
+    private const string CrestSizeID = "_CrestSize";
+    private const string CrestOffsetID = "_CrestOffset";
+    private const string FoamFalloffID = "_FoamFalloff";
+    private const string FoamWidthID = "_FoamWidth";
+    private const string FoamRemovalID = "_FoamRemoval";
+    private const string FoamBandsID = "_FoamBands";
+    
     private OceanPresets _oceanPreset;
     
     private void Awake()
     {
         Instance = this;
+        PhotonNetwork.SendRate = 30;
+    }
+
+    public Material GetOceanMat()
+    {
+        return oceanMaterial;
     }
 
 
@@ -87,6 +87,11 @@ public class Ocean : MonoBehaviour
         oceanMaterial.SetFloat(FoamBandsID, oceanPreset.foamBands);
     }
 
+    private void Update()
+    {
+        oceanMaterial.SetFloat("_GameTime", OceanGlobalData.Instance.Time);
+    }
+
     public float GetWaterHeightAtPosition(Vector3 pos)
     {
         float height = 0.0f;
@@ -114,40 +119,5 @@ public class Ocean : MonoBehaviour
 
         return Mathf.Cos(total) * (waveAmp * direction.y);
     }
-
-    private void Update()
-    {
-        UpdateWaterMeshPosition(Camera.main, waterMesh);
-    }
-
-    public void UpdateWaterMeshPosition(Camera cam, Transform waterMeshTransform)
-    {
-        if (cam == null || waterMeshTransform == null)
-            return;
-        
-        if (!IsCanRendererForCurrentCamera()) 
-            return;
-            
-        Vector3 pos = waterMeshTransform.position;
-        Vector3 camPos = cam.transform.position;
-
-        Vector3 relativeToCamPos = new Vector3(camPos.x, pos.y, camPos.z);
-        
-        if (Vector3.Distance(pos, relativeToCamPos) >= updateDistance)
-        {
-            waterMeshTransform.position = relativeToCamPos;
-        }
-    }
-
-    bool IsCanRendererForCurrentCamera()
-    {
-        if (Application.isPlaying)
-        {
-            return Camera.main.cameraType == CameraType.Game;
-        }
-        else
-        {
-            return Camera.main.cameraType == CameraType.SceneView;
-        }
-    }
+    
 }

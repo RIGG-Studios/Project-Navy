@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e32bace0e3f4b48908f2397fc80868, type: 3}
+  m_Name: CalmWaters
+  m_EditorClassIdentifier: 
+  waves: {fileID: 11400000, guid: 8935bbc05f6d2374193cfd337fc37cf2, type: 2}
+  shallowColor: {r: 0.5529412, g: 0.9098039, b: 1, a: 0}
+  deepColor: {r: 0.019607844, g: 0.30980393, b: 0.7921569, a: 0}
+  foamColor: {r: 1, g: 1, b: 1, a: 0}
+  waveFoam: 1
+  extraDispersion: 6.53
+  edgeHardness: 0.69
+  crestSize: 4.24
+  crestOffset: 2.35
+  edgeFoam: 1
+  foamFallOff: 1.51
+  foamWidth: 4.3
+  foamRemoval: 0.02
+  foamBands: 1.42

@@ -149,7 +149,7 @@ MonoBehaviour:
   active: 1
   indirectDiffuseLightingMultiplier:
     m_OverrideState: 1
-    m_Value: 2.1
+    m_Value: 1
   indirectDiffuseLightingLayers:
     m_OverrideState: 1
     m_Value: 255
@@ -323,7 +323,7 @@ MonoBehaviour:
     m_Value: 0
   earthCurvature:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.756
   cloudTiling:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1}
@@ -332,10 +332,10 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0}
   lowestCloudAltitude:
     m_OverrideState: 1
-    m_Value: 500
+    m_Value: 1500
   cloudThickness:
     m_OverrideState: 1
-    m_Value: 8000
+    m_Value: 3000
   fadeInMode:
     m_OverrideState: 1
     m_Value: 0
@@ -567,8 +567,8 @@ MonoBehaviour:
   globalWindSpeed:
     m_OverrideState: 1
     m_Value:
-      mode: 1
-      customValue: 100
+      mode: 0
+      customValue: 1000
       additiveValue: 0
       multiplyValue: 1
   orientation:
@@ -580,7 +580,7 @@ MonoBehaviour:
       multiplyValue: 1
   altitudeDistortion:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.254
   cloudMapSpeedMultiplier:
     m_OverrideState: 1
     m_Value: 0.5
@@ -589,7 +589,7 @@ MonoBehaviour:
     m_Value: 1
   erosionSpeedMultiplier:
     m_OverrideState: 1
-    m_Value: 0.25
+    m_Value: 0.304
   verticalShapeWindSpeed:
     m_OverrideState: 1
     m_Value: 0
