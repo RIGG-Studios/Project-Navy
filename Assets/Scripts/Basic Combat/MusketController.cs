@@ -2,38 +2,87 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = System.Random;
 
 //After the prototype phase is over, delete this script and start from scratch, nothing in here is worth preserving
 public class MusketController : MonoBehaviour
 {
     public Transform camera;
+    public Transform gunHolder;
     public float sensitivity;
     public float range;
     public string playerTag;
     public Transform firePoint;
     public int maxAmmo;
     public float reloadTime;
+    public float swayAmount;
+    public float swaySpeed;
+    public float aimedSwayAmount;
+    public float aimedSwaySpeed;
+    public float swayClamp;
+    public float recoilAmount;
+    public float kickbackAmount;
+    public float recoilDecreaseRate;
+    public AudioClip[] fireSounds;
+    public AudioClip[] hitImpactSounds;
+    public AudioClip[] hitPlayerSounds;
+    public AudioClip[] aimSounds;
+    public GameObject hitImpactPrefab;
+    public Animator animator;
     
     private float _yaw;
     private float _pitch;
     private int _currentAmmo;
     private bool _isReloading;
+    private Vector3 musketPivotOriginalPosition;
+
+    private Vector3 _weaponSway;
+    private float _recoilAngle;
+    private AudioSource _fireSource;
+
+    private float _currentSwayAmount;
+    private float _currentSwaySpeed;
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
         _currentAmmo = maxAmmo;
+        musketPivotOriginalPosition = gunHolder.transform.localPosition;
+        _fireSource = firePoint.GetComponent<AudioSource>();
+
+        _currentSwayAmount = swayAmount;
+        _currentSwaySpeed = swaySpeed;
     }
 
+    Vector3 finalRotation;
+    
     void Update()
     {
         _yaw += Input.GetAxis ("Mouse X") * sensitivity;
         _pitch += -Input.GetAxis ("Mouse Y") * sensitivity;
 
-        _pitch = Mathf.Clamp(_pitch, -80.0f, 80.0f);
+        _weaponSway.x -= Input.GetAxis("Mouse Y") * _currentSwayAmount;
+        _weaponSway.y += Input.GetAxis("Mouse X") * _currentSwayAmount;
+        _weaponSway.z += Input.GetAxis("Mouse X") * _currentSwayAmount;
+
+        _weaponSway.x = Mathf.Clamp(_weaponSway.x, -swayClamp, swayClamp);
+        _weaponSway.y = Mathf.Clamp(_weaponSway.y, -swayClamp, swayClamp);
+        _weaponSway.z = Mathf.Clamp(_weaponSway.z, -swayClamp, swayClamp);
+
+        _recoilAngle = Mathf.Lerp(_recoilAngle, 0, Time.deltaTime * recoilDecreaseRate);
+        
+        float finalAngle = _pitch - _recoilAngle;
+
+        finalAngle = Mathf.Clamp(finalAngle, -80.0f, 80.0f);
         
         transform.eulerAngles = transform.up * (_yaw);
-        camera.localEulerAngles = new Vector3(_pitch, 0, 0);
+        camera.localEulerAngles = new Vector3(finalAngle, 0, 0);
+        
+        _weaponSway = Vector3.Lerp(_weaponSway, Vector3.zero, Time.deltaTime * _currentSwaySpeed);
+        finalRotation = Vector3.Lerp(finalRotation, _weaponSway, Time.deltaTime * _currentSwaySpeed);
+
+        gunHolder.localEulerAngles = finalRotation;
+        gunHolder.localPosition = musketPivotOriginalPosition - new Vector3(0, 0, _recoilAngle * kickbackAmount);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -41,15 +90,53 @@ public class MusketController : MonoBehaviour
                 return;
 
             _currentAmmo--;
+            _fireSource.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
+            _fireSource.Play();
+            
+            _recoilAngle += recoilAmount;
+            
             RaycastHit hit;
             if (Physics.Raycast(firePoint.position, firePoint.forward, out hit))
             {
+                GameObject instantiatedHitImpact = Instantiate(hitImpactPrefab);
+                instantiatedHitImpact.transform.position = hit.point;
+                AudioClip clipToPlay;
+                DoHitImpacts impactEffects = instantiatedHitImpact.GetComponent<DoHitImpacts>();
+
                 if (!((hit.transform.position - firePoint.transform.position).magnitude <= range))
                     return;
-                if(!hit.collider.gameObject.CompareTag(playerTag))
+                if (!hit.collider.gameObject.CompareTag(playerTag))
+                {
+                    clipToPlay = hitImpactSounds[UnityEngine.Random.Range(0, hitImpactSounds.Length)];
+                    impactEffects.PlayHitImpactSound(clipToPlay, (firePoint.transform.position - hit.point).magnitude/30);
+                    Destroy(instantiatedHitImpact, 3);
                     return;
-                Debug.Log("Do damage here");
+                }
+                
+                clipToPlay = hitPlayerSounds[UnityEngine.Random.Range(0, hitPlayerSounds.Length)];
+                impactEffects.PlayHitImpactSound(clipToPlay, (firePoint.transform.position - hit.point).magnitude/30);
+                Debug.Log("Kill other player here");
+                Destroy(instantiatedHitImpact, 3);
             }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            animator.SetBool("IsAiming", true);
+            _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
+            _fireSource.Play();
+            _currentSwayAmount = aimedSwayAmount;
+            _currentSwaySpeed = aimedSwaySpeed;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            animator.SetBool("IsAiming", false);
+            _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
+            _fireSource.Play();
+
+            _currentSwayAmount = swayAmount;
+            _currentSwaySpeed = swaySpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
