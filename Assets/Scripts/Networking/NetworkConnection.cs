@@ -6,16 +6,18 @@ using Random = UnityEngine.Random;
 
 public class NetworkConnection : MonoBehaviourPunCallbacks
 {
+    public static NetworkConnection Instance;
+    
     [SerializeField] private GameObject sceneCamera;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        
         DontDestroyOnLoad(this);
-    }
-
-    private void Start()
-    {
-        ConnectToPhoton();
     }
 
     public void ConnectToPhoton()
@@ -44,6 +46,7 @@ public class NetworkConnection : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to lobby");
 
+        /*/
         string roomName = "Room";
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.BroadcastPropsChangeToAll = true;
@@ -51,6 +54,7 @@ public class NetworkConnection : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
 
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+        /*/
     }
     
     public override void OnJoinedRoom()
@@ -58,7 +62,7 @@ public class NetworkConnection : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " Has joined the room!");
 
        // PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
-       GameManager.Instance.SpawnPlayerShip();
-        sceneCamera.SetActive(false);
+  //     GameManager.Instance.SpawnPlayerShip();
+    //    sceneCamera.SetActive(false);
     }
 }

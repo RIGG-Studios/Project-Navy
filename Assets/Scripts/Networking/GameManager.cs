@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -13,6 +14,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        SpawnPlayerShip();
     }
 
     public void SpawnPlayerShip()

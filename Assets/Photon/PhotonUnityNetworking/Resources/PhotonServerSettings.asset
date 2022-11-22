@@ -39,6 +39,18 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - AcceptAll
+  - AcceptBattleAll
+  - AcceptMaster
+  - LoadSceneAll
+  - RefusMaster
+  - RefusMasterAll
+  - sendProgress
+  - TimeOutMaster
+  - TimeOutMasterAll
+  - AcceptMatchAll
+  - SendProgress
+  - TimeOutAll
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
