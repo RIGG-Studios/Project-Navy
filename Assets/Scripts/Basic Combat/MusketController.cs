@@ -29,6 +29,8 @@ public class MusketController : MonoBehaviour
     public AudioClip[] aimSounds;
     public GameObject hitImpactPrefab;
     public Animator animator;
+    public Animator musketAnimator;
+    public bool canDoAnything;
     
     private float _yaw;
     private float _pitch;
@@ -52,6 +54,7 @@ public class MusketController : MonoBehaviour
 
         _currentSwayAmount = swayAmount;
         _currentSwaySpeed = swaySpeed;
+        canDoAnything = true;
     }
 
     Vector3 finalRotation;
@@ -84,6 +87,9 @@ public class MusketController : MonoBehaviour
         gunHolder.localEulerAngles = finalRotation;
         gunHolder.localPosition = musketPivotOriginalPosition - new Vector3(0, 0, _recoilAngle * kickbackAmount);
 
+        if(!canDoAnything)
+            return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             if (_currentAmmo <= 0)
@@ -92,6 +98,7 @@ public class MusketController : MonoBehaviour
             _currentAmmo--;
             _fireSource.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
             _fireSource.Play();
+            musketAnimator.SetTrigger("Fire");
             
             _recoilAngle += recoilAmount;
             
@@ -141,7 +148,7 @@ public class MusketController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if(_isReloading) 
+            if(_isReloading || _currentAmmo > 0) 
                 return;
             
             StartCoroutine("ReloadRoutine");
@@ -151,7 +158,13 @@ public class MusketController : MonoBehaviour
     IEnumerator ReloadRoutine()
     {
         _isReloading = true;
+        musketAnimator.SetTrigger("StartReload");
+        _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
+        _fireSource.Play();
         yield return new WaitForSeconds(reloadTime);
+        musketAnimator.SetTrigger("EndReload");
+        _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
+        _fireSource.Play();
         _currentAmmo = maxAmmo;
         _isReloading = false;
     }

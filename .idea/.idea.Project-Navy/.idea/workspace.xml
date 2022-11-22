@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="24dc35f5-04cb-4113-a817-e06f2f7cae28" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weapons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Musket.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Musket.fbx.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketDraw.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketDraw.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/WeaponAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/WeaponAnimator.controller" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +81,7 @@
       <workItem from="1668637089751" duration="7564000" />
       <workItem from="1668993560667" duration="1497000" />
       <workItem from="1669081065022" duration="4569000" />
-      <workItem from="1669138654908" duration="8308000" />
+      <workItem from="1669138654908" duration="11921000" />
     </task>
     <servers />
   </component>
