@@ -169,9 +169,11 @@ public class PlayerController : MonoBehaviour
     
     void Move()
     {
-        Vector3 playerVelocity = _moveDirection.x * transform.forward + _moveDirection.y * transform.right;
-        playerVelocity = playerVelocity.normalized;
-        _body.AddForce(playerVelocity * _moveSpeed);
+        Vector3 playerVelocity = transform.position +
+                                 (_moveDirection.y * transform.right + _moveDirection.x * transform.forward) *
+                                 (Time.fixedDeltaTime * _moveSpeed);
+        
+        _body.MovePosition(playerVelocity);
     }
 
     IEnumerator PlayFootstepSounds()

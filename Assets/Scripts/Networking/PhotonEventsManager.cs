@@ -43,11 +43,15 @@ public class PhotonEventsManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public static PhotonEventsManager Instance;
 
     public List<NetworkPlayer> players = new List<NetworkPlayer>();
-
     public NetworkPlayer LocalPlayer => players[_localIndex];
 
     private int _localIndex;
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -102,6 +106,10 @@ public class PhotonEventsManager : MonoBehaviourPunCallbacks, IOnEventCallback
             case EventCodes.DamageEntity:
                 DamageEntity(o);
                 break;
+            
+            case EventCodes.RemovePlayer:
+                RemovePlayer(o);
+                break;
         }
     }
 
@@ -117,8 +125,9 @@ public class PhotonEventsManager : MonoBehaviourPunCallbacks, IOnEventCallback
         
         players.Add(player);
 
-        object[] updatedPackage = new object[]
+        object[] updatedPackage =
         {
+            0,
             players
         };
         
@@ -179,13 +188,40 @@ public class PhotonEventsManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void DamageEntity(object[] package)
     {
+        int attackerID = (int)package[0];
+        int victimID = (int)package[1];
+        float damage = (float)package[2];
+
+        PhotonDamageHandler.RecieveDamageEvent(attackerID, victimID, damage);
+    }
+
+    private void RemovePlayer(object[] package)
+    {
+        int actorNumber = (int)package[0];
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (actorNumber != players[i].actorID)
+                continue;
+            
+            players.Remove(players[i]);
+            break;
+        }
         
+        object[] updatedPackage =
+        {
+            0,
+            players
+        };
+        
+        RaiseEvent(EventCodes.UpdatePlayers, ReceiverGroup.All, updatedPackage);
     }
 
     public NetworkPlayer FindPlayerByActorID(int actorID)
     {
         for (int i = 0; i < players.Count; i++)
         {
+            Debug.Log(players[i].actorID);
             if (actorID == players[i].actorID)
             {
                 return players[i];

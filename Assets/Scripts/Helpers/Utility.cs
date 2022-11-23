@@ -34,7 +34,7 @@ public class Utility : MonoBehaviour
         if (code == EventCodes.ChangePlayerStats) return new object[] { (int)arguements[0],
             (int)arguements[1], (int)arguements[2] };
         
-        if (code == EventCodes.DamageEntity)  return new object[] { (string)arguements[0], (string)arguements[1], 
+        if (code == EventCodes.DamageEntity)  return new object[] { (int)arguements[0], (int)arguements[1], 
             (float)arguements[2] };
         
         if (code == EventCodes.RemovePlayer) return new object[] { (int)arguements[0] };

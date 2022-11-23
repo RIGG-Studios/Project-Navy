@@ -23,6 +23,7 @@ public class MusketController : MonoBehaviour
     public float recoilAmount;
     public float kickbackAmount;
     public float recoilDecreaseRate;
+    public float damage;
     public AudioClip[] fireSounds;
     public AudioClip[] hitImpactSounds;
     public AudioClip[] hitPlayerSounds;
@@ -44,12 +45,14 @@ public class MusketController : MonoBehaviour
     private Vector3 _weaponSway;
     private float _recoilAngle;
     private AudioSource _fireSource;
+    private Player _player;
 
     private float _currentSwayAmount;
     private float _currentSwaySpeed;
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
         Cursor.lockState = CursorLockMode.Locked;
         _currentAmmo = maxAmmo;
         musketPivotOriginalPosition = gunHolder.transform.localPosition;
@@ -112,7 +115,7 @@ public class MusketController : MonoBehaviour
                 instantiatedHitImpact.transform.position = hit.point;
                 AudioClip clipToPlay;
                 DoHitImpacts impactEffects = instantiatedHitImpact.GetComponent<DoHitImpacts>();
-
+/*/
                 if (!((hit.transform.position - firePoint.transform.position).magnitude <= range))
                     return;
                 if (!hit.collider.gameObject.CompareTag(playerTag))
@@ -122,10 +125,16 @@ public class MusketController : MonoBehaviour
                     Destroy(instantiatedHitImpact, 3);
                     return;
                 }
+                /*/
                 
                 clipToPlay = hitPlayerSounds[UnityEngine.Random.Range(0, hitPlayerSounds.Length)];
                 impactEffects.PlayHitImpactSound(clipToPlay, (firePoint.transform.position - hit.point).magnitude/30);
-                Debug.Log("Kill other player here");
+
+                if (hit.collider.TryGetComponent(out IDamagable damagable))
+                {
+                    PhotonDamageHandler.SendDamageRequest(_player.PlayerActorNumber, damagable.ActorID, damage);
+                }
+                
                 Destroy(instantiatedHitImpact, 3);
             }
         }

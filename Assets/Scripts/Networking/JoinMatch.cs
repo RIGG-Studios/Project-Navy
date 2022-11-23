@@ -48,7 +48,7 @@ public class JoinMatch : MonoBehaviourPun, IPunObservable
                     photonView.RPC("TimeOutMaster", RpcTarget.All);
                 }
 
-                if (playersInRoom > maxPlayersInRoom && !_sentCall)
+                if (playersInRoom >= maxPlayersInRoom && !_sentCall)
                 {
                     photonView.RPC("LoadSceneAll", RpcTarget.All);
                     _sentCall = true;

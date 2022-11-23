@@ -79,7 +79,6 @@ public class BuoyancyObject : MonoBehaviour
 
         float archimedesForceMagnitude = WATER_DENSITY * Mathf.Abs(Physics.gravity.y) * volume;
         _localArchimedesForce = new Vector3(0, archimedesForceMagnitude, 0) / _voxels.Count;
-        Debug.Log(_localArchimedesForce);
     }
     
 

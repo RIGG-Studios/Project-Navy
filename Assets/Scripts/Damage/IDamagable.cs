@@ -1,4 +1,6 @@
 public interface IDamagable
 {
-    void Damage(float damageAmount);
+    int ActorID { get; }
+    
+    void Damage(int attackerID, float damageAmount);
 }

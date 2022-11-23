@@ -7,9 +7,7 @@ using UnityEngine;
 
 public class UnderWaterCamera : MonoBehaviour
 {
-    [SerializeField] private GameObject defaultPostProcessing;
     [SerializeField] private GameObject underwaterPostProcessing;
-    [SerializeField] private TextMeshProUGUI depthText;
     [SerializeField] private float maxDiff;
     
     private void Update()
@@ -21,12 +19,10 @@ public class UnderWaterCamera : MonoBehaviour
         if (diff <= maxDiff)
         {
             underwaterPostProcessing.SetActive(true);
-            defaultPostProcessing.SetActive(false);
         }
         else
         {
             underwaterPostProcessing.SetActive(false);
-            defaultPostProcessing.SetActive(true);
         }
     }
 }

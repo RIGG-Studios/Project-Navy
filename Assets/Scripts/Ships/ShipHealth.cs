@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ShipHealth : MonoBehaviour, IDamagable
+public class ShipHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     
