@@ -4,13 +4,10 @@
     <list default="true" id="24dc35f5-04cb-4113-a817-e06f2f7cae28" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Movement.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerControl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerControl.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/HDRPUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/HDRPUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +18,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Combat/DoHitImpacts.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Combat/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonballController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -82,7 +81,7 @@
       <workItem from="1668993560667" duration="1497000" />
       <workItem from="1669081065022" duration="4569000" />
       <workItem from="1669138654908" duration="11921000" />
-      <workItem from="1669163769168" duration="6724000" />
+      <workItem from="1669163769168" duration="10463000" />
     </task>
     <servers />
   </component>
