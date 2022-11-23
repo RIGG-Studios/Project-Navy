@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24dc35f5-04cb-4113-a817-e06f2f7cae28" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Navy/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CombatTesting.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/MusketController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/WeaponWalkingController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Combat/WeaponWalkingController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonBall.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonBall.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonballController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonballController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +85,7 @@
       <workItem from="1669081065022" duration="4569000" />
       <workItem from="1669138654908" duration="11921000" />
       <workItem from="1669163769168" duration="10463000" />
-      <workItem from="1669213212668" duration="815000" />
+      <workItem from="1669213212668" duration="5493000" />
     </task>
     <servers />
   </component>

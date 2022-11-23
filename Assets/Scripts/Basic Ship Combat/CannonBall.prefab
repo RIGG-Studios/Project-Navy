@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6006405496149323382}
   - component: {fileID: 6006405496149323378}
   - component: {fileID: 6006405496149323373}
+  - component: {fileID: -390837390119404087}
   m_Layer: 0
   m_Name: CannonBall
   m_TagString: Untagged
@@ -114,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &6006405496149323373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,5 +128,115 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2214f5c14033c5647b0179cff955ecd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  shipTag: 
+  damage: 2
+  shipTag: Ship
+  waterTag: Water
+  source: {fileID: -390837390119404087}
+  hitShipSounds:
+  - {fileID: 8300000, guid: f807bdeb64504604e87716e99bb3d8a5, type: 3}
+  - {fileID: 8300000, guid: 3d9cb78056b17df4bb64dc99ec5a4422, type: 3}
+  - {fileID: 8300000, guid: d82e47ef4d5144b40a443dada9f7a8b0, type: 3}
+  - {fileID: 8300000, guid: 7404c787452740942bc01ddc568d3db0, type: 3}
+  - {fileID: 8300000, guid: 8d57a08a7fcdc1f4b9f62c5b62af6887, type: 3}
+  hitWaterSounds:
+  - {fileID: 8300000, guid: adf4b84ccccff3f4ea503eb85f23bf6e, type: 3}
+  - {fileID: 8300000, guid: 8f816b3fae01b0148bca3864ae467c95, type: 3}
+  - {fileID: 8300000, guid: 138fe74113a7aea4ba6fb6fea6083135, type: 3}
+  - {fileID: 8300000, guid: 8627efc11e9899749afdf9e78eb6969c, type: 3}
+  - {fileID: 8300000, guid: 0a6ab70a68ba78b40a06223c976ef26f, type: 3}
+--- !u!82 &-390837390119404087
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006405496149323383}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 123
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 100
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

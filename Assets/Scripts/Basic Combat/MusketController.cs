@@ -28,6 +28,7 @@ public class MusketController : MonoBehaviour
     public AudioClip[] hitImpactSounds;
     public AudioClip[] hitPlayerSounds;
     public AudioClip[] aimSounds;
+    public AudioClip musketDryFire;
     public GameObject hitImpactPrefab;
     public Animator animator;
     public Animator musketAnimator;
@@ -103,7 +104,11 @@ public class MusketController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (_currentAmmo <= 0)
+            {
+                _fireSource.clip = musketDryFire;
+                _fireSource.Play();
                 return;
+            }
 
             _currentAmmo--;
             _fireSource.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];

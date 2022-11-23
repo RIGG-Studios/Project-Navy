@@ -22,8 +22,10 @@ public class PlayerController : MonoBehaviour
     public float runSoundSpeed;
     public bool canDoAnything;
     public Vector2 moveDirection;
-    public CannonController cannon;
     public bool fire;
+    public float cannonInteractRange;
+    public GameObject cannonBallPrefab;
+    public string cannonBallTag;
     
     private bool _isGrounded;
     private Rigidbody _body;
@@ -36,6 +38,9 @@ public class PlayerController : MonoBehaviour
     private bool _jumpedLastFrame;
     private bool _isMoving;
     private bool _playingFootstepSound;
+    private CannonController _occupiedCannon;
+    private bool _hasCannonBall;
+    private GameObject _instantiatedCannonBall;
 
     void Awake()
     {
@@ -82,11 +87,6 @@ public class PlayerController : MonoBehaviour
             dPressed = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            cannon.Occupy(this);
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             fire = true;
@@ -94,6 +94,70 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             fire = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
+            {
+                if ((hit.transform.position - transform.position).magnitude > cannonInteractRange) return;
+
+                CannonController controller = null;
+                
+                if (hit.transform.parent)
+                {
+                    controller = hit.transform.parent.GetComponent<CannonController>();
+                } 
+                
+                if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
+
+                if (hit.transform.CompareTag(cannonBallTag))
+                {
+                    if (_hasCannonBall) return;
+
+                    source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                    source.Play();
+                    
+                    _hasCannonBall = true;
+                    musketController.canDoAnything = false;
+                    bayonetteController.canDoStuff = false;
+                    musketController.musketAnimator.transform.gameObject.SetActive(false);
+                    _instantiatedCannonBall = Instantiate(cannonBallPrefab);
+                    _instantiatedCannonBall.transform.position = musketController.musketAnimator.transform.position;
+                    _instantiatedCannonBall.transform.parent = musketController.musketAnimator.transform.parent;
+                    
+                    return;
+                }
+
+                if (_hasCannonBall)
+                {
+                    source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                    source.Play();
+                    
+                    controller.Reload();
+                    _hasCannonBall = false;
+                    musketController.canDoAnything = true;
+                    bayonetteController.canDoStuff = true;
+                    Destroy(_instantiatedCannonBall);
+                    musketController.musketAnimator.transform.gameObject.SetActive(true);
+
+                    return;
+                }
+                
+                source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                source.Play();
+                controller.Occupy(this);
+                _occupiedCannon = controller;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!_occupiedCannon) return;
+            
+            _occupiedCannon.UnOccupy(this);
+            _occupiedCannon = null;
         }
 
         moveDirection.x = wPressed ? 1 : 0;

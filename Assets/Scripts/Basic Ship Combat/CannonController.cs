@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class CannonController : MonoBehaviour
@@ -11,6 +11,10 @@ public class CannonController : MonoBehaviour
     public Transform firePoint;
     public float cooldown;
     public float cannonBallVelocity;
+    public AudioClip[] fireSounds;
+    public AudioClip[] reloadSounds;
+    public float reloadTime;
+    public AudioSource source;
 
     private PlayerController _occupier;
     private float _yaw;
@@ -19,6 +23,7 @@ public class CannonController : MonoBehaviour
     private Quaternion _occupierCameraRotation;
     private float _timeSinceLastFired;
     private int _currentAmmo;
+    private bool _isReloading;
 
     private void Awake()
     {
@@ -28,6 +33,10 @@ public class CannonController : MonoBehaviour
     public void Occupy(PlayerController player)
     {
         if(occupied) return;
+        if (_currentAmmo <= 0)
+        {
+            return;
+        }
 
         occupied = true;
         _occupier = player;
@@ -43,6 +52,26 @@ public class CannonController : MonoBehaviour
         _occupier.musketController.camera.parent = newCameraTransform;
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(false);
         _occupier.musketController.stopLooking = true;
+    }
+
+    public void Reload()
+    {
+        if(_isReloading)
+            return;
+        
+        StartCoroutine("ReloadRoutine");
+    }
+
+    IEnumerator ReloadRoutine()
+    {
+        _isReloading = true;
+        source.clip = reloadSounds[UnityEngine.Random.Range(0, reloadSounds.Length)];
+        source.Play();
+
+        yield return new WaitForSeconds(reloadTime);
+
+        _isReloading = false;
+        _currentAmmo = 1;
     }
 
     public void UnOccupy(PlayerController player)
@@ -77,14 +106,20 @@ public class CannonController : MonoBehaviour
 
         if (_occupier.fire)
         {
-            if(_currentAmmo <= 0)
+            if (_currentAmmo <= 0)
+            {
+                UnOccupy(_occupier);
                 return;
+            }
 
             if(_timeSinceLastFired + cooldown > Time.time)
                 return;
             
             _currentAmmo--;
             _timeSinceLastFired = Time.time;
+
+            source.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
+            source.Play();
             
             GameObject instantiatedCannonBall = Instantiate(cannonBall);
             instantiatedCannonBall.transform.position = firePoint.position;

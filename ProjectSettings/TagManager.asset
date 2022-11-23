@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Target
+  - CannonBalls
+  - Cannon
+  - Ship
+  - Water
   layers:
   - Default
   - TransparentFX
