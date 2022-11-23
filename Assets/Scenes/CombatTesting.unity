@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 141046874}
   - component: {fileID: 141046875}
   - component: {fileID: 141046876}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BayonettePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,6 +201,7 @@ MonoBehaviour:
   timeUntilStab: 0.5
   source: {fileID: 1704261656}
   controller: {fileID: 1578835862}
+  canDoStuff: 0
 --- !u!1 &269353173
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 269353174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 355787464}
   - component: {fileID: 355787465}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeaponAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,13 +589,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355787463}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 269353174}
-  m_Father: {fileID: 2016046754}
+  m_Father: {fileID: 1309421669}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &355787465
@@ -617,6 +618,37 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1201908385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1201908386}
+  m_Layer: 6
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1201908386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201908385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.79, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1578835861}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1206756263
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +729,7 @@ GameObject:
   - component: {fileID: 1255068280}
   - component: {fileID: 1255068279}
   - component: {fileID: 1255068278}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,6 +815,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1309421668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309421669}
+  - component: {fileID: 1309421670}
+  m_Layer: 6
+  m_Name: WeaponWalkingLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1309421669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309421668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 355787464}
+  m_Father: {fileID: 2016046754}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1309421670
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309421668}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7fefc4f0044074940bf45f399d77b3e8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1342741364
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,8 +981,11 @@ GameObject:
   - component: {fileID: 1578835860}
   - component: {fileID: 1578835859}
   - component: {fileID: 1578835858}
+  - component: {fileID: 1578835864}
   - component: {fileID: 1578835862}
-  m_Layer: 0
+  - component: {fileID: 1578835865}
+  - component: {fileID: 1578835866}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,6 +1069,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2016046754}
+  - {fileID: 1201908386}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -177.979, z: 0}
@@ -1034,7 +1123,163 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 355787465}
   musketAnimator: {fileID: 4507169322479670396}
+  walkingAnimator: {fileID: 1309421670}
+  controller: {fileID: 141046876}
   canDoAnything: 0
+  isAiming: 0
+--- !u!54 &1578835864
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578835857}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &1578835865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578835857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9dbd966d3feb014ab03034dee788498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 1201908386}
+  groundRadius: 0.3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  musketController: {fileID: 1578835862}
+  bayonetteController: {fileID: 141046876}
+  walkingSounds:
+  - {fileID: 8300000, guid: be3cc91edda5ac74586dc5f9b9dbae43, type: 3}
+  - {fileID: 8300000, guid: edd78ce14f25e134abbd4966a3495703, type: 3}
+  - {fileID: 8300000, guid: 4f84726f78d32c84e8442841970489d3, type: 3}
+  - {fileID: 8300000, guid: 6b9d231cf001e4449b2b39ce327ceb77, type: 3}
+  aimingSounds:
+  - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
+  - {fileID: 8300000, guid: 28c17ec0e120a7144b77983349f8fac7, type: 3}
+  - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
+  landedSounds:
+  - {fileID: 8300000, guid: be3cc91edda5ac74586dc5f9b9dbae43, type: 3}
+  - {fileID: 8300000, guid: edd78ce14f25e134abbd4966a3495703, type: 3}
+  - {fileID: 8300000, guid: 4f84726f78d32c84e8442841970489d3, type: 3}
+  - {fileID: 8300000, guid: 6b9d231cf001e4449b2b39ce327ceb77, type: 3}
+  source: {fileID: 1578835866}
+  animator: {fileID: 1309421670}
+  walkSpeed: 10
+  runSpeed: 20
+  jumpHeight: 300
+  footstepSoundLength: 2
+  footstepSoundSpeed: 0.2
+  runSoundSpeed: 0.3
+--- !u!82 &1578835866
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578835857}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.389
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 158
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1684980361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,7 +1366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1704261655}
   - component: {fileID: 1704261656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1251,7 +1496,7 @@ GameObject:
   - component: {fileID: 2016046753}
   - component: {fileID: 2016046752}
   - component: {fileID: 2016046755}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1321,7 +1566,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 355787464}
+  - {fileID: 1309421669}
   m_Father: {fileID: 1578835861}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1475,7 +1720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 583074452959128759}
   - component: {fileID: 8292130262874477506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Musket.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1491,7 +1736,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9021524890073325195}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dog_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1508,7 +1753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660665673179336071}
   - component: {fileID: 4125223287712741854}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Musket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1539,7 +1784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3232374004042566390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1572,7 +1817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4507169322479670395}
   - component: {fileID: 4507169322479670396}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Musket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1701,7 +1946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4772825823866225893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1772,7 +2017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8555134846348987827}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

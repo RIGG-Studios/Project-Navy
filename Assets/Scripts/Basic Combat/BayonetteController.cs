@@ -13,14 +13,23 @@ public class BayonetteController : MonoBehaviour
     public float timeUntilStab;
     public AudioSource source;
     public MusketController controller;
+    public bool canDoStuff;
 
     private bool _canAttack;
     private bool _isAttacking;
     private bool _dealtDamage;
     private float _timeSinceLastAttack;
-
+    
+    private void Awake()
+    {
+        canDoStuff = true;
+    }
+    
     private void Update()
     {
+        if(!canDoStuff)
+            return;
+        
         if (Input.GetKeyDown(KeyCode.V))
         {
             if(_isAttacking)

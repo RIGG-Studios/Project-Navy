@@ -30,7 +30,10 @@ public class MusketController : MonoBehaviour
     public GameObject hitImpactPrefab;
     public Animator animator;
     public Animator musketAnimator;
+    public Animator walkingAnimator;
+    public BayonetteController controller;
     public bool canDoAnything;
+    public bool isAiming;
     
     private float _yaw;
     private float _pitch;
@@ -130,6 +133,7 @@ public class MusketController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             animator.SetBool("IsAiming", true);
+            walkingAnimator.SetBool("IsAiming", true);
             _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
             _fireSource.Play();
             _currentSwayAmount = aimedSwayAmount;
@@ -139,6 +143,7 @@ public class MusketController : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             animator.SetBool("IsAiming", false);
+            walkingAnimator.SetBool("IsAiming", false);
             _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
             _fireSource.Play();
 
@@ -157,6 +162,7 @@ public class MusketController : MonoBehaviour
 
     IEnumerator ReloadRoutine()
     {
+        controller.canDoStuff = false;
         _isReloading = true;
         musketAnimator.SetTrigger("StartReload");
         _fireSource.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
@@ -167,5 +173,6 @@ public class MusketController : MonoBehaviour
         _fireSource.Play();
         _currentAmmo = maxAmmo;
         _isReloading = false;
+        controller.canDoStuff = true;
     }
 }
