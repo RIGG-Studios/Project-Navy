@@ -45,13 +45,13 @@ public class BayonetteController : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-        _isAttacking = true;
-        _canAttack = true;
         controller.canDoAnything = false;
         animator.SetTrigger("Stab");
         source.clip = aimSounds[UnityEngine.Random.Range(0, aimSounds.Length)];
         source.Play();
         yield return new WaitForSeconds(timeUntilStab);
+        _isAttacking = true;
+        _canAttack = true;
         source.clip = stabSounds[UnityEngine.Random.Range(0, stabSounds.Length)];
         source.Play();
         yield return new WaitForSeconds(attackDuration);

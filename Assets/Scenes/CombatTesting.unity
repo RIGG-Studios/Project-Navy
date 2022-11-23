@@ -376,13 +376,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901aad0eb4d76284cbb73d3517ecabef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 1.5
+  attackDuration: 0.2
   targetTag: Target
   attackRate: 2
   animator: {fileID: 355787465}
   aimSounds:
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
-  - {fileID: 8300000, guid: 28c17ec0e120a7144b77983349f8fac7, type: 3}
+  - {fileID: 8300000, guid: 53ab5050f52179f418f607dd798300e6, type: 3}
   - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
   stabSounds:
   - {fileID: 8300000, guid: eca9e6542b1bbb84eb81235dc4b94f73, type: 3}
@@ -1327,6 +1327,7 @@ MonoBehaviour:
   recoilAmount: 30
   kickbackAmount: 0.1
   recoilDecreaseRate: 2
+  damage: 0
   fireSounds:
   - {fileID: 8300000, guid: af3322dc7ab8b16429b734c63b0d0535, type: 3}
   - {fileID: 8300000, guid: 5af2fa03e6a0c10448721def894ef94f, type: 3}
@@ -1342,9 +1343,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 96b14b466f47fe9498dae0d15d46aac5, type: 3}
   - {fileID: 8300000, guid: 3a4b4a260dde3ae4f9d2d3fefc9f4e4f, type: 3}
   aimSounds:
-  - {fileID: 8300000, guid: 28c17ec0e120a7144b77983349f8fac7, type: 3}
-  - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
+  - {fileID: 8300000, guid: 53ab5050f52179f418f607dd798300e6, type: 3}
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
+  - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
   hitImpactPrefab: {fileID: 3939447689303160795, guid: ce19598f3b5e6b8499a28c78b9bce6c9,
     type: 3}
   animator: {fileID: 355787465}
@@ -1396,7 +1397,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6b9d231cf001e4449b2b39ce327ceb77, type: 3}
   aimingSounds:
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
-  - {fileID: 8300000, guid: 28c17ec0e120a7144b77983349f8fac7, type: 3}
+  - {fileID: 8300000, guid: 53ab5050f52179f418f607dd798300e6, type: 3}
   - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
   landedSounds:
   - {fileID: 8300000, guid: be3cc91edda5ac74586dc5f9b9dbae43, type: 3}
@@ -1427,13 +1428,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.389
+  m_Volume: 0.097
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 158
+  Priority: 231
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1637,7 +1638,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 72
   DopplerLevel: 1
   MinDistance: 3.8995404
   MaxDistance: 500
