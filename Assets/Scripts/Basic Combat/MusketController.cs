@@ -35,6 +35,7 @@ public class MusketController : MonoBehaviour
     public BayonetteController controller;
     public bool canDoAnything;
     public bool isAiming;
+    public bool stopLooking;
     
     private float _yaw;
     private float _pitch;
@@ -83,6 +84,9 @@ public class MusketController : MonoBehaviour
         float finalAngle = _pitch - _recoilAngle;
 
         finalAngle = Mathf.Clamp(finalAngle, -80.0f, 80.0f);
+        
+        if(stopLooking)
+            return;
         
         transform.eulerAngles = transform.up * (_yaw);
         camera.localEulerAngles = new Vector3(finalAngle, 0, 0);

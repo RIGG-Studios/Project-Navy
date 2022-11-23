@@ -20,10 +20,13 @@ public class PlayerController : MonoBehaviour
     public float footstepSoundLength;
     public float footstepSoundSpeed;
     public float runSoundSpeed;
+    public bool canDoAnything;
+    public Vector2 moveDirection;
+    public CannonController cannon;
+    public bool fire;
     
     private bool _isGrounded;
     private Rigidbody _body;
-    private Vector3 _moveDirection;
     private bool wPressed;
     private bool sPressed;
     private bool aPressed;
@@ -38,10 +41,70 @@ public class PlayerController : MonoBehaviour
     {
         _body = GetComponent<Rigidbody>();
         _moveSpeed = walkSpeed;
+        canDoAnything = true;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            wPressed = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.W))
+        {
+            wPressed = false;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            sPressed = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.S))
+        {
+            sPressed = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            aPressed = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            aPressed = false;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            dPressed = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            dPressed = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            cannon.Occupy(this);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            fire = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            fire = false;
+        }
+
+        moveDirection.x = wPressed ? 1 : 0;
+        moveDirection.x = sPressed ? -1 : moveDirection.x;
+        
+        moveDirection.y = dPressed ? 1 : 0;
+        moveDirection.y = aPressed ? -1 : moveDirection.y;
+        
+        if(!canDoAnything)
+            return;
+        
         if (!_playingFootstepSound && _isMoving)
         {
             StartCoroutine("PlayFootstepSounds");
@@ -90,49 +153,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine("Jump");
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            wPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            wPressed = false;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            sPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            sPressed = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            aPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            aPressed = false;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            dPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            dPressed = false;
-        }
-
-        _moveDirection.x = wPressed ? 1 : 0;
-        _moveDirection.x = sPressed ? -1 : _moveDirection.x;
-        
-        _moveDirection.y = dPressed ? 1 : 0;
-        _moveDirection.y = aPressed ? -1 : _moveDirection.y;
-
-        if (_moveDirection.x == 0 && _moveDirection.y == 0)
+        if (moveDirection.x == 0 && moveDirection.y == 0)
         {
             animator.SetBool("Walking", false);
             _isMoving = false;
@@ -148,6 +169,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!canDoAnything)
+            return;
+        
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundLayer);
 
         Move();
@@ -169,11 +193,9 @@ public class PlayerController : MonoBehaviour
     
     void Move()
     {
-        Vector3 playerVelocity = transform.position +
-                                 (_moveDirection.y * transform.right + _moveDirection.x * transform.forward) *
-                                 (Time.fixedDeltaTime * _moveSpeed);
-        
-        _body.MovePosition(playerVelocity);
+        Vector3 playerVelocity = moveDirection.x * transform.forward + moveDirection.y * transform.right;
+        playerVelocity = playerVelocity.normalized;
+        _body.AddForce(playerVelocity * _moveSpeed);
     }
 
     IEnumerator PlayFootstepSounds()
