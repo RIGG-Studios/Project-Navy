@@ -1394,16 +1394,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: be3cc91edda5ac74586dc5f9b9dbae43, type: 3}
   - {fileID: 8300000, guid: edd78ce14f25e134abbd4966a3495703, type: 3}
   - {fileID: 8300000, guid: 4f84726f78d32c84e8442841970489d3, type: 3}
-  - {fileID: 8300000, guid: 6b9d231cf001e4449b2b39ce327ceb77, type: 3}
   aimingSounds:
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
   - {fileID: 8300000, guid: 53ab5050f52179f418f607dd798300e6, type: 3}
   - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
   landedSounds:
-  - {fileID: 8300000, guid: be3cc91edda5ac74586dc5f9b9dbae43, type: 3}
-  - {fileID: 8300000, guid: edd78ce14f25e134abbd4966a3495703, type: 3}
-  - {fileID: 8300000, guid: 4f84726f78d32c84e8442841970489d3, type: 3}
   - {fileID: 8300000, guid: 6b9d231cf001e4449b2b39ce327ceb77, type: 3}
+  - {fileID: 8300000, guid: dd154cc1441f03a42a73d68ff80765fa, type: 3}
+  - {fileID: 8300000, guid: fec39ba96cbbaed40991cd025fc780d2, type: 3}
   source: {fileID: 1578835866}
   animator: {fileID: 1309421670}
   walkSpeed: 10
@@ -1428,7 +1426,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.097
+  m_Volume: 0.138
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(footstepSoundLength * 1/_moveSpeed * 1/footstepSoundSpeed);
         }
         
-        if (_isMoving)
+        if (_isMoving && _isGrounded)
         {
             source.clip = walkingSounds[UnityEngine.Random.Range(0, walkingSounds.Length)];
             source.Play();
