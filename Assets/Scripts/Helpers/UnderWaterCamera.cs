@@ -18,8 +18,6 @@ public class UnderWaterCamera : MonoBehaviour
 
         float diff = (transform.position.y - waterHeight);
         
-        depthText.text = diff.ToString(CultureInfo.InvariantCulture);
-        
         if (diff <= maxDiff)
         {
             underwaterPostProcessing.SetActive(true);

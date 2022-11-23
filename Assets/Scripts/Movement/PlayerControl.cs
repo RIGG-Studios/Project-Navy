@@ -59,6 +59,8 @@ public class PlayerControl : MonoBehaviour
     // Using FixedUpdate() here instead of Update(), because this is a multiplayer game and I don't want to risk any framerate discrepencies fucking with movement
     void FixedUpdate()
     {
+        body.AddForceAtPosition(Physics.gravity, transform.position, ForceMode.Acceleration);
+
         //If the player isn't steering, move them. If they are, move the ship.
         if(!isSteering)
         {
@@ -67,6 +69,8 @@ public class PlayerControl : MonoBehaviour
         {
             Steer();
         }
+        
+        
         //CheckIfGrounded();
     }
 
@@ -78,11 +82,15 @@ public class PlayerControl : MonoBehaviour
     //Handles player movement (walking/running).
     void Move()
     {
-        Vector3 movement = new Vector3(moveDirection.x, 0f, moveDirection.y);
-        movement = facingAngle.forward * movement.z + facingAngle.right * movement.x;
+        Vector3 playerVelocity = transform.position +
+                                 (moveDirection.x * transform.right + moveDirection.y * transform.forward) *
+                                 (Time.fixedDeltaTime * moveSpeed);
+        
+     //   Vector3 movement = transform.position + new Vector3(moveDirection.x, 0f, moveDirection.y);
+      //  movement = facingAngle.forward * movement.z + facingAngle.right * movement.x;
 
         //MAJOR BUG: Movement doesn't work right unless you're jumping. I poked around with the numbers a bit, and it seems like the issue might be related to the Rigidbody's mass? Not sure how to fix; will experiment.
-        body.AddForce(movement * moveSpeed);
+        body.MovePosition(playerVelocity * moveSpeed);
     }
 
     //Handles player turning (camera movement/looking around).

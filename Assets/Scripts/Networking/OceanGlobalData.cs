@@ -24,7 +24,7 @@ public class OceanGlobalData : MonoBehaviour, IPunObservable
         }
         else
         {
-            Time = Mathf.Lerp(Time, _currentTime, UnityEngine.Time.deltaTime * 3.5f);
+            Time = Mathf.Lerp(Time, _currentTime, UnityEngine.Time.time * 3.5f);
         }
     }
 
