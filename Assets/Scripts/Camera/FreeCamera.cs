@@ -10,6 +10,12 @@ public class FreeCamera : MonoBehaviour
 
     private Vector2 _rotation;
 
+    private void Awake()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void Update()
     {
         _rotation.y += Input.GetAxis ("Mouse X");

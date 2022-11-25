@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Photon.Pun;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ public class PlayerSpawner : MonoBehaviour
     public static PlayerSpawner Instance;
     
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject freeCamPlayerPrefab;
     [SerializeField] private GameObject sceneCamera;
     [SerializeField] private Transform[] playerSpawnPoints;
 
@@ -41,10 +43,17 @@ public class PlayerSpawner : MonoBehaviour
                 .GetComponent<Player>();
             
             player.SetupNetworkPlayer(ship);
-       //     player.transform.parent = ship.transform;
             sceneCamera.SetActive(false);
         }
     }
+
+    public void SpawnFreeCamPlayer()
+    {
+        PhotonNetwork.Instantiate(freeCamPlayerPrefab.name, Vector3.zero, quaternion.identity, 0);
+        sceneCamera.SetActive(false);
+    }
+
+    public void ToggleSceneCamera(bool state) => sceneCamera.SetActive(state);
 
     public Transform GetRandomSpawnPoint()
     {

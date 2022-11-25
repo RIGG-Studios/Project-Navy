@@ -1,5 +1,6 @@
 using System;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,5 +23,31 @@ public class GameManager : MonoBehaviour
         {
             rb.AddForce(velocity, ForceMode.Impulse);
         }
+    }
+    
+    public void ExitMatch()
+    {
+        object[] package =
+        {
+            PhotonNetwork.LocalPlayer.ActorNumber
+        };
+        
+        PhotonEventsManager.Instance.RaiseEvent(EventCodes.RemovePlayer, ReceiverGroup.MasterClient, package);
+        
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public void Spectate()
+    {
+        object[] package =
+        {
+            PhotonNetwork.LocalPlayer.ActorNumber
+        };
+        
+        
+        PhotonEventsManager.Instance.RaiseEvent(EventCodes.RemovePlayer, ReceiverGroup.MasterClient, package);
+
+        PlayerSpawner.Instance.SpawnFreeCamPlayer();
     }
 }

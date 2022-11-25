@@ -19,7 +19,13 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         _ship = GetComponent<Ship>();
         Health = maxHealth;
     }
-    
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+            Damage(50f);
+    }
+
     public void Damage(float damageAmount)
     {
         Health -= damageAmount;
@@ -27,6 +33,13 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         if (Health <= 0)
         {
             photonView.RPC("RPCDie", RpcTarget.All);
+
+            NetworkPlayer owner = PhotonEventsManager.Instance.FindPlayerByActorID(_ship.OwnerActorNumber);
+
+            if (owner != null)
+            {
+                owner.playerPhotonView.RPC("OnPlayerShipSink", owner.playerPhotonView.Owner);
+            }
         }
     }
 

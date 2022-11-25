@@ -55,6 +55,7 @@ public class MusketController : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
+        
         Cursor.lockState = CursorLockMode.Locked;
         _currentAmmo = maxAmmo;
         musketPivotOriginalPosition = gunHolder.transform.localPosition;

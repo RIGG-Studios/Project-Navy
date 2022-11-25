@@ -14,6 +14,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     [SerializeField] private bool useHitMarker = true;
     [SerializeField] private GameObject hitMarker;
 
+    [SerializeField] private bool useShipDestroyedNotifier;
+    [SerializeField] private Animator shipDestroyedAnim;
     
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
@@ -23,12 +25,14 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private bool _canRecieveDamage;
 
     private Transform _spawnPoint;
+    private bool _hasNoShip;
 
     public int ActorID => PlayerActorNumber;
 
     private void Awake()
     {
         _currentHealth = maxHealth;
+        healthSlider.value = _currentHealth;
         healthSlider.minValue = 0;
         healthSlider.maxValue = 100;
     }
@@ -57,7 +61,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         //send event with the package we created
         PhotonEventsManager.Instance.RaiseEvent(EventCodes.AddPlayer, ReceiverGroup.MasterClient, package);
     }
-
+    
     [PunRPC]
     public void SetInitialPlayerInfo(string playerName, int actorID)
     {
@@ -65,10 +69,44 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         PlayerActorNumber = actorID;
         gameObject.name = PlayerName + (photonView.IsMine ? " (Local)" : " (Remote)");
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O))
+            Damage(ActorID, 50);
+    }
+
+    [PunRPC]
+    public void OnPlayerShipSink()
+    {
+        _hasNoShip = true;
+
+        if (useShipDestroyedNotifier)
+        {
+            shipDestroyedAnim.SetTrigger("Show");
+        }
+    }
     
     private void Die()
     {
         if (photonView.IsMine)
+        {
+            Respawn();
+        }
+    }
+
+    private void Respawn()
+    {
+        if (_hasNoShip)
+        {
+            EndGameUI.Instance.ShowGameOverScreen();
+            PlayerSpawner.Instance.ToggleSceneCamera(true);
+            PhotonNetwork.Destroy(gameObject);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
         {
             transform.position = _spawnPoint.position;
             transform.rotation = _spawnPoint.rotation;
@@ -80,6 +118,16 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     [PunRPC]
     public void OnPlayerDamagedOther(int otherActorID)
+    {
+        if (useHitMarker)
+        {
+            hitMarker.SetActive(true);
+            Invoke(nameof(ResetHitMarker), 0.25f);
+        }
+    }
+    
+    [PunRPC]
+    public void OnPlayerDamagedShip()
     {
         if (useHitMarker)
         {
