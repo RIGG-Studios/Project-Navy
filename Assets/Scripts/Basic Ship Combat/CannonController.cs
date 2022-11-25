@@ -108,8 +108,6 @@ public class CannonController : MonoBehaviour
         {
             if (_currentAmmo <= 0)
             {
-                UnOccupy(_occupier);
-                return;
             }
 
             if(_timeSinceLastFired + cooldown > Time.time)
@@ -120,10 +118,14 @@ public class CannonController : MonoBehaviour
 
             source.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
             source.Play();
-            
+
+            Vector3 velocity = firePoint.forward * cannonBallVelocity;
+            GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation);
+            /*/
             GameObject instantiatedCannonBall = Instantiate(cannonBall);
             instantiatedCannonBall.transform.position = firePoint.position;
             instantiatedCannonBall.GetComponent<Rigidbody>().AddForce(firePoint.forward * cannonBallVelocity, ForceMode.Impulse);
+            /*/
         }
     }
 }

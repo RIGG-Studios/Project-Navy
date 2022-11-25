@@ -7,26 +7,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject projectilePrefab;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    public void SpawnProjectile(Vector3 velocity, Vector3 pos, Quaternion rot)
     {
-        SpawnPlayerShip();
-    }
+        Rigidbody rb = PhotonNetwork.Instantiate(projectilePrefab.name, pos, rot, 0).GetComponent<Rigidbody>();
 
-    public void SpawnPlayerShip()
-    {
-        /*/
-        if (success)
+        if (rb != null)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, ship.playerSpawnPoint.position, ship.playerSpawnPoint.rotation,
-                0);
+            rb.AddForce(velocity, ForceMode.Impulse);
         }
-        /*/
     }
 }

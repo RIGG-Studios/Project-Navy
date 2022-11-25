@@ -12,6 +12,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
     
+    public Ship PlayerShip { get; private set; }
+    
     private float _currentHealth;
     private bool _canRecieveDamage;
 
@@ -35,6 +37,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
             PhotonNetwork.LocalPlayer.NickName, PhotonNetwork.LocalPlayer.ActorNumber);
 
         _spawnPoint = ship.playerSpawnPoint;
+        PlayerShip = ship;
         
         //initialize package info
         object[] package =

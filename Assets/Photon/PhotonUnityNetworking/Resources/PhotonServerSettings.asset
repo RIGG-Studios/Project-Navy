@@ -53,6 +53,12 @@ MonoBehaviour:
   - TimeOutAll
   - AddShip
   - SetInitialPlayerInfo
+  - RpcClearBuffer
+  - RpcNonServerOwnedTeleportFromServer
+  - RpcTeleport
+  - AllSpawnShip
+  - MasterSpawnShip
+  - RPCDie
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

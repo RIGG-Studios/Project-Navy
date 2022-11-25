@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6964860745637483221}
   - component: {fileID: 831384075509821677}
   - component: {fileID: 4496319664245138819}
-  - component: {fileID: 7906998529017510127}
+  - component: {fileID: 1630885868067202959}
   m_Layer: 6
   m_Name: NetworkedPlayer
   m_TagString: Player
@@ -92,6 +92,8 @@ MonoBehaviour:
   - {fileID: 1277023247355373948}
   - {fileID: 7470301512465939415}
   - {fileID: 36660363931683249}
+  - {fileID: 443385099775225270}
+  - {fileID: 1571874058585844719}
   gameObjectsToDisable: []
   localGameObjectsToDisable:
   - {fileID: 7171501060227083223}
@@ -115,7 +117,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4388148399073719949}
-  - {fileID: 7906998529017510127}
+  - {fileID: 1630885868067202959}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -148,7 +150,7 @@ MonoBehaviour:
   groundRadius: 0.3
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   musketController: {fileID: 6964860745637483221}
   bayonetteController: {fileID: 1571874058585844719}
   walkingSounds:
@@ -173,6 +175,13 @@ MonoBehaviour:
   footstepSoundLength: 2
   footstepSoundSpeed: 0.2
   runSoundSpeed: 0.3
+  canDoAnything: 0
+  moveDirection: {x: 0, y: 0}
+  fire: 0
+  cannonInteractRange: 4.5
+  cannonBallPrefab: {fileID: 6006405496149323383, guid: 165679d871c3c0548973b8843aa027a2,
+    type: 3}
+  cannonBallTag: CannonBalls
 --- !u!114 &6964860745637483221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +210,7 @@ MonoBehaviour:
   recoilAmount: 30
   kickbackAmount: 0.1
   recoilDecreaseRate: 2
-  damage: 34
+  damage: 50
   fireSounds:
   - {fileID: 8300000, guid: af3322dc7ab8b16429b734c63b0d0535, type: 3}
   - {fileID: 8300000, guid: 5af2fa03e6a0c10448721def894ef94f, type: 3}
@@ -220,6 +229,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 28c17ec0e120a7144b77983349f8fac7, type: 3}
   - {fileID: 8300000, guid: ba419fbb41a77de4a8561df3da10a7f7, type: 3}
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
+  musketDryFire: {fileID: 0}
   hitImpactPrefab: {fileID: 3939447689303160795, guid: ce19598f3b5e6b8499a28c78b9bce6c9,
     type: 3}
   animator: {fileID: 5278768968084333402}
@@ -228,6 +238,7 @@ MonoBehaviour:
   controller: {fileID: 1571874058585844719}
   canDoAnything: 0
   isAiming: 0
+  stopLooking: 0
 --- !u!82 &831384075509821677
 AudioSource:
   m_ObjectHideFlags: 0
@@ -337,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4388148399073719949}
---- !u!114 &7906998529017510127
+--- !u!114 &1630885868067202959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,13 +357,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 32588379015309455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 8069ffa6ab7df7340ad5ce0c3da47526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
+  interpolationBackTime: 0.12
+  extrapolationMode: 1
+  useExtrapolationTimeLimit: 1
+  extrapolationTimeLimit: 5
+  useExtrapolationDistanceLimit: 0
+  extrapolationDistanceLimit: 20
+  sendPositionThreshold: 0
+  sendRotationThreshold: 0
+  sendScaleThreshold: 0
+  sendVelocityThreshold: 0
+  sendAngularVelocityThreshold: 0
+  receivedPositionThreshold: 0
+  receivedRotationThreshold: 0
+  snapPositionThreshold: 0
+  snapRotationThreshold: 0
+  snapScaleThreshold: 0
+  positionLerpSpeed: 0.85
+  rotationLerpSpeed: 0.85
+  scaleLerpSpeed: 0.85
+  timeCorrectionSpeed: 0.1
+  snapTimeThreshold: 0.3
+  syncPosition: 0
+  syncRotation: 0
+  syncScale: 0
+  syncVelocity: 0
+  syncAngularVelocity: 0
+  isPositionCompressed: 0
+  isRotationCompressed: 0
+  isScaleCompressed: 0
+  isVelocityCompressed: 0
+  isAngularVelocityCompressed: 0
+  automaticallyResetTime: 1
+  isSmoothingAuthorityChanges: 0
+  whenToUpdateTransform: 1
+  setVelocityInsteadOfPositionOnNonOwners: 0
+  useLocalTransformOnly: 0
+  maxPositionDifferenceForVelocitySyncing: 10
+  ownerChangeIndicator: 1
+  receivedStatesCounter: 0
 --- !u!1 &1071319607694775290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,9 +1472,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901aad0eb4d76284cbb73d3517ecabef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 4388148399073719949}
   attackDuration: 1.5
-  targetTag: Target
+  targetTag: Player
   attackRate: 2
+  attackDamage: 65
   animator: {fileID: 5278768968084333402}
   aimSounds:
   - {fileID: 8300000, guid: 2eb25bcc126628c46a9afb475e7ffe0e, type: 3}
@@ -1445,5 +1493,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9fcb4a1f46f0efd4cb7dde9b02cc20f5, type: 3}
   timeUntilStab: 0.5
   source: {fileID: 4485034051843004559}
-  controller: {fileID: 0}
+  controller: {fileID: 6964860745637483221}
   canDoStuff: 0

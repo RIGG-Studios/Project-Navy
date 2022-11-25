@@ -41,9 +41,9 @@ public class PlayerSpawner : MonoBehaviour
                 .GetComponent<Player>();
             
             player.SetupNetworkPlayer(ship);
+       //     player.transform.parent = ship.transform;
             sceneCamera.SetActive(false);
         }
-        
     }
 
     public Transform GetRandomSpawnPoint()

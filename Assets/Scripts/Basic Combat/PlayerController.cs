@@ -105,11 +105,8 @@ public class PlayerController : MonoBehaviour
 
                 CannonController controller = null;
                 
-                if (hit.transform.parent)
-                {
-                    controller = hit.transform.parent.GetComponent<CannonController>();
-                } 
-                
+                controller = hit.collider.GetComponent<CannonController>();
+
                 if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
 
                 if (hit.transform.CompareTag(cannonBallTag))
@@ -257,9 +254,14 @@ public class PlayerController : MonoBehaviour
     
     void Move()
     {
-        Vector3 playerVelocity = moveDirection.x * transform.forward + moveDirection.y * transform.right;
-        playerVelocity = playerVelocity.normalized;
-        _body.AddForce(playerVelocity * _moveSpeed);
+        _body.AddForceAtPosition(Physics.gravity, transform.position, ForceMode.Acceleration);
+        
+        Vector3 playerVelocity = transform.position +
+                                 (moveDirection.y * transform.right + moveDirection.x * transform.forward) *
+                                 (Time.fixedDeltaTime * _moveSpeed);
+        
+        
+        _body.MovePosition(playerVelocity);
     }
 
     IEnumerator PlayFootstepSounds()

@@ -22,9 +22,9 @@ public class ShipNetworkManager : MonoBehaviourPun
 
         Ship ship = PhotonNetwork.Instantiate(shipPrefab.name, spawnPoint.position, spawnPoint.rotation, 0)
             .GetComponent<Ship>();
-        
+
         ship.AssignShipToPlayer(actorID);
-  //      player.playerPhotonView.RPC("AssignShip", RpcTarget.AllBuffered);
+
         return ship;
     }
 }

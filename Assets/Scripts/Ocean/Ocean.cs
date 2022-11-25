@@ -89,8 +89,8 @@ public class Ocean : MonoBehaviour
 
     private void Update()
     {
-        float time = PhotonNetwork.IsConnectedAndReady ? OceanGlobalData.Instance.Time : Time.time;
-        oceanMaterial.SetFloat("_GameTime", time);
+     //   float time = PhotonNetwork.IsConnectedAndReady ? OceanGlobalData.Instance.Time : Time.time;
+        oceanMaterial.SetFloat("_GameTime", Time.time);
     }
 
     public float GetWaterHeightAtPosition(Vector3 pos)

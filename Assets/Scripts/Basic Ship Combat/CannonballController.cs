@@ -21,7 +21,7 @@ public class CannonballController : MonoBehaviour
             _hit = true;
             source.clip = hitShipSounds[UnityEngine.Random.Range(0, hitShipSounds.Length)];
             source.Play();
-            Debug.Log("Do ship damage stuff here");
+            other.collider.GetComponent<ShipVitalPoint>().Damage(PhotonEventsManager.Instance.LocalPlayer.actorID, damage);
             Destroy(gameObject, 2.0f);
         }
         else if(other.gameObject.CompareTag(waterTag))

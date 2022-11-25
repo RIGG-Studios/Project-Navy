@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class BayonetteController : MonoBehaviour
 {
+    [SerializeField] private Player player;
+    
     public float attackDuration;
     public string targetTag;
     public float attackRate;
+    public float attackDamage;
     public Animator animator;
     public AudioClip[] aimSounds;
     public AudioClip[] stabSounds;
@@ -72,7 +75,12 @@ public class BayonetteController : MonoBehaviour
         
         source.clip = hitPlayerSounds[UnityEngine.Random.Range(0, hitPlayerSounds.Length)];
         source.Play();
-        Debug.Log("Do damage here");
+        
+        if (other.TryGetComponent(out IDamagable damagable))
+        {
+            PhotonDamageHandler.SendDamageRequest(player.PlayerActorNumber, damagable.ActorID, attackDamage);
+        }
+        
         animator.SetTrigger("Hit");
         _dealtDamage = true;
     }
@@ -89,7 +97,12 @@ public class BayonetteController : MonoBehaviour
         
         source.clip = hitPlayerSounds[UnityEngine.Random.Range(0, hitPlayerSounds.Length)];
         source.Play();
-        Debug.Log("Do damage here");
+        
+        if (other.TryGetComponent(out IDamagable damagable))
+        {
+            PhotonDamageHandler.SendDamageRequest(player.PlayerActorNumber, damagable.ActorID, attackDamage);
+        }
+        
         animator.SetTrigger("Hit");
         _dealtDamage = true;
     }
