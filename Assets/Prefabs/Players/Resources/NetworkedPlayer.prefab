@@ -96,6 +96,7 @@ MonoBehaviour:
   - {fileID: 36660363931683249}
   - {fileID: 443385099775225270}
   - {fileID: 1571874058585844719}
+  - {fileID: 7902596052883694757}
   gameObjectsToDisable: []
   localGameObjectsToDisable:
   - {fileID: 7171501060227083223}
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dbd966d3feb014ab03034dee788498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipCorrection: 0
   groundCheck: {fileID: 2470501768328136522}
   groundRadius: 0.3
   groundLayer:
@@ -187,6 +189,7 @@ MonoBehaviour:
   cannonBallPrefab: {fileID: 6006405496149323383, guid: 165679d871c3c0548973b8843aa027a2,
     type: 3}
   cannonBallTag: CannonBalls
+  canRecieveInput: 0
 --- !u!114 &6964860745637483221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,9 +419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052f93321e29945489498fc151237a17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 5
-  maxSpeed: 10
-  acceleration: 0.2
+  playerCamera: {fileID: 36660363931683249}
+  remoteBody: {fileID: 7171501060227083223}
+  turnSpeed: 500
+  maxSpeed: 40
+  acceleration: 35
 --- !u!1 &1071319607694775290
 GameObject:
   m_ObjectHideFlags: 0

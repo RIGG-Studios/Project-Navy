@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3670.9453, g: 3111.3984, b: 3119.7773, a: 1}
+  m_IndirectSpecularColor: {r: 3670.9844, g: 3111.3984, b: 3119.7695, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1103,7 +1103,7 @@ PrefabInstance:
         type: 3}
       propertyPath: oceanPreset
       value: 
-      objectReference: {fileID: 11400000, guid: b227332eda1c67c419f9ccd4b0d3bfcb,
+      objectReference: {fileID: 11400000, guid: 0f555cfeed6459c4aa34ad7bb9dfae51,
         type: 2}
     - target: {fileID: 7874310804424549954, guid: 493f25cd476a0b546953e4c4f0c3cc41,
         type: 3}

@@ -132,6 +132,7 @@ public class MatchMaking : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         roomCreated = true;
+        FindObjectOfType<BasicShipController>().StartSailing();
     }
 
     public void CancelGame()

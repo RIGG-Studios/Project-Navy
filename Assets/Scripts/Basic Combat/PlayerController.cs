@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float shipCorrection;
     public Transform groundCheck;
     public float groundRadius;
     public LayerMask groundLayer;
@@ -41,16 +42,31 @@ public class PlayerController : MonoBehaviour
     private CannonController _occupiedCannon;
     private bool _hasCannonBall;
     private GameObject _instantiatedCannonBall;
+    private Player _player;
+
+    public bool canRecieveInput;
 
     void Awake()
     {
         _body = GetComponent<Rigidbody>();
+        _player = GetComponent<Player>();
         _moveSpeed = walkSpeed;
         canDoAnything = true;
+        canRecieveInput = true;
     }
 
     private void Update()
     {
+        if (!canRecieveInput)
+        {
+            wPressed = false;
+            sPressed = false;
+            aPressed = false;
+            dPressed = false;
+            moveDirection = Vector2.zero;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             wPressed = true;
@@ -230,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!canDoAnything)
+        if (!canDoAnything)
             return;
         
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundLayer);
@@ -259,9 +275,16 @@ public class PlayerController : MonoBehaviour
         Vector3 playerVelocity = transform.position +
                                  (moveDirection.y * transform.right + moveDirection.x * transform.forward) *
                                  (Time.fixedDeltaTime * _moveSpeed);
-        
-        
+
         _body.MovePosition(playerVelocity);
+
+        Vector3 shipVelocity = _player.PlayerShip.Rigidbody.velocity;
+        Vector3 forwardVel = _body.velocity - shipVelocity;
+
+        Vector3 shipAngularVelocity = _player.PlayerShip.Rigidbody.angularVelocity;
+        Vector3 angularVel = _body.angularVelocity - shipAngularVelocity;
+        
+        _body.AddForce(forwardVel + angularVel, ForceMode.Force);
     }
 
     IEnumerator PlayFootstepSounds()
