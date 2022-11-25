@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 32
+  waterVelocityMultiplier: 250
   shipTag: Ship
-  waterTag: Water
   source: {fileID: -390837390119404087}
   hitShipSounds:
   - {fileID: 8300000, guid: f807bdeb64504604e87716e99bb3d8a5, type: 3}
@@ -167,7 +167,7 @@ AudioSource:
   Priority: 123
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 250
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -202,7 +202,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

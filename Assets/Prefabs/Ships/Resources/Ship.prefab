@@ -883,6 +883,51 @@ Transform:
   m_Father: {fileID: 1109442479613472987}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &936163894021649667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7149491466597108284}
+  - component: {fileID: 6725874229553932413}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: WheelTrigger
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7149491466597108284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936163894021649667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.38, y: 7.84, z: -9.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4919899842544981481}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6725874229553932413
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936163894021649667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.65, y: 3, z: 2.65}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1132803377906859206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,10 +1082,9 @@ GameObject:
   - component: {fileID: 8087544155881981666}
   - component: {fileID: 4849110651218512892}
   - component: {fileID: 5837655761172434106}
-  - component: {fileID: 3729955284456158235}
   - component: {fileID: 2772846352441324515}
   - component: {fileID: 4862245091782810086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StylShip_MastMid
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -1112,20 +1156,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3729955284456158235
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801122428080865909}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -401888291066383863, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
 --- !u!136 &2772846352441324515
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3556,6 +3586,7 @@ Transform:
   - {fileID: 3313448481264484908}
   - {fileID: 810909322117680010}
   - {fileID: 1109442479613472987}
+  - {fileID: 7149491466597108284}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5576,7 +5607,7 @@ MeshCollider:
   m_GameObject: {fileID: 7358134428479174335}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30

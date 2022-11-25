@@ -95,7 +95,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_01:
-        m_Texture: {fileID: 2800000, guid: 800e061692ff7a84e887f439d3364410, type: 3}
+        m_Texture: {fileID: 2800000, guid: 78e4b6e6bd5d5b44180508367c421eb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_02:
@@ -217,7 +217,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.2
-    - _GameTime: 114.0028
+    - _GameTime: 78.96046
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -252,9 +252,9 @@ Material:
     - _Refraction_Strength: 0.42
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
-    - _RippleSpeed: 0.01
-    - _RippleStrength: 0.05
-    - _RippleTling: 0.09
+    - _RippleSpeed: 0.1
+    - _RippleStrength: 0.4
+    - _RippleTling: 0.2
     - _Secondary_Frequency: 0.4
     - _Secondary_Speed: 1
     - _Smoothness: 0.9

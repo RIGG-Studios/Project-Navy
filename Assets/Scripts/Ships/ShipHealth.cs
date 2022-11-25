@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,8 +9,7 @@ using UnityEngine.Events;
 public class ShipHealth : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float maxHealth;
-    [SerializeField] private floa
-    
+
     public float Health { get; private set; }
 
     private Ship _ship;
@@ -19,11 +19,11 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         _ship = GetComponent<Ship>();
         Health = maxHealth;
     }
-
+    
     public void Damage(float damageAmount)
     {
         Health -= damageAmount;
-
+        
         if (Health <= 0)
         {
             photonView.RPC("RPCDie", RpcTarget.All);

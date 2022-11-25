@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,60 +8,97 @@ public class ShipControl : MonoBehaviour
     float forwardVelocity = 0f;
     float horizontInput;
     //Unsure about these numbers; will need testing
-    float turnSpeed = 5f;
-    float maxSpeed = 10f;
-    float acceleration = 0.2f;
+    public float turnSpeed = 5f;
+    public float maxSpeed = 10f;
+    public float acceleration = 0.2f;
 
     bool moving;
+    private bool _controlling;
+    private bool _InTrigger;
     
     Rigidbody body;
+    private PlayerController _player;
 
     // Start is called before the first frame update
     void Start()
     {
+        _player = GetComponent<PlayerController>();
         body = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
-        //Accelerate or Decelerate based on whether the player is inputting forwards movement
-        if(moving)
+        if (_InTrigger)
         {
-            Accelerate();
-        } else
-        {
-            Decelerate();
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                _controlling = !_controlling;
+                _player.canDoAnything = !_controlling;
+            }
         }
-        //Limit speed to maximum
-        forwardVelocity = Mathf.Clamp(forwardVelocity, 0, maxSpeed);
+        
+        if (_controlling)
+        {
+            float y = Input.GetAxis("Vertical");
+            float x = Input.GetAxis("Horizontal");
 
-        //move and rotate based on velocity
-        Vector3 rotationVar = Vector3.up * horizontInput;
-        Quaternion angleRotation = Quaternion.Euler(rotationVar * Time.fixedDeltaTime);
+            
+            
+            //Accelerate or Decelerate based on whether the player is inputting forwards movement
+            if (moving)
+            {
+                Accelerate(y);
+            }
+            else
+            {
+                Decelerate(y);
+            }
+            
+            Turn(x);
 
-        body.AddForce(transform.forward * forwardVelocity, ForceMode.Force);
-        body.MoveRotation(body.rotation * angleRotation);
+            //Limit speed to maximum
+            forwardVelocity = Mathf.Clamp(forwardVelocity, 0, maxSpeed);
+
+            //move and rotate based on velocity
+            Vector3 rotationVar = Vector3.up * horizontInput;
+            Quaternion angleRotation = Quaternion.Euler(rotationVar * Time.fixedDeltaTime);
+
+            body.AddForce(transform.forward * forwardVelocity, ForceMode.Force);
+            body.MoveRotation(body.rotation * angleRotation);
+        }
     }
 
     //These functions increase or decrease the ship's speed. They reason they're functions (despite being so short) is so that ship speed can be modified by other classes if necessary.
-    public void Accelerate()
+    public void Accelerate(float y)
     {
-        forwardVelocity += acceleration;
+        forwardVelocity += y * acceleration;
     }
-    public void Decelerate()
+    public void Decelerate(float y)
     {
-        forwardVelocity -= acceleration;
+        forwardVelocity -= y * acceleration;
     }
 
     //Turns the ship; called when the player presses A or D while steering the ship
-    public void Turn()
+    public void Turn(float x)
     {
-        horizontInput += turnSpeed;
+        horizontInput += x* turnSpeed;
     }
 
     //Checks if the ship is being moved forwards; called when the player presses/releases W while steering the ship
     public void SetMoving(bool input)
     {
         moving = input;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        _InTrigger = true;
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _InTrigger = false;
+
     }
 }

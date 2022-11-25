@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3031.7207, g: 2612.0215, b: 2697.0352, a: 1}
+  m_IndirectSpecularColor: {r: 2840.211, g: 2471.8047, b: 2632.8945, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3364,6 +3364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Light Brown Two Ringed Barrel (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938219416440916793, guid: 9baef116214427f41809c0850f393f62,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9baef116214427f41809c0850f393f62, type: 3}

@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 {
     [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private Slider healthSlider;
+
+    [SerializeField] private bool useHitMarker = true;
+    [SerializeField] private GameObject hitMarker;
+
     
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
-    
     public Ship PlayerShip { get; private set; }
     
     private float _currentHealth;
@@ -24,6 +29,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private void Awake()
     {
         _currentHealth = maxHealth;
+        healthSlider.minValue = 0;
+        healthSlider.maxValue = 100;
     }
 
     public void SetupNetworkPlayer(Ship ship)
@@ -70,11 +77,28 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
             _canRecieveDamage = true;
         }
     }
+
+    [PunRPC]
+    public void OnPlayerDamagedOther(int otherActorID)
+    {
+        if (useHitMarker)
+        {
+            hitMarker.SetActive(true);
+            Invoke(nameof(ResetHitMarker), 0.25f);
+        }
+    }
+    
+    private void ResetHitMarker()
+    {
+        hitMarker.SetActive(false);
+    }
+    
     
     public void Damage(int attackerID, float damageAmount)
     {
         _currentHealth -= damageAmount;
-
+        healthSlider.value = _currentHealth;
+        
         if (_currentHealth <= 0)
         {
             Die();
