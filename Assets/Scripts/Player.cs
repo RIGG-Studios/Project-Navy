@@ -32,9 +32,9 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private void Awake()
     {
         _currentHealth = maxHealth;
-        healthSlider.value = _currentHealth;
         healthSlider.minValue = 0;
         healthSlider.maxValue = 100;
+        healthSlider.value = maxHealth;
     }
 
     public void SetupNetworkPlayer(Ship ship)
@@ -68,12 +68,6 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         PlayerName = playerName;
         PlayerActorNumber = actorID;
         gameObject.name = PlayerName + (photonView.IsMine ? " (Local)" : " (Remote)");
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.O))
-            Damage(ActorID, 50);
     }
 
     [PunRPC]
@@ -119,21 +113,19 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     [PunRPC]
     public void OnPlayerDamagedOther(int otherActorID)
     {
-        if (useHitMarker)
-        {
-            hitMarker.SetActive(true);
-            Invoke(nameof(ResetHitMarker), 0.25f);
-        }
+        if (!useHitMarker) return;
+        
+        hitMarker.SetActive(true);
+        Invoke(nameof(ResetHitMarker), 0.25f);
     }
     
     [PunRPC]
     public void OnPlayerDamagedShip()
     {
-        if (useHitMarker)
-        {
-            hitMarker.SetActive(true);
-            Invoke(nameof(ResetHitMarker), 0.25f);
-        }
+        if (!useHitMarker || !photonView.IsMine) return;
+        
+        hitMarker.SetActive(true);
+        Invoke(nameof(ResetHitMarker), 0.25f);
     }
     
     private void ResetHitMarker()

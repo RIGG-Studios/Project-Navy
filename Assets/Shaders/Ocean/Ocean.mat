@@ -216,8 +216,8 @@ Material:
     - _Foam_Width: 7.71
     - _Frequency: 0.1
     - _Frequency_1: 0.1
-    - _Frequency_2: 0.2
-    - _GameTime: 54.856655
+    - _Frequency_2: 0.4
+    - _GameTime: 78.72106
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0

@@ -1,13 +1,15 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class CannonController : MonoBehaviour
 {
+    public GameObject muzzleFlash;
+    public Camera camera;
     public bool occupied;
     public float maxHorizontalRotation;
     public float maxVerticalRotation;
-    public GameObject cannonBall;
-    public Transform newCameraTransform;
     public Transform firePoint;
     public float cooldown;
     public float cannonBallVelocity;
@@ -25,9 +27,20 @@ public class CannonController : MonoBehaviour
     private int _currentAmmo;
     private bool _isReloading;
 
+    private Ship _ship;
+    
+    public int CannonID { get; private set; }
+    
     private void Awake()
     {
         _currentAmmo = 1;
+        camera.gameObject.SetActive(false);
+    }
+
+    public void Init(Ship ship, int cannonID)
+    {
+        _ship = ship;
+        CannonID = cannonID;
     }
 
     public void Occupy(PlayerController player)
@@ -44,12 +57,9 @@ public class CannonController : MonoBehaviour
         _occupier.bayonetteController.canDoStuff = false;
         _occupier.musketController.canDoAnything = false;
         
-        _occupierCameraPosition = _occupier.musketController.camera.position;
-        _occupierCameraRotation = _occupier.musketController.camera.rotation;
-
-        _occupier.musketController.camera.position = newCameraTransform.position;
-        _occupier.musketController.camera.rotation = newCameraTransform.rotation;
-        _occupier.musketController.camera.parent = newCameraTransform;
+        _occupier.musketController.camera.gameObject.SetActive(false);
+        camera.gameObject.SetActive(true);
+        
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(false);
         _occupier.musketController.stopLooking = true;
     }
@@ -82,10 +92,10 @@ public class CannonController : MonoBehaviour
         _occupier.bayonetteController.canDoStuff = true;
         _occupier.musketController.canDoAnything = true;
 
-        _occupier.musketController.camera.position = _occupierCameraPosition;
-        _occupier.musketController.camera.rotation = _occupierCameraRotation;
+        
+        _occupier.musketController.camera.gameObject.SetActive(true);
+        camera.gameObject.SetActive(false);
         _occupier.musketController.stopLooking = false;
-        _occupier.musketController.camera.parent = _occupier.transform;
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(true);
         
         _occupier = null;
@@ -102,7 +112,7 @@ public class CannonController : MonoBehaviour
         _pitch = Mathf.Clamp(_pitch, -maxHorizontalRotation, maxHorizontalRotation);
         _yaw = Mathf.Clamp(_yaw, 0, maxVerticalRotation);
 
-        transform.eulerAngles = new Vector3(0, _pitch, -_yaw);
+        transform.rotation = Quaternion.Euler(0, _pitch, -_yaw);
 
         if (_occupier.fire)
         {
@@ -116,16 +126,10 @@ public class CannonController : MonoBehaviour
             _currentAmmo--;
             _timeSinceLastFired = Time.time;
 
-            source.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
-            source.Play();
-
+            _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;
             GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation);
-            /*/
-            GameObject instantiatedCannonBall = Instantiate(cannonBall);
-            instantiatedCannonBall.transform.position = firePoint.position;
-            instantiatedCannonBall.GetComponent<Rigidbody>().AddForce(firePoint.forward * cannonBallVelocity, ForceMode.Impulse);
-            /*/
         }
     }
+    
 }

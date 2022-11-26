@@ -20,6 +20,9 @@ GameObject:
   - component: {fileID: 4496319664245138819}
   - component: {fileID: 1630885868067202959}
   - component: {fileID: 7902596052883694757}
+  - component: {fileID: 905999448789658511}
+  - component: {fileID: 4402857731550299052}
+  - component: {fileID: 2100829201074502008}
   m_Layer: 6
   m_Name: NetworkedPlayer
   m_TagString: Player
@@ -97,6 +100,8 @@ MonoBehaviour:
   - {fileID: 443385099775225270}
   - {fileID: 1571874058585844719}
   - {fileID: 7902596052883694757}
+  - {fileID: 4402857731550299052}
+  - {fileID: 2100829201074502008}
   gameObjectsToDisable: []
   localGameObjectsToDisable:
   - {fileID: 7171501060227083223}
@@ -423,9 +428,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 36660363931683249}
   remoteBody: {fileID: 7171501060227083223}
+  lookDist: 0
   turnSpeed: 500
   maxSpeed: 40
   acceleration: 35
+--- !u!114 &905999448789658511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32588379015309455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc6f5e1c3202df468305152bef2686c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterHeightChecker: {fileID: 1210003132132850460}
+--- !u!114 &4402857731550299052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32588379015309455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4e776b13ea4a54aa642858f12e2101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underwaterChecker: {fileID: 905999448789658511}
+  buoyancy: 1.01
+  moveSpeed: 4.5
+  cameraTransform: {fileID: 1210003132132850460}
+--- !u!114 &2100829201074502008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32588379015309455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270ee874e03795b41ae44cc8abc40e93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOxygen: 1
+  oxygenDecayRate: 0.045
+  outOfBreathDamageRate: 1.9
+  oxygenSlider: {fileID: 7324089140593272550}
+  underwaterChecker: {fileID: 905999448789658511}
 --- !u!1 &1071319607694775290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwaterPostProcessing: {fileID: 4422291271453772026}
-  maxDiff: 0.001
+  underwaterChecker: {fileID: 905999448789658511}
 --- !u!1 &5609811317390911171
 GameObject:
   m_ObjectHideFlags: 0

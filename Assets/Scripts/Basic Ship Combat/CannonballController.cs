@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class CannonballController : MonoBehaviour
 {
+    public GameObject hitEffect;
     public float damage;
     public float waterVelocityMultiplier;
     public string shipTag;
@@ -48,9 +50,20 @@ public class CannonballController : MonoBehaviour
         if (other.gameObject.CompareTag(shipTag))
         {
             _hit = true;
+            
+            //audio
             source.clip = hitShipSounds[UnityEngine.Random.Range(0, hitShipSounds.Length)];
             source.Play();
+            
+            //effects
+            VisualEffect vfx = Instantiate(hitEffect, transform.position, transform.rotation)
+                .GetComponent<VisualEffect>();
+            
+            vfx.Play();
+            
+            //damage
             other.collider.GetComponent<ShipVitalPoint>().Damage(PhotonEventsManager.Instance.LocalPlayer.actorID, damage);
+            PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.RPC("OnPlayerDamagedShip",  PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.Owner);
             Destroy(gameObject, 2.0f);
         }
     }

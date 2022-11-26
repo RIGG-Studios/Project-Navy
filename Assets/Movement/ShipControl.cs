@@ -6,19 +6,21 @@ using UnityEngine;
 
 public class ShipControl : MonoBehaviour
 {
+    
     public Camera playerCamera;
     public GameObject remoteBody;
+    public float lookDist;
     public float turnSpeed = 5f;
     public float maxSpeed = 10f;
     public float acceleration = 0.2f;
 
     private bool _controlling;
-    private bool _InTrigger;
     
     private PlayerController _playerController;
     private Player _player;
 
     private float _x, _y;
+    private bool _looking;
 
 
     void Start()
@@ -29,10 +31,21 @@ public class ShipControl : MonoBehaviour
 
     private void Update()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDist))
+        {
+            Debug.Log(hit.collider.gameObject.tag);
+            _looking = hit.collider.CompareTag("WheelTrigger");
+        }
+        else
+        {
+            _looking = false;
+        }
+        
         _y = Input.GetAxis("Vertical");
         _x = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.F) && _InTrigger && !_controlling)
+        if (Input.GetKeyDown(KeyCode.F) && _looking && !_controlling)
         {
             _controlling = true;
             _playerController.canRecieveInput = false;
@@ -63,15 +76,5 @@ public class ShipControl : MonoBehaviour
             _player.PlayerShip.MoveShip(forwardVel);
             _player.PlayerShip.RotateShip(horizontalVel);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        _InTrigger = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        _InTrigger = false;
     }
 }
