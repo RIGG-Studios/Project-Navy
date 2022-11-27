@@ -16,6 +16,9 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     [SerializeField] private bool useShipDestroyedNotifier;
     [SerializeField] private Animator shipDestroyedAnim;
+
+    [SerializeField] private bool useInteractHelper;
+    [SerializeField] private GameObject interactHelper;
     
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
@@ -27,6 +30,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private Transform _spawnPoint;
     private bool _hasNoShip;
 
+    private Rigidbody _rigidbody;
+
     public int ActorID => PlayerActorNumber;
 
     private void Awake()
@@ -35,6 +40,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         healthSlider.minValue = 0;
         healthSlider.maxValue = 100;
         healthSlider.value = maxHealth;
+
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     public void SetupNetworkPlayer(Ship ship)
@@ -102,7 +109,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         }
         else
         {
-            transform.position = _spawnPoint.position;
+            transform.position = _spawnPoint.position + new Vector3(0, 1, 0);
             transform.rotation = _spawnPoint.rotation;
 
             _currentHealth = maxHealth;
@@ -132,7 +139,14 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     {
         hitMarker.SetActive(false);
     }
-    
+
+    public void ToggleInteractHelper(bool state)
+    {
+        if (!useInteractHelper)
+            return;
+        
+        interactHelper.SetActive(state);
+    }
     
     public void Damage(int attackerID, float damageAmount)
     {

@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             wPressed = false;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             sPressed = true;
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         {
             aPressed = false;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.D))
         {
             dPressed = true;
@@ -112,15 +112,17 @@ public class PlayerController : MonoBehaviour
             fire = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        RaycastHit hit;
+        if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
+            _player.ToggleInteractHelper(true);
+            
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 if ((hit.transform.position - transform.position).magnitude > cannonInteractRange) return;
 
                 CannonController controller = null;
-                
+
                 controller = hit.collider.GetComponent<CannonController>();
 
                 if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
                     source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
                     source.Play();
-                    
+
                     _hasCannonBall = true;
                     musketController.canDoAnything = false;
                     bayonetteController.canDoStuff = false;
@@ -139,7 +141,7 @@ public class PlayerController : MonoBehaviour
                     _instantiatedCannonBall = Instantiate(cannonBallPrefab);
                     _instantiatedCannonBall.transform.position = musketController.musketAnimator.transform.position;
                     _instantiatedCannonBall.transform.parent = musketController.musketAnimator.transform.parent;
-                    
+
                     return;
                 }
 
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 {
                     source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
                     source.Play();
-                    
+
                     controller.Reload();
                     _hasCannonBall = false;
                     musketController.canDoAnything = true;
@@ -157,14 +159,18 @@ public class PlayerController : MonoBehaviour
 
                     return;
                 }
-                
+
                 source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
                 source.Play();
                 controller.Occupy(this);
                 _occupiedCannon = controller;
             }
+            else
+            {
+                _player.ToggleInteractHelper(false);
+            }
         }
-
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(!_occupiedCannon) return;

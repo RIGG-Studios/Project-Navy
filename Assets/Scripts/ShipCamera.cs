@@ -6,11 +6,10 @@ using UnityEngine;
 public class ShipCamera : MonoBehaviour
 {
     [SerializeField] private float lerpSpeed = 3.0f;
-    [SerializeField] private Vector3 offset;
 
     private Transform _target;
+    private bool _rotate;
 
-    
     public void Init(Transform target)
     {
         _target = target;
@@ -18,19 +17,20 @@ public class ShipCamera : MonoBehaviour
 
     public void Enable()
     {
- //       transform.SetParent(null);
+        _rotate = true;
     }
 
     public void Disable()
     {
-    //    transform.SetParent(_target);
+        _rotate = false;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-  //      Vector3 target = _target.position + offset;
-
-     //   transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * lerpSpeed);
-       // transform.rotation = Quaternion.Lerp(transform.rotation, _target.rotation, Time.deltaTime * lerpSpeed);
+        if (_rotate)
+        {
+           transform.RotateAround(_target.position, transform.up, Input.GetAxis("Mouse X") * lerpSpeed);
+         //   transform.RotateAround(_target.position, transform.right, -Input.GetAxis("Mouse X") * lerpSpeed);
+        }
     }
 }

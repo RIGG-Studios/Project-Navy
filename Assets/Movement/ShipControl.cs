@@ -34,11 +34,16 @@ public class ShipControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDist))
         {
-            Debug.Log(hit.collider.gameObject.tag);
             _looking = hit.collider.CompareTag("WheelTrigger");
+
+            if (_looking && !_controlling)
+            {
+                _player.ToggleInteractHelper(true);
+            }
         }
         else
         {
+            _player.ToggleInteractHelper(false);
             _looking = false;
         }
         
@@ -52,8 +57,9 @@ public class ShipControl : MonoBehaviour
             playerCamera.gameObject.SetActive(false);
             _player.PlayerShip.ToggleCamera(true);
             remoteBody.SetActive(true);
+            _player.ToggleInteractHelper(false);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && _controlling)
+        else if (Input.GetKeyDown(KeyCode.Escape) && _controlling)
         {
             _controlling = false;
             _playerController.canRecieveInput = true;

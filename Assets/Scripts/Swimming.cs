@@ -24,8 +24,6 @@ public class Swimming : MonoBehaviour
         bool underWater = underwaterChecker.IsUnderWater();
 
         _rigidbody.drag = 0;
-        _playerController.canDoAnything = true;
-        _playerController.canRecieveInput = true;
 
         if (!underWater)
         {
