@@ -15,13 +15,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SpawnProjectile(Vector3 velocity, Vector3 pos, Quaternion rot)
+    public void SpawnProjectile(Vector3 velocity, Vector3 pos, Quaternion rot, int ownerID)
     {
-        Rigidbody rb = PhotonNetwork.Instantiate(projectilePrefab.name, pos, rot, 0).GetComponent<Rigidbody>();
+        CannonballController cannon = PhotonNetwork.Instantiate(projectilePrefab.name, pos, rot, 0).GetComponent<CannonballController>();
 
-        if (rb != null)
+        if (cannon != null)
         {
-            rb.AddForce(velocity, ForceMode.Impulse);
+            cannon.Init(ownerID, velocity);
         }
     }
     

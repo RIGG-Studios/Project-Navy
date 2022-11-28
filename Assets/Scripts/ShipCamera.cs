@@ -29,8 +29,8 @@ public class ShipCamera : MonoBehaviour
     {
         if (_rotate)
         {
-           transform.RotateAround(_target.position, transform.up, Input.GetAxis("Mouse X") * lerpSpeed);
-         //   transform.RotateAround(_target.position, transform.right, -Input.GetAxis("Mouse X") * lerpSpeed);
+            transform.RotateAround(_target.position, transform.up, Input.GetAxis("Mouse X") * lerpSpeed);
+       //     transform.RotateAround(_target.position, transform.right, -Input.GetAxis("Mouse Y") * lerpSpeed);
         }
     }
 }

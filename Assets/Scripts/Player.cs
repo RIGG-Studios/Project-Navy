@@ -44,6 +44,12 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+            Damage(ActorID, 100f);
+    }
+
     public void SetupNetworkPlayer(Ship ship)
     {
         if (!photonView.IsMine)

@@ -4,7 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class CannonballController : MonoBehaviour
+public class CannonballController : MonoBehaviour, IPunObservable
 {
     public GameObject hitEffect;
     public float damage;
@@ -17,9 +17,17 @@ public class CannonballController : MonoBehaviour
     private bool _hit;
     private Rigidbody _rigidbody;
 
+    private int _ownerID;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void Init(int ownerID, Vector3 velocity)
+    {
+        _ownerID = ownerID;
+        _rigidbody.AddForce(velocity, ForceMode.Impulse);
     }
 
     private void Update()
@@ -45,9 +53,10 @@ public class CannonballController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(_hit)return;
+        if(_hit)
+            return;
         
-        if (other.gameObject.CompareTag(shipTag))
+        if (other.gameObject.TryGetComponent(out ShipVitalPoint vitalPoint))
         {
             _hit = true;
             
@@ -60,11 +69,26 @@ public class CannonballController : MonoBehaviour
                 .GetComponent<VisualEffect>();
             
             vfx.Play();
+
+            if (vitalPoint.ActorID == _ownerID)
+                return;
             
             //damage
             other.collider.GetComponent<ShipVitalPoint>().Damage(PhotonEventsManager.Instance.LocalPlayer.actorID, damage);
             PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.RPC("OnPlayerDamagedShip",  PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.Owner);
             Destroy(gameObject, 2.0f);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_ownerID);
+        }
+        else
+        {
+            _ownerID = (int) stream.ReceiveNext();
         }
     }
 }

@@ -5,25 +5,19 @@ using System.ComponentModel;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class ShipHealth : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private float maxHealth;
 
     public float Health { get; private set; }
-
-    private Ship _ship;
+    public Ship Ship { get; private set; }
     
     private void Awake()
     {
-        _ship = GetComponent<Ship>();
+        Ship = GetComponent<Ship>();
         Health = maxHealth;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H))
-            Damage(50f);
     }
 
     public void Damage(float damageAmount)
@@ -34,7 +28,7 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("RPCDie", RpcTarget.All);
 
-            NetworkPlayer owner = PhotonEventsManager.Instance.FindPlayerByActorID(_ship.OwnerActorNumber);
+            NetworkPlayer owner = PhotonEventsManager.Instance.FindPlayerByActorID(Ship.OwnerActorNumber);
 
             if (owner != null)
             {
@@ -46,7 +40,7 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void RPCDie()
     {
-        _ship.ShipBuoyancy.enabled = false;
+        Ship.ShipBuoyancy.enabled = false;
     }
 
 

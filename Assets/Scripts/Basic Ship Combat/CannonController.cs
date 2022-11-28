@@ -28,6 +28,7 @@ public class CannonController : MonoBehaviour
     private bool _isReloading;
 
     private Ship _ship;
+    private Player _player;
     
     public int CannonID { get; private set; }
     
@@ -35,6 +36,7 @@ public class CannonController : MonoBehaviour
     {
         _currentAmmo = 1;
         camera.gameObject.SetActive(false);
+        _player = GetComponent<Player>();
     }
 
     public void Init(Ship ship, int cannonID)
@@ -128,7 +130,7 @@ public class CannonController : MonoBehaviour
 
             _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;
-            GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation);
+            GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation, _player.ActorID);
         }
     }
     

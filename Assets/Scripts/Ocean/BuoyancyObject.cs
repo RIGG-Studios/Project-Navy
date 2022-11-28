@@ -252,7 +252,6 @@ public class BuoyancyObject : MonoBehaviour
 
             _currentForces[i] = force;
             rigidBody.AddForceAtPosition(force, wp, ForceMode.Acceleration);
-
             if (DebugForces) _debugForces.Add(new[] { wp, force }); 
 
         }

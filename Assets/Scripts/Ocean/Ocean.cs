@@ -109,13 +109,13 @@ public class Ocean : MonoBehaviour
     {
         float waveAmp = waveSettings.amplitude * waveSettings.steepness;
 
-        Vector3 direction = waveSettings.direction.normalized;
-        Vector3 dir = -1f * direction;
+        Vector2 direction = waveSettings.direction.normalized;
+        Vector2 dir = -1f * direction;
         dir *= waveSettings.frequency;
 
         float speed = waveSettings.speed * Time.time;
 
-        float dot = Vector3.Dot(dir,pos);
+        float dot = Vector2.Dot(pos, dir);
         float total = speed + dot;
 
         return Mathf.Cos(total) * (waveAmp * direction.y);

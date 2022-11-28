@@ -10,7 +10,7 @@ public class WaveSettings : ScriptableObject
     public float frequency = 0.6f;
     public float speed = 0.5f;
     public float steepness = 0.5f;
-    public Vector3 direction;
+    public Vector2 direction;
 
     [Header("SHADER SETTINGS")]
     public string amplitudeID = "_Amplitude";
