@@ -19,18 +19,26 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     [SerializeField] private bool useInteractHelper;
     [SerializeField] private GameObject interactHelper;
-    
+
+    [SerializeField] private bool useShipBoardingNotification;
+    [SerializeField] private float shipBoardingTimer = 5f;
+    [SerializeField] private Text shipBoardingText;
+
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
     public Ship PlayerShip { get; private set; }
     
     private float _currentHealth;
     private bool _canRecieveDamage;
-
     private Transform _spawnPoint;
     private bool _hasNoShip;
+    private Ship _shipToBoard;
+    private PlayerController _playerController;
+    private MusketController _musketController;
 
-    private Rigidbody _rigidbody;
+    private bool _boardingShip;
+    private float _shipBoardingCooldown;
+
 
     public int ActorID => PlayerActorNumber;
 
@@ -40,14 +48,29 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         healthSlider.minValue = 0;
         healthSlider.maxValue = 100;
         healthSlider.value = maxHealth;
+        _shipBoardingCooldown = shipBoardingTimer;
 
-        _rigidbody = GetComponent<Rigidbody>();
+        _playerController = GetComponent<PlayerController>();
+        _musketController = GetComponent<MusketController>();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-            Damage(ActorID, 100f);
+        if (_boardingShip)
+        {
+            _shipBoardingCooldown -= Time.deltaTime;
+            
+            if (useShipBoardingNotification)
+            {
+                shipBoardingText.gameObject.SetActive(true);
+                shipBoardingText.text = "BOARDING SHIP IN: " + _shipBoardingCooldown;
+            }
+            
+            if (_shipBoardingCooldown <= 0)
+            {
+                BoardShip();
+            }
+        }
     }
 
     public void SetupNetworkPlayer(Ship ship)
@@ -93,6 +116,35 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
             shipDestroyedAnim.SetTrigger("Show");
         }
     }
+
+    private void BoardShip()
+    {
+        _shipBoardingCooldown = shipBoardingTimer;
+
+        if (useShipBoardingNotification)
+        {
+            shipBoardingText.gameObject.SetActive(false);
+            shipBoardingText.text = string.Empty;
+        }
+
+        if (photonView.IsMine)
+        {
+            _musketController.enabled = false;
+            _playerController.enabled = false;
+        }
+
+        transform.position = _shipToBoard.boardingSpawnPoint.position;
+        transform.rotation = _shipToBoard.boardingSpawnPoint.rotation;
+
+        if (photonView.IsMine)
+        {
+            _musketController.enabled = true;
+            _playerController.enabled = true;
+        }
+
+        _shipToBoard = null;
+        _boardingShip = false;
+    }
     
     private void Die()
     {
@@ -115,10 +167,27 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         }
         else
         {
+            if (photonView.IsMine)
+            {
+                _musketController.enabled = false;
+                _playerController.enabled = false;
+            }
+            
             transform.position = _spawnPoint.position + new Vector3(0, 1, 0);
             transform.rotation = _spawnPoint.rotation;
 
+            if (photonView.IsMine)
+            {
+                _musketController.enabled = true;
+                _playerController.enabled = true;
+                
+                _playerController.canDoAnything = true;
+                _playerController.canRecieveInput = true;
+                _musketController.canDoAnything = true;
+            }
+            
             _currentHealth = maxHealth;
+            healthSlider.value = _currentHealth;
             _canRecieveDamage = true;
         }
     }
@@ -164,6 +233,27 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
             Die();
         }
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
+        {
+            _boardingShip = true;
+            _shipToBoard = shipBoardingCollider.Ship;
+            _shipBoardingCooldown = shipBoardingTimer;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
+        {
+            _boardingShip = false;
+            _shipToBoard = null;
+            shipBoardingText.gameObject.SetActive(false);
+        }
+    }
+
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

@@ -52,6 +52,8 @@ public class MusketController : MonoBehaviour
     private float _currentSwayAmount;
     private float _currentSwaySpeed;
 
+    private float _xRot;
+
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -86,18 +88,28 @@ public class MusketController : MonoBehaviour
         float finalAngle = _pitch - _recoilAngle;
 
         finalAngle = Mathf.Clamp(finalAngle, -80.0f, 80.0f);
-        
-        if(stopLooking)
-            return;
-        
-        transform.eulerAngles = transform.up * (_yaw);
-        camera.localEulerAngles = new Vector3(finalAngle, 0, 0);
-        
-        _weaponSway = Vector3.Lerp(_weaponSway, Vector3.zero, Time.deltaTime * _currentSwaySpeed);
-        finalRotation = Vector3.Lerp(finalRotation, _weaponSway, Time.deltaTime * _currentSwaySpeed);
 
-        gunHolder.localEulerAngles = finalRotation;
-        gunHolder.localPosition = musketPivotOriginalPosition - new Vector3(0, 0, _recoilAngle * kickbackAmount);
+        if (!stopLooking)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+
+            _xRot -= mouseY;
+            _xRot = Mathf.Clamp(_xRot, -90f, 90f);
+        
+            camera.localRotation = Quaternion.Euler(_xRot - _recoilAngle, 0f, 0f);
+            transform.Rotate(Vector3.up * mouseX);
+            
+            /*/
+            transform.eulerAngles = transform.up * (_yaw);
+            camera.localEulerAngles = new Vector3(finalAngle, 0, 0);
+/*/
+            _weaponSway = Vector3.Lerp(_weaponSway, Vector3.zero, Time.deltaTime * _currentSwaySpeed);
+            finalRotation = Vector3.Lerp(finalRotation, _weaponSway, Time.deltaTime * _currentSwaySpeed);
+
+            gunHolder.localEulerAngles = finalRotation;
+            gunHolder.localPosition = musketPivotOriginalPosition - new Vector3(0, 0, _recoilAngle * kickbackAmount);
+        }
 
         if(!canDoAnything)
             return;

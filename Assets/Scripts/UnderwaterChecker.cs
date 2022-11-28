@@ -1,18 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnderwaterChecker : MonoBehaviour
 {
     [SerializeField] private Transform waterHeightChecker;
-    [SerializeField] private float maxDiff;
-    
+
     
     public bool IsUnderWater()
     {
         float waterHeight = Ocean.Instance.GetWaterHeightAtPosition(waterHeightChecker.position);
-        float diff = waterHeightChecker.position.y - waterHeight;
-        
-        if (diff <= maxDiff)
+
+        if (waterHeightChecker.transform.position.y < waterHeight)
         {
             return true;
         }

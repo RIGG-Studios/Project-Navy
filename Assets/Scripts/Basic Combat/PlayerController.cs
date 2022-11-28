@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class PlayerController : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
     public bool canRecieveInput;
 
+    private Ship _ship;
+    
     void Awake()
     {
         _body = GetComponent<Rigidbody>();
@@ -171,6 +174,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         
+        CheckForShip();
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(!_occupiedCannon) return;
@@ -284,13 +289,16 @@ public class PlayerController : MonoBehaviour
 
         _body.MovePosition(playerVelocity);
 
-        Vector3 shipVelocity = _player.PlayerShip.Rigidbody.velocity;
-        Vector3 forwardVel = _body.velocity - shipVelocity;
+        if (_ship != null)
+        {
+            Vector3 shipVelocity = _ship.Rigidbody.velocity;
+            Vector3 forwardVel = _body.velocity - shipVelocity;
 
-        Vector3 shipAngularVelocity = _player.PlayerShip.Rigidbody.angularVelocity;
-        Vector3 angularVel = _body.angularVelocity - shipAngularVelocity;
-        
-        _body.AddForce(forwardVel + angularVel, ForceMode.Force);
+            Vector3 shipAngularVelocity = _ship.Rigidbody.angularVelocity;
+            Vector3 angularVel = _body.angularVelocity - shipAngularVelocity;
+
+            _body.AddForce(forwardVel + angularVel, ForceMode.Force);
+        }
     }
 
     IEnumerator PlayFootstepSounds()
@@ -311,5 +319,20 @@ public class PlayerController : MonoBehaviour
             source.Play();
         }
         _playingFootstepSound = false;
+    }
+
+    private void CheckForShip()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+        {
+            if (hit.collider.TryGetComponent(out ShipVitalPoint ship))
+            {
+                if (ship.ShipHealth != null)
+                {
+                    _ship = ship.ShipHealth.Ship;
+                }
+            }
+        }
     }
 }

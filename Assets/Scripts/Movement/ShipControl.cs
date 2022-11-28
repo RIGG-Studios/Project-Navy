@@ -22,6 +22,8 @@ public class ShipControl : MonoBehaviour
     private float _x, _y;
     private bool _looking;
 
+    private float _fowardVelocity;
+
 
     void Start()
     {
@@ -67,20 +69,21 @@ public class ShipControl : MonoBehaviour
             _player.PlayerShip.ToggleCamera(false);
             remoteBody.SetActive(false);
         }
-
     }
 
     void FixedUpdate()
     {
         if (_controlling)
-        {
-            float forwardVel = _y * acceleration;
+        { 
+            _fowardVelocity = _y * acceleration;
             float horizontalVel = _x * turnSpeed;
 
-            forwardVel = Mathf.Clamp(forwardVel, 0, maxSpeed);
+            _fowardVelocity = Mathf.Clamp(_fowardVelocity, 0.1f, maxSpeed);
 
-            _player.PlayerShip.MoveShip(forwardVel);
             _player.PlayerShip.RotateShip(horizontalVel);
         }
+        
+        _player.PlayerShip.MoveShip(_fowardVelocity);
+
     }
 }

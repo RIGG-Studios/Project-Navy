@@ -9,6 +9,8 @@ public class ShipVitalPoint : MonoBehaviour, IDamagable
     
     public int ActorID { get; set; }
 
+    public ShipHealth ShipHealth => shipHealth;
+
     private void Start()
     {
         if (shipHealth == null)

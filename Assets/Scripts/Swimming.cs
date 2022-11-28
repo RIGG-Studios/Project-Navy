@@ -13,6 +13,8 @@ public class Swimming : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _rigidbody;
 
+    private bool _stoppedMovement;
+
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
@@ -22,17 +24,27 @@ public class Swimming : MonoBehaviour
     private void FixedUpdate()
     {
         bool underWater = underwaterChecker.IsUnderWater();
-
-        _rigidbody.drag = 0;
-
+        
         if (!underWater)
         {
+            if (_stoppedMovement)
+            {
+                _rigidbody.drag = 0;
+                _playerController.canDoAnything = true;
+                _playerController.canRecieveInput = true;
+                _stoppedMovement = false;
+            }
+            
             return;
         }
 
-        _rigidbody.drag = 10f;
-        _playerController.canDoAnything = false;
-        _playerController.canRecieveInput = false;
+        if (!_stoppedMovement)
+        {
+            _rigidbody.drag = 10f;
+            _playerController.canDoAnything = false;
+            _playerController.canRecieveInput = false;
+            _stoppedMovement = true;
+        }
 
         Vector3 buoyancy = -Physics.gravity * this.buoyancy;
         _rigidbody.AddForce(buoyancy, ForceMode.Acceleration);

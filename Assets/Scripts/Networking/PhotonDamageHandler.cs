@@ -5,6 +5,12 @@ public static class PhotonDamageHandler
 {
     public static void SendDamageRequest(int attackerID, int victimID, float damage)
     {
+        if (attackerID == victimID)
+        {
+            Debug.Log("Cant attack yourself");
+            return;
+        }
+        
         object[] package =
         {
             attackerID,

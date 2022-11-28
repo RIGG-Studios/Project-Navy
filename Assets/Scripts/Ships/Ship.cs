@@ -13,6 +13,7 @@ public class Ship : MonoBehaviourPun, IPunObservable
     public ShipCamera shipCamera;
     public Transform playerSpawnPoint;
     public Transform rudderTransform;
+    public Transform boardingSpawnPoint;
 
     public BuoyancyObject ShipBuoyancy { get; private set; }
     public int OwnerActorNumber { get; private set; }

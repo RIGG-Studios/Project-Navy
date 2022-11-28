@@ -15,8 +15,8 @@ MonoBehaviour:
   amplitude: 1.42
   frequency: 0.1
   speed: 0.8
-  steepness: 3
-  direction: {x: -1, y: 1, z: 0}
+  steepness: 1
+  direction: {x: -1, y: 1}
   amplitudeID: _Amplitude_1
   frequencyID: _Frequency_1
   speedID: _Speed_1

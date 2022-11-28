@@ -5,6 +5,7 @@ using UnityEngine.VFX;
 
 public class CannonController : MonoBehaviour
 {
+    public bool flipAxis;
     public GameObject muzzleFlash;
     public Camera camera;
     public bool occupied;
@@ -28,7 +29,6 @@ public class CannonController : MonoBehaviour
     private bool _isReloading;
 
     private Ship _ship;
-    private Player _player;
     
     public int CannonID { get; private set; }
     
@@ -36,7 +36,6 @@ public class CannonController : MonoBehaviour
     {
         _currentAmmo = 1;
         camera.gameObject.SetActive(false);
-        _player = GetComponent<Player>();
     }
 
     public void Init(Ship ship, int cannonID)
@@ -108,13 +107,13 @@ public class CannonController : MonoBehaviour
     {
         if(!occupied) return;
 
-        _pitch += _occupier.moveDirection.y;
-        _yaw += _occupier.moveDirection.x;
+        _yaw += Input.GetAxis("Mouse Y");
+        _pitch += Input.GetAxis("Mouse X");
 
         _pitch = Mathf.Clamp(_pitch, -maxHorizontalRotation, maxHorizontalRotation);
-        _yaw = Mathf.Clamp(_yaw, 0, maxVerticalRotation);
+        _yaw = Mathf.Clamp(_yaw, -maxVerticalRotation / 1.5f, maxVerticalRotation);
 
-        transform.rotation = Quaternion.Euler(0, _pitch, -_yaw);
+        transform.rotation =  Quaternion.Euler(0, _pitch, flipAxis ? _yaw : -_yaw);
 
         if (_occupier.fire)
         {
@@ -127,10 +126,10 @@ public class CannonController : MonoBehaviour
             
             _currentAmmo--;
             _timeSinceLastFired = Time.time;
-
+    
             _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;
-            GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation, _player.ActorID);
+            GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation, _ship.OwnerActorNumber);
         }
     }
     

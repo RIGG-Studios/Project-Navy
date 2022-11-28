@@ -32,6 +32,8 @@ public class Ocean : MonoBehaviour
     private const string FoamBandsID = "_FoamBands";
     
     private OceanPresets _oceanPreset;
+
+    private float _time;
     
     private void Awake()
     {
@@ -89,8 +91,8 @@ public class Ocean : MonoBehaviour
 
     private void Update()
     {
-     //   float time = PhotonNetwork.IsConnectedAndReady ? OceanGlobalData.Instance.Time : Time.time;
-        oceanMaterial.SetFloat("_GameTime", Time.time);
+        _time = Time.time;
+        oceanMaterial.SetFloat("_GameTime", _time);
     }
 
     public float GetWaterHeightAtPosition(Vector3 pos)
@@ -107,18 +109,16 @@ public class Ocean : MonoBehaviour
 
     private float CalculateWaveHeight(Vector3 pos, WaveSettings waveSettings)
     {
+        Vector2 dir = waveSettings.direction.normalized;
+        Vector2 negatedDir = -1 * dir;
+
+        float dot = Vector2.Dot(pos, negatedDir * waveSettings.frequency);
+        float time = waveSettings.speed * _time;
+        float total = dot + time;
+
         float waveAmp = waveSettings.amplitude * waveSettings.steepness;
-
-        Vector2 direction = waveSettings.direction.normalized;
-        Vector2 dir = -1f * direction;
-        dir *= waveSettings.frequency;
-
-        float speed = waveSettings.speed * Time.time;
-
-        float dot = Vector2.Dot(pos, dir);
-        float total = speed + dot;
-
-        return Mathf.Cos(total) * (waveAmp * direction.y);
+        float n = waveAmp * dir.y;
+        return Mathf.Cos(total) * n;
     }
     
 }
