@@ -40,7 +40,13 @@ public class PlayerController : MonoBehaviour
     private bool _jumpedLastFrame;
     private bool _isMoving;
     private bool _playingFootstepSound;
-    private CannonController _occupiedCannon;
+
+    public CannonController occupiedCannon
+    {
+        get;
+        private set;
+    }
+    
     private bool _hasCannonBall;
     private GameObject _instantiatedCannonBall;
     private Player _player;
@@ -118,7 +124,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
         {
-            if (!_occupiedCannon)
+            if (!occupiedCannon)
             {
                 _player.ToggleInteractHelper(true);
             }
@@ -171,7 +177,7 @@ public class PlayerController : MonoBehaviour
                 source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
                 source.Play();
                 controller.Occupy(this);
-                _occupiedCannon = controller;
+                occupiedCannon = controller;
             }
         }
         else
@@ -183,11 +189,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!_occupiedCannon) return;
-            
-            _occupiedCannon.UnOccupy(this);
-            _player.ToggleCannonUI(false);
-            _occupiedCannon = null;
+            UnOccupyCannon();
         }
 
         moveDirection.x = wPressed ? 1 : 0;
@@ -261,6 +263,17 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = _isSprinting ? runSpeed : walkSpeed;
     }
 
+    public void Reset()
+    {
+        wPressed = false;
+        sPressed = false;
+        aPressed = false;
+        dPressed = false;
+        moveDirection = Vector2.zero;
+        
+        UnOccupyCannon();
+    }
+
     private void FixedUpdate()
     {
         if (!canDoAnything)
@@ -269,6 +282,15 @@ public class PlayerController : MonoBehaviour
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundLayer);
 
         Move();
+    }
+
+    public void UnOccupyCannon()
+    {
+        if(!occupiedCannon) return;
+            
+        occupiedCannon.UnOccupy(this);
+        _player.ToggleCannonUI(false);
+        occupiedCannon = null;
     }
     
     private IEnumerator Jump()

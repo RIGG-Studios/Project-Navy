@@ -44,6 +44,11 @@ public class CannonController : MonoBehaviour
         CannonID = cannonID;
     }
 
+    public void Reset(PlayerController playerController)
+    {
+        UnOccupy(playerController);
+    }
+
     public void Occupy(PlayerController player)
     {
         if(occupied) return;
@@ -113,7 +118,7 @@ public class CannonController : MonoBehaviour
         _pitch = Mathf.Clamp(_pitch, -maxHorizontalRotation, maxHorizontalRotation);
         _yaw = Mathf.Clamp(_yaw, -maxVerticalRotation / 1.5f, maxVerticalRotation);
 
-        transform.rotation =  Quaternion.Euler(0, _pitch, flipAxis ? _yaw : -_yaw);
+        transform.localRotation =  Quaternion.Euler(0, _pitch, flipAxis ? _yaw : -_yaw);
 
         if (_occupier.fire)
         {

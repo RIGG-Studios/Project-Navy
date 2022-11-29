@@ -43,6 +43,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private Ship _shipToBoard;
     private PlayerController _playerController;
     private MusketController _musketController;
+    private ShipControl _shipControl;
 
     private bool _boardingShip;
     private float _shipBoardingCooldown;
@@ -60,6 +61,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
         _playerController = GetComponent<PlayerController>();
         _musketController = GetComponent<MusketController>();
+        _shipControl = GetComponent<ShipControl>();
     }
 
     private void Update()
@@ -160,6 +162,15 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         {
             shipControlUI.SetActive(state);
         }
+
+
+        if (state)
+        {
+            if (_playerController.occupiedCannon != null && _playerController.occupiedCannon.occupied)
+            {
+                _playerController.UnOccupyCannon();
+            }
+        }
     }
 
     public void ToggleCannonUI(bool state)
@@ -174,6 +185,8 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     {
         if (photonView.IsMine)
         {
+            _playerController.Reset();
+            _shipControl.Reset();
             Respawn();
         }
     }
@@ -255,6 +268,28 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         if (_currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    public void ResetPlayerToSpawnPoint()
+    {
+        if (photonView.IsMine)
+        {
+            _musketController.enabled = false;
+            _playerController.enabled = false;
+        }
+            
+        transform.position = _spawnPoint.position + new Vector3(0, 1, 0);
+        transform.rotation = _spawnPoint.rotation;
+
+        if (photonView.IsMine)
+        {
+            _musketController.enabled = true;
+            _playerController.enabled = true;
+                
+            _playerController.canDoAnything = true;
+            _playerController.canRecieveInput = true;
+            _musketController.canDoAnything = true;
         }
     }
 

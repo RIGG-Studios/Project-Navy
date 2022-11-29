@@ -15,6 +15,21 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        if (PhotonEventsManager.Instance.players.Count <= 0)
+        {
+            //game over
+        //    PhotonNetwork.LeaveRoom();
+        //    PhotonNetwork.LoadLevel(0);
+        }
+    }
+
     public void SpawnProjectile(Vector3 velocity, Vector3 pos, Quaternion rot, int ownerID)
     {
         CannonballController cannon = PhotonNetwork.Instantiate(projectilePrefab.name, pos, rot, 0).GetComponent<CannonballController>();

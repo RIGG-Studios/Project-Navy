@@ -65,7 +65,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &2010265292293255954
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -471,9 +471,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwaterChecker: {fileID: 905999448789658511}
-  buoyancy: 1.01
-  moveSpeed: 4.5
-  cameraTransform: {fileID: 1210003132132850460}
 --- !u!114 &2100829201074502008
 MonoBehaviour:
   m_ObjectHideFlags: 0

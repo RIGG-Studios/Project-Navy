@@ -14,9 +14,10 @@ public class ShipControl : MonoBehaviour
     public float maxSpeed = 10f;
     public float acceleration = 0.2f;
 
-    private bool _controlling;
+    public bool controlling { get; private set; }
     
     private PlayerController _playerController;
+    private MusketController _musketController;
     private Player _player;
 
     private float _x, _y;
@@ -28,6 +29,7 @@ public class ShipControl : MonoBehaviour
     void Start()
     {
         _playerController = GetComponent<PlayerController>();
+        _musketController = GetComponent<MusketController>();
         _player = GetComponent<Player>();
     }
 
@@ -38,7 +40,7 @@ public class ShipControl : MonoBehaviour
         {
             _looking = hit.collider.CompareTag("WheelTrigger");
 
-            if (_looking && !_controlling)
+            if (_looking && !controlling)
             {
                 _player.ToggleInteractHelper(true);
             }
@@ -52,10 +54,11 @@ public class ShipControl : MonoBehaviour
         _y = Input.GetAxis("Vertical");
         _x = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.F) && _looking && !_controlling)
+        if (Input.GetKeyDown(KeyCode.F) && _looking && !controlling)
         {
-            _controlling = true;
+            controlling = true;
             _playerController.canRecieveInput = false;
+            _musketController.canDoAnything = false;
             playerCamera.gameObject.SetActive(false);
             _player.PlayerShip.ToggleCamera(true);
             remoteBody.SetActive(true);
@@ -63,10 +66,11 @@ public class ShipControl : MonoBehaviour
             _player.ToggleShipControlUI(true);
             _playerController.musketController.musketAnimator.gameObject.SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && _controlling)
+        else if (Input.GetKeyDown(KeyCode.Escape) && controlling)
         {
-            _controlling = false;
+            controlling = false;
             _playerController.canRecieveInput = true;
+            _musketController.canDoAnything = true;
             playerCamera.gameObject.SetActive(true);
             _player.PlayerShip.ToggleCamera(false);
             remoteBody.SetActive(false);
@@ -74,7 +78,7 @@ public class ShipControl : MonoBehaviour
             _playerController.musketController.musketAnimator.gameObject.SetActive(true);
         }
 
-        if (_controlling)
+        if (controlling)
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
@@ -94,9 +98,24 @@ public class ShipControl : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        if (!controlling)
+            return;
+        
+        controlling = false;
+        _playerController.canRecieveInput = true;
+        _musketController.canDoAnything = true;
+        playerCamera.gameObject.SetActive(true);
+        _player.PlayerShip.ToggleCamera(false);
+        remoteBody.SetActive(false);
+        _player.ToggleShipControlUI(false);
+        _playerController.musketController.musketAnimator.gameObject.SetActive(true);
+    }
+
     void FixedUpdate()
     {
-        if (_controlling)
+        if (controlling)
         { 
             _fowardVelocity = _y * acceleration;
             float horizontalVel = _x * turnSpeed;
