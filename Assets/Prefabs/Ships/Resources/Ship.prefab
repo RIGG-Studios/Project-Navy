@@ -5858,6 +5858,7 @@ GameObject:
   - component: {fileID: 3193322385694644775}
   - component: {fileID: 8153948468006789076}
   - component: {fileID: 808326554395165460}
+  - component: {fileID: 7885305666141273110}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -6069,6 +6070,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 3
+--- !u!114 &7885305666141273110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912220507846151747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6020e14b1b31b345838f7c0bc1d43bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeSettings:
+  - id: CannonShot
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.3773548
+        value: 0.12607665
+        inSlope: -0.5644588
+        outSlope: -0.5644588
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.08504527
+      - serializedVersion: 3
+        time: 0.9969258
+        value: 0.0017724405
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    duration: 0.29
 --- !u!1 &8000672531474890794
 GameObject:
   m_ObjectHideFlags: 0
@@ -7114,6 +7163,7 @@ GameObject:
   - component: {fileID: 1746859070439047629}
   - component: {fileID: 6789941447305383704}
   - component: {fileID: 8639979944782386662}
+  - component: {fileID: 6763730695586808020}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -7325,6 +7375,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 3
+--- !u!114 &6763730695586808020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215147535597869702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6020e14b1b31b345838f7c0bc1d43bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeSettings:
+  - id: CannonShot
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.3773548
+        value: 0.12607665
+        inSlope: -0.5644588
+        outSlope: -0.5644588
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.08504527
+      - serializedVersion: 3
+        time: 0.9969258
+        value: 0.0017724405
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    duration: 0.29
 --- !u!1001 &1807762445704775521
 PrefabInstance:
   m_ObjectHideFlags: 0

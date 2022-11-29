@@ -1818,6 +1818,7 @@ GameObject:
   - component: {fileID: 7470301512465939415}
   - component: {fileID: 9149195901863511773}
   - component: {fileID: 443385099775225270}
+  - component: {fileID: 8653450964611015809}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2031,6 +2032,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underwaterPostProcessing: {fileID: 4422291271453772026}
   underwaterChecker: {fileID: 905999448789658511}
+--- !u!114 &8653450964611015809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592306619978276897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6020e14b1b31b345838f7c0bc1d43bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeSettings:
+  - id: ShipHit
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.18421708
+        value: 0.1196377
+        inSlope: 0.68249327
+        outSlope: 0.68249327
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.16171867
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.44186175
+        value: 0.11595012
+        inSlope: -0.24357219
+        outSlope: -0.24357219
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.24335471
+        outWeight: 0.08504527
+      - serializedVersion: 3
+        time: 0.9969258
+        value: 0.0017724405
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    duration: 0.39
 --- !u!1 &5609811317390911171
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     
     private bool _isGrounded;
     private Rigidbody _body;
+    private CameraShake _cameraShake;
     private bool wPressed;
     private bool sPressed;
     private bool aPressed;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         _body = GetComponent<Rigidbody>();
         _player = GetComponent<Player>();
+        _cameraShake = GetComponentInChildren<CameraShake>();
         _moveSpeed = walkSpeed;
         canDoAnything = true;
         canRecieveInput = true;
@@ -129,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 _player.ToggleInteractHelper(true);
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && !occupiedCannon)
             {
                 if ((hit.transform.position - transform.position).magnitude > cannonInteractRange) return;
 
@@ -271,8 +273,9 @@ public class PlayerController : MonoBehaviour
         dPressed = false;
         moveDirection = Vector2.zero;
         
-        UnOccupyCannon();
+    //    UnOccupyCannon();
     }
+
 
     private void FixedUpdate()
     {
@@ -284,6 +287,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+
     public void UnOccupyCannon()
     {
         if(!occupiedCannon) return;
@@ -292,7 +296,7 @@ public class PlayerController : MonoBehaviour
         _player.ToggleCannonUI(false);
         occupiedCannon = null;
     }
-    
+
     private IEnumerator Jump()
     {
         if(_isGrounded)

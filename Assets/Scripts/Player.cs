@@ -44,6 +44,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private PlayerController _playerController;
     private MusketController _musketController;
     private ShipControl _shipControl;
+    private CameraShake _cameraShake;
 
     private bool _boardingShip;
     private float _shipBoardingCooldown;
@@ -62,6 +63,7 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         _playerController = GetComponent<PlayerController>();
         _musketController = GetComponent<MusketController>();
         _shipControl = GetComponent<ShipControl>();
+        _cameraShake = GetComponentInChildren<CameraShake>();
     }
 
     private void Update()
@@ -241,10 +243,13 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     [PunRPC]
     public void OnPlayerDamagedShip()
     {
-        if (!useHitMarker || !photonView.IsMine) return;
+        if (useHitMarker)
+        {
+            hitMarker.SetActive(true);
+            Invoke(nameof(ResetHitMarker), 0.25f);
+        }
         
-        hitMarker.SetActive(true);
-        Invoke(nameof(ResetHitMarker), 0.25f);
+        _cameraShake.ShakeCamera("ShipHit");
     }
     
     private void ResetHitMarker()

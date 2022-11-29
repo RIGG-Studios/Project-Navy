@@ -135,7 +135,7 @@ MonoBehaviour:
     type: 3}
   damage: 32
   waterVelocityMultiplier: 250
-  shipTag: Ship
+  shipImpactForce: 100
   source: {fileID: -390837390119404087}
   hitShipSounds:
   - {fileID: 8300000, guid: f807bdeb64504604e87716e99bb3d8a5, type: 3}
@@ -264,6 +264,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 6006405496149323373}
   - {fileID: 3015547424831654982}
   sceneViewId: 0
   InstantiationId: 0

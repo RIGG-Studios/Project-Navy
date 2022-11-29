@@ -9,7 +9,7 @@ public class CannonballController : MonoBehaviour, IPunObservable
     public GameObject hitEffect;
     public float damage;
     public float waterVelocityMultiplier;
-    public string shipTag;
+    public float shipImpactForce;
     public AudioSource source;
     public AudioClip[] hitShipSounds;
     public AudioClip[] hitWaterSounds;
@@ -74,7 +74,15 @@ public class CannonballController : MonoBehaviour, IPunObservable
                 return;
             
             //damage
-            other.collider.GetComponent<ShipVitalPoint>().Damage(PhotonEventsManager.Instance.LocalPlayer.actorID, damage);
+            
+            
+            vitalPoint.Damage(PhotonEventsManager.Instance.LocalPlayer.actorID, damage);
+
+            if (vitalPoint.ShipHealth != null)
+            {
+                vitalPoint.ShipHealth.Ship.Rigidbody.AddForce(_rigidbody.velocity * shipImpactForce, ForceMode.Force);
+            }
+            
             PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.RPC("OnPlayerDamagedShip",  PhotonEventsManager.Instance.LocalPlayer.playerPhotonView.Owner);
             Destroy(gameObject, 2.0f);
         }

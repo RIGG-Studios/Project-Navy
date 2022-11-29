@@ -29,6 +29,7 @@ public class CannonController : MonoBehaviour
     private bool _isReloading;
 
     private Ship _ship;
+    private CameraShake _cameraShake;
     
     public int CannonID { get; private set; }
     
@@ -36,6 +37,7 @@ public class CannonController : MonoBehaviour
     {
         _currentAmmo = 1;
         camera.gameObject.SetActive(false);
+        _cameraShake = camera.GetComponent<CameraShake>();
     }
 
     public void Init(Ship ship, int cannonID)
@@ -43,11 +45,7 @@ public class CannonController : MonoBehaviour
         _ship = ship;
         CannonID = cannonID;
     }
-
-    public void Reset(PlayerController playerController)
-    {
-        UnOccupy(playerController);
-    }
+    
 
     public void Occupy(PlayerController player)
     {
@@ -65,7 +63,6 @@ public class CannonController : MonoBehaviour
         
         _occupier.musketController.camera.gameObject.SetActive(false);
         camera.gameObject.SetActive(true);
-        
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(false);
         _occupier.musketController.stopLooking = true;
     }
@@ -92,8 +89,10 @@ public class CannonController : MonoBehaviour
 
     public void UnOccupy(PlayerController player)
     {
+        Debug.Log("hi");
         if (player != _occupier) return;
 
+        Debug.Log("hi2");
         _occupier.canDoAnything = true;
         _occupier.bayonetteController.canDoStuff = true;
         _occupier.musketController.canDoAnything = true;
@@ -131,6 +130,7 @@ public class CannonController : MonoBehaviour
             
             _currentAmmo--;
             _timeSinceLastFired = Time.time;
+            _cameraShake.ShakeCamera("CannonShot");
     
             _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;
