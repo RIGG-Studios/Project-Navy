@@ -45,6 +45,7 @@ public class PlayerVitals : MonoBehaviour
         {
             oxygenSlider.gameObject.SetActive(false);
             _oxygen += Time.deltaTime * oxygenDecayRate;
+            _outOfBreath = false;
         }
 
         oxygenSlider.value = _oxygen;
