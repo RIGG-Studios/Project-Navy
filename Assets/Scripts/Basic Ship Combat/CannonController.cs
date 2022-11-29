@@ -8,6 +8,7 @@ public class CannonController : MonoBehaviour
     public bool flipAxis;
     public GameObject muzzleFlash;
     public Camera camera;
+    public Animator cameraAnimator;
     public bool occupied;
     public float maxHorizontalRotation;
     public float maxVerticalRotation;
@@ -89,10 +90,8 @@ public class CannonController : MonoBehaviour
 
     public void UnOccupy(PlayerController player)
     {
-        Debug.Log("hi");
         if (player != _occupier) return;
 
-        Debug.Log("hi2");
         _occupier.canDoAnything = true;
         _occupier.bayonetteController.canDoStuff = true;
         _occupier.musketController.canDoAnything = true;
@@ -131,6 +130,7 @@ public class CannonController : MonoBehaviour
             _currentAmmo--;
             _timeSinceLastFired = Time.time;
             _cameraShake.ShakeCamera("CannonShot");
+            cameraAnimator.SetTrigger("Shoot");
     
             _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;

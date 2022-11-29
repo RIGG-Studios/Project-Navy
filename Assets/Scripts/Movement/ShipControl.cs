@@ -120,7 +120,7 @@ public class ShipControl : MonoBehaviour
             _fowardVelocity = _y * acceleration;
             float horizontalVel = _x * turnSpeed;
 
-            _fowardVelocity = Mathf.Clamp(_fowardVelocity, 0.1f, maxSpeed);
+            _fowardVelocity = Mathf.Clamp(_fowardVelocity, 0.0f, maxSpeed);
 
             _player.PlayerShip.RotateShip(horizontalVel);
         }

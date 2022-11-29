@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -390837390119404087}
   - component: {fileID: 7687875912558889503}
   - component: {fileID: 3015547424831654982}
+  - component: {fileID: 4622712661198407663}
   m_Layer: 0
   m_Name: CannonBall
   m_TagString: Untagged
@@ -285,6 +286,20 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &4622712661198407663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006405496149323383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0abd78f22df18449a5a5e3c880aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTimer: 4.5
+  destroyNetwork: 1
 --- !u!1 &7815215713495206942
 GameObject:
   m_ObjectHideFlags: 0

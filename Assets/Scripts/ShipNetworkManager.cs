@@ -5,12 +5,11 @@ using Random = UnityEngine.Random;
 
 public class ShipNetworkManager : MonoBehaviourPun
 {
-    public static ShipNetworkManager Instance; 
-    
-    [SerializeField] private Transform[] shipSpawnPoints;
+    public static ShipNetworkManager Instance;
+
+    [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject shipPrefab;
 
-    
     private void Awake()
     {
         Instance = this;
@@ -19,39 +18,21 @@ public class ShipNetworkManager : MonoBehaviourPun
     public Ship RequestShip(int actorID)
     {
         Transform spawnPoint = FindSpawnPoint();
-
+        
         Ship ship = PhotonNetwork.Instantiate(shipPrefab.name, spawnPoint.position, spawnPoint.rotation, 0)
             .GetComponent<Ship>();
 
         ship.AssignShipToPlayer(actorID);
+   //     photonView.RPC("FillSpawnPoint", RpcTarget.All, i);
 
         return ship;
     }
 
+
     private Transform FindSpawnPoint()
     {
-        Ship[] ships = FindObjectsOfType<Ship>();
+        int index = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (ships.Length > 0)
-        {
-            for (int i = 0; i < ships.Length; i++)
-            {
-                for (int z = 0; z < shipSpawnPoints.Length; z++)
-                {
-                    float dist = (ships[i].transform.position - shipSpawnPoints[i].position).magnitude;
-
-                    if (dist >= 15f)
-                    {
-                        return shipSpawnPoints[z];
-                    }
-                }
-            }
-        }
-        else
-        {
-            return shipSpawnPoints[Random.Range(0, shipSpawnPoints.Length)];
-        }
-
-        return shipSpawnPoints[0];
+        return spawnPoints[index];
     }
 }

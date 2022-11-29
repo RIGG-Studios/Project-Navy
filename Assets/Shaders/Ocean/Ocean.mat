@@ -217,7 +217,7 @@ Material:
     - _Frequency: 0.1
     - _Frequency_1: 0.1
     - _Frequency_2: 0.4
-    - _GameTime: 76.033554
+    - _GameTime: 103.06625
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -328,8 +328,8 @@ Material:
     - _Color_01: {r: 0, g: 0.6698113, b: 0.50369817, a: 0}
     - _Color_02: {r: 0.25907797, g: 0.51477236, b: 0.7735849, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _Direction: {r: 1, g: -1, b: 0, a: 0}
-    - _Direction_1: {r: -1, g: 1, b: 0, a: 0}
+    - _Direction: {r: 10, g: -1, b: 0, a: 0}
+    - _Direction_1: {r: -1, g: -10, b: 0, a: 0}
     - _Direction_2: {r: 1, g: 1, b: 0, a: 0}
     - _Direction_3: {r: -1, g: 1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

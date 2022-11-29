@@ -112,12 +112,12 @@ public class Ocean : MonoBehaviour
         Vector2 dir = waveSettings.direction.normalized;
         Vector2 negatedDir = -1 * dir;
 
-        float dot = Vector2.Dot(pos, negatedDir * waveSettings.frequency);
+        float dot = Vector2.Dot(negatedDir * waveSettings.frequency, pos);
         float time = waveSettings.speed * _time;
         float total = dot + time;
 
         float waveAmp = waveSettings.amplitude * waveSettings.steepness;
-        float n = waveAmp * dir.y;
+        float n = waveAmp * negatedDir.y;
         return Mathf.Cos(total) * n;
     }
     

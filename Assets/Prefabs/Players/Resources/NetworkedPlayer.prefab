@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 905999448789658511}
   - component: {fileID: 4402857731550299052}
   - component: {fileID: 2100829201074502008}
-  - component: {fileID: 3531757050982303594}
+  - component: {fileID: 1615198101006513706}
   m_Layer: 6
   m_Name: NetworkedPlayer
   m_TagString: Player
@@ -474,7 +474,7 @@ MonoBehaviour:
   outOfBreathDamageRate: 1.9
   oxygenSlider: {fileID: 7324089140593272550}
   underwaterChecker: {fileID: 905999448789658511}
---- !u!136 &3531757050982303594
+--- !u!136 &1615198101006513706
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -484,8 +484,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.72
-  m_Height: 3.4
+  m_Radius: 0.5
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: -0.63, z: 0}
 --- !u!1 &60023540296931477
@@ -1834,7 +1834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5592306619978276897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.852, z: 0}
+  m_LocalPosition: {x: 0, y: 0.617, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2775,7 +2775,7 @@ Transform:
   m_GameObject: {fileID: 7171501060227083223}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.604, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.65, z: 1.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 32588379015309451}

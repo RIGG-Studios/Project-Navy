@@ -68,22 +68,12 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     private void Update()
     {
-        if (_boardingShip)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _shipBoardingCooldown -= Time.deltaTime;
-            
-            if (useShipBoardingNotification)
-            {
-                shipBoardingText.gameObject.SetActive(true);
-                shipBoardingText.text = "BOARDING SHIP IN: " + _shipBoardingCooldown;
-            }
-            
-            if (_shipBoardingCooldown <= 0)
-            {
-                BoardShip();
-            }
+            Damage(ActorID, 50f);
         }
     }
+    
 
     public void SetupNetworkPlayer(Ship ship)
     {
@@ -129,35 +119,6 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         }
     }
 
-    private void BoardShip()
-    {
-        _shipBoardingCooldown = shipBoardingTimer;
-
-        if (useShipBoardingNotification)
-        {
-            shipBoardingText.gameObject.SetActive(false);
-            shipBoardingText.text = string.Empty;
-        }
-
-        if (photonView.IsMine)
-        {
-            _musketController.enabled = false;
-            _playerController.enabled = false;
-        }
-
-        transform.position = _shipToBoard.boardingSpawnPoint.position;
-        transform.rotation = _shipToBoard.boardingSpawnPoint.rotation;
-
-        if (photonView.IsMine)
-        {
-            _musketController.enabled = true;
-            _playerController.enabled = true;
-        }
-
-        _shipToBoard = null;
-        _boardingShip = false;
-    }
-
     public void ToggleShipControlUI(bool state)
     {
         if (useShipControlUI)
@@ -189,6 +150,16 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         {
             _playerController.Reset();
             _shipControl.Reset();
+
+            if (_playerController.occupiedCannon)
+            {
+                _playerController.UnOccupyCannon();
+            }
+            
+            ToggleInteractHelper(false);
+            ToggleCannonUI(false);
+            ToggleShipControlUI(false);
+            
             Respawn();
         }
     }
