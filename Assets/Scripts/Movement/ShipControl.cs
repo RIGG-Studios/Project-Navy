@@ -23,7 +23,7 @@ public class ShipControl : MonoBehaviour
     private bool _looking;
 
     private float _fowardVelocity;
-
+    private bool _isFPCamera;
 
     void Start()
     {
@@ -60,6 +60,8 @@ public class ShipControl : MonoBehaviour
             _player.PlayerShip.ToggleCamera(true);
             remoteBody.SetActive(true);
             _player.ToggleInteractHelper(false);
+            _player.ToggleShipControlUI(true);
+            _playerController.musketController.musketAnimator.gameObject.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && _controlling)
         {
@@ -68,6 +70,27 @@ public class ShipControl : MonoBehaviour
             playerCamera.gameObject.SetActive(true);
             _player.PlayerShip.ToggleCamera(false);
             remoteBody.SetActive(false);
+            _player.ToggleShipControlUI(false);
+            _playerController.musketController.musketAnimator.gameObject.SetActive(true);
+        }
+
+        if (_controlling)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                _isFPCamera = !_isFPCamera;
+
+                if (_isFPCamera)
+                {
+                    playerCamera.gameObject.SetActive(true);
+                    _player.PlayerShip.ToggleCamera(false);
+                }
+                else
+                {
+                    playerCamera.gameObject.SetActive(false);
+                    _player.PlayerShip.ToggleCamera(true);
+                }
+            }
         }
     }
 

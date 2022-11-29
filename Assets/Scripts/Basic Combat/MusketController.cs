@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using Photon.Pun;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = System.Random;
 
 //After the prototype phase is over, delete this script and start from scratch, nothing in here is worth preserving
-public class MusketController : MonoBehaviour
+public class MusketController : MonoBehaviourPun
 {
     public Transform camera;
     public Transform gunHolder;
@@ -32,6 +34,7 @@ public class MusketController : MonoBehaviour
     public GameObject hitImpactPrefab;
     public Animator animator;
     public Animator musketAnimator;
+    public GameObject muzzleFlash;
     public Animator walkingAnimator;
     public BayonetteController controller;
     public bool canDoAnything;
@@ -85,9 +88,6 @@ public class MusketController : MonoBehaviour
 
         _recoilAngle = Mathf.Lerp(_recoilAngle, 0, Time.deltaTime * recoilDecreaseRate);
         
-        float finalAngle = _pitch - _recoilAngle;
-
-        finalAngle = Mathf.Clamp(finalAngle, -80.0f, 80.0f);
 
         if (!stopLooking)
         {
@@ -124,9 +124,9 @@ public class MusketController : MonoBehaviour
             }
 
             _currentAmmo--;
-            _fireSource.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
-            _fireSource.Play();
             musketAnimator.SetTrigger("Fire");
+            
+            photonView.RPC("RPCEffects", RpcTarget.All);
             
             _recoilAngle += recoilAmount;
             
@@ -137,17 +137,6 @@ public class MusketController : MonoBehaviour
                 instantiatedHitImpact.transform.position = hit.point;
                 AudioClip clipToPlay;
                 DoHitImpacts impactEffects = instantiatedHitImpact.GetComponent<DoHitImpacts>();
-/*/
-                if (!((hit.transform.position - firePoint.transform.position).magnitude <= range))
-                    return;
-                if (!hit.collider.gameObject.CompareTag(playerTag))
-                {
-                    clipToPlay = hitImpactSounds[UnityEngine.Random.Range(0, hitImpactSounds.Length)];
-                    impactEffects.PlayHitImpactSound(clipToPlay, (firePoint.transform.position - hit.point).magnitude/30);
-                    Destroy(instantiatedHitImpact, 3);
-                    return;
-                }
-                /*/
                 
                 clipToPlay = hitPlayerSounds[UnityEngine.Random.Range(0, hitPlayerSounds.Length)];
                 impactEffects.PlayHitImpactSound(clipToPlay, (firePoint.transform.position - hit.point).magnitude/30);
@@ -189,6 +178,18 @@ public class MusketController : MonoBehaviour
             
             StartCoroutine("ReloadRoutine");
         }
+    }
+
+    [PunRPC]
+    public void RPCEffects()
+    {
+        VisualEffect muzzleFlash = Instantiate(this.muzzleFlash, firePoint.position, firePoint.rotation)
+            .GetComponent<VisualEffect>();
+        
+        muzzleFlash.Play();
+        
+        _fireSource.clip = fireSounds[UnityEngine.Random.Range(0, fireSounds.Length)];
+        _fireSource.Play();
     }
 
     IEnumerator ReloadRoutine()

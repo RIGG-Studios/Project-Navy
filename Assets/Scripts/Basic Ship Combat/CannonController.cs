@@ -107,8 +107,8 @@ public class CannonController : MonoBehaviour
     {
         if(!occupied) return;
 
-        _yaw += Input.GetAxis("Mouse Y");
-        _pitch += Input.GetAxis("Mouse X");
+        _yaw += Input.GetAxis("Mouse Y") * 0.5f;
+        _pitch += Input.GetAxis("Mouse X") * 0.5f;
 
         _pitch = Mathf.Clamp(_pitch, -maxHorizontalRotation, maxHorizontalRotation);
         _yaw = Mathf.Clamp(_yaw, -maxVerticalRotation / 1.5f, maxVerticalRotation);

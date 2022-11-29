@@ -118,8 +118,11 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
         {
-            _player.ToggleInteractHelper(true);
-            
+            if (!_occupiedCannon)
+            {
+                _player.ToggleInteractHelper(true);
+            }
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 if ((hit.transform.position - transform.position).magnitude > cannonInteractRange) return;
@@ -127,6 +130,8 @@ public class PlayerController : MonoBehaviour
                 CannonController controller = null;
 
                 controller = hit.collider.GetComponent<CannonController>();
+                
+                _player.ToggleCannonUI(true);
 
                 if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
 
@@ -168,10 +173,10 @@ public class PlayerController : MonoBehaviour
                 controller.Occupy(this);
                 _occupiedCannon = controller;
             }
-            else
-            {
-                _player.ToggleInteractHelper(false);
-            }
+        }
+        else
+        {
+            _player.ToggleInteractHelper(false);
         }
         
         CheckForShip();
@@ -181,6 +186,7 @@ public class PlayerController : MonoBehaviour
             if(!_occupiedCannon) return;
             
             _occupiedCannon.UnOccupy(this);
+            _player.ToggleCannonUI(false);
             _occupiedCannon = null;
         }
 

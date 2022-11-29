@@ -10,6 +10,7 @@ TagManager:
   - Ship
   - Water
   - WheelTrigger
+  - OutOfMapTrigger
   layers:
   - Default
   - TransparentFX

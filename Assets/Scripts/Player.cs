@@ -24,6 +24,14 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     [SerializeField] private float shipBoardingTimer = 5f;
     [SerializeField] private Text shipBoardingText;
 
+    [SerializeField] private bool useShipControlUI;
+    [SerializeField] private GameObject shipControlUI;
+
+    [SerializeField] private bool useCannonUI;
+    [SerializeField] private GameObject cannonUI;
+
+    [SerializeField] private GameObject outOfMapUI;
+    
     public string PlayerName { get; private set; }
     public int PlayerActorNumber { get; private set; }
     public Ship PlayerShip { get; private set; }
@@ -145,6 +153,22 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         _shipToBoard = null;
         _boardingShip = false;
     }
+
+    public void ToggleShipControlUI(bool state)
+    {
+        if (useShipControlUI)
+        {
+            shipControlUI.SetActive(state);
+        }
+    }
+
+    public void ToggleCannonUI(bool state)
+    {
+        if (useCannonUI)
+        {
+            cannonUI.SetActive(state);
+        }
+    }
     
     private void Die()
     {
@@ -236,21 +260,38 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     public void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine)
+            return;
+        
         if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
         {
             _boardingShip = true;
             _shipToBoard = shipBoardingCollider.Ship;
             _shipBoardingCooldown = shipBoardingTimer;
         }
+        
+        
+        if (other.CompareTag("OutOfMapTrigger"))
+        {
+            outOfMapUI.SetActive(true);
+        }
     }
 
     public void OnTriggerExit(Collider other)
     {
+        if (!photonView.IsMine)
+            return;
+
         if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
         {
             _boardingShip = false;
             _shipToBoard = null;
             shipBoardingText.gameObject.SetActive(false);
+        }
+
+        if (other.CompareTag("OutOfMapTrigger"))
+        {
+            outOfMapUI.SetActive(false);
         }
     }
 
