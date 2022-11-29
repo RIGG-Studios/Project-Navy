@@ -2019,7 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51533bb75b7426b43b72c81b49a91ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayersPerRoom: 5
+  maxPlayersPerRoom: 4
   joinMatch: {fileID: 861452382}
   timerText: {fileID: 1286190460}
   joinMatchPanel: {fileID: 871058276}
