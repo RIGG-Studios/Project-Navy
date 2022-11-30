@@ -14,6 +14,8 @@ public class CannonController : MonoBehaviour
     public float maxVerticalRotation;
     public Transform firePoint;
     public float cooldown;
+    public float defaultFOV;
+    public float aimFOV;
     public float cannonBallVelocity;
     public AudioClip[] fireSounds;
     public AudioClip[] reloadSounds;
@@ -47,15 +49,8 @@ public class CannonController : MonoBehaviour
         CannonID = cannonID;
     }
     
-
     public void Occupy(PlayerController player)
     {
-        if(occupied) return;
-        if (_currentAmmo <= 0)
-        {
-            return;
-        }
-
         occupied = true;
         _occupier = player;
         _occupier.canDoAnything = false;
@@ -90,8 +85,11 @@ public class CannonController : MonoBehaviour
 
     public void UnOccupy(PlayerController player)
     {
-        if (player != _occupier) return;
-
+        if (!occupied)
+        {
+            return;
+        }
+        
         _occupier.canDoAnything = true;
         _occupier.bayonetteController.canDoStuff = true;
         _occupier.musketController.canDoAnything = true;
@@ -99,6 +97,7 @@ public class CannonController : MonoBehaviour
         
         _occupier.musketController.camera.gameObject.SetActive(true);
         camera.gameObject.SetActive(false);
+        camera.fieldOfView = defaultFOV;
         _occupier.musketController.stopLooking = false;
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(true);
         
@@ -108,8 +107,23 @@ public class CannonController : MonoBehaviour
 
     void Update()
     {
+        if (_currentAmmo <= 0)
+        {
+        //    Reload();
+        }
+        
         if(!occupied) return;
 
+        if (Input.GetMouseButton(1))
+        {
+            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, aimFOV, Time.deltaTime * 5f);
+        }
+        else
+        {
+            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, defaultFOV, Time.deltaTime * 5f);
+
+        }
+        
         _yaw += Input.GetAxis("Mouse Y") * 0.5f;
         _pitch += Input.GetAxis("Mouse X") * 0.5f;
 
@@ -122,6 +136,7 @@ public class CannonController : MonoBehaviour
         {
             if (_currentAmmo <= 0)
             {
+     //           return;
             }
 
             if(_timeSinceLastFired + cooldown > Time.time)

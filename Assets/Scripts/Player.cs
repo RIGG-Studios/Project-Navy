@@ -40,15 +40,10 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
     private bool _canRecieveDamage;
     private Transform _spawnPoint;
     private bool _hasNoShip;
-    private Ship _shipToBoard;
     private PlayerController _playerController;
     private MusketController _musketController;
     private ShipControl _shipControl;
     private CameraShake _cameraShake;
-
-    private bool _boardingShip;
-    private float _shipBoardingCooldown;
-
 
     public int ActorID => PlayerActorNumber;
 
@@ -58,20 +53,11 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
         healthSlider.minValue = 0;
         healthSlider.maxValue = 100;
         healthSlider.value = maxHealth;
-        _shipBoardingCooldown = shipBoardingTimer;
 
         _playerController = GetComponent<PlayerController>();
         _musketController = GetComponent<MusketController>();
         _shipControl = GetComponent<ShipControl>();
         _cameraShake = GetComponentInChildren<CameraShake>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Damage(ActorID, 50f);
-        }
     }
     
 
@@ -249,6 +235,16 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
 
     public void ResetPlayerToSpawnPoint()
     {
+        if (_hasNoShip && photonView.IsMine)
+        {
+            EndGameUI.Instance.ShowGameOverScreen();
+            PlayerSpawner.Instance.ToggleSceneCamera(true);
+            PhotonNetwork.Destroy(gameObject);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        
         if (photonView.IsMine)
         {
             _musketController.enabled = false;
@@ -268,44 +264,6 @@ public class Player : MonoBehaviourPun, IDamagable, IPunObservable
             _musketController.canDoAnything = true;
         }
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (!photonView.IsMine)
-            return;
-        
-        if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
-        {
-            _boardingShip = true;
-            _shipToBoard = shipBoardingCollider.Ship;
-            _shipBoardingCooldown = shipBoardingTimer;
-        }
-        
-        
-        if (other.CompareTag("OutOfMapTrigger"))
-        {
-            outOfMapUI.SetActive(true);
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (!photonView.IsMine)
-            return;
-
-        if (other.TryGetComponent(out ShipBoardingCollider shipBoardingCollider))
-        {
-            _boardingShip = false;
-            _shipToBoard = null;
-            shipBoardingText.gameObject.SetActive(false);
-        }
-
-        if (other.CompareTag("OutOfMapTrigger"))
-        {
-            outOfMapUI.SetActive(false);
-        }
-    }
-
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

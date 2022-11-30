@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
         dPressed = false;
         moveDirection = Vector2.zero;
         
-    //    UnOccupyCannon();
+        UnOccupyCannon();
     }
 
 
