@@ -24,6 +24,7 @@ public class ShipControl : MonoBehaviour
     private bool _looking;
 
     private float _fowardVelocity;
+    private float _horizontalVelocity;
     private bool _isFPCamera;
 
     void Start()
@@ -40,7 +41,6 @@ public class ShipControl : MonoBehaviour
             _y = Input.GetAxis("Vertical");
             _x = Input.GetAxis("Horizontal");
 
-            
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 _isFPCamera = !_isFPCamera;
@@ -121,14 +121,12 @@ public class ShipControl : MonoBehaviour
         if (controlling)
         { 
             _fowardVelocity = _y * acceleration;
-            float horizontalVel = _x * turnSpeed;
+            _horizontalVelocity = _x * turnSpeed;
 
             _fowardVelocity = Mathf.Clamp(_fowardVelocity, 0.0f, maxSpeed);
-
-            _player.PlayerShip.RotateShip(horizontalVel);
         }
         
+        _player.PlayerShip.RotateShip(_horizontalVelocity);
         _player.PlayerShip.MoveShip(_fowardVelocity);
-
     }
 }

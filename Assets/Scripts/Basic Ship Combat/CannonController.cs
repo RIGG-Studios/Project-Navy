@@ -58,13 +58,8 @@ public class CannonController : MonoBehaviour, IInteractable
         _occupier.canDoAnything = false;
         _occupier.bayonetteController.canDoStuff = false;
         _occupier.musketController.canDoAnything = false;
-
-        if (player.hasCannonBall)
-        {
-            player.TakeCannonBall();
-            _currentAmmo = 1;
-        }
-
+        _currentAmmo = player.cannonBalls;
+        
         _occupier.musketController.camera.gameObject.SetActive(false);
         camera.gameObject.SetActive(true);
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(false);
@@ -123,6 +118,9 @@ public class CannonController : MonoBehaviour, IInteractable
     {
         if(!occupied) return;
 
+        needsCannonBallUI.SetActive(_currentAmmo <= 0);
+
+        
         if (Input.GetMouseButton(1))
         {
             camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, aimFOV, Time.deltaTime * 5f);
@@ -151,12 +149,12 @@ public class CannonController : MonoBehaviour, IInteractable
             if(_timeSinceLastFired + cooldown > Time.time)
                 return;
             
-            _currentAmmo--;
-            needsCannonBallUI.SetActive(true);
             _timeSinceLastFired = Time.time;
             _cameraShake.ShakeCamera("CannonShot");
             cameraAnimator.SetTrigger("Shoot");
-    
+            _currentAmmo--;
+            _occupier.TakeCannonBall();
+
             _ship.OnCannonFired(CannonID, firePoint.position, firePoint.rotation);
             Vector3 velocity = firePoint.forward * cannonBallVelocity;
             GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation, _ship.OwnerActorNumber);

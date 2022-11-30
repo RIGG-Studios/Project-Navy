@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public LayerMask ignoreLayer;
+    public Text cannonsText;
     public GameObject pickedUpUI;
     public Transform groundCheck;
     public float groundRadius;
@@ -55,8 +58,8 @@ public class PlayerController : MonoBehaviour
 
     public bool canRecieveInput;
     private Ship _ship;
-    
-    public bool hasCannonBall { get; private set; }
+
+    public int cannonBalls { get; private set; }
 
     private IInteractable _currentInteractable;
     
@@ -130,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
         if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit,
-                cannonInteractRange))
+                cannonInteractRange, ignoreLayer))
         {
             hit.collider.TryGetComponent(out IInteractable interactable);
 
@@ -186,7 +189,6 @@ public class PlayerController : MonoBehaviour
 
                         source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
                         source.Play();
-                        controller.Occupy(this);
                         occupiedCannon = controller;
                     }
                 }
@@ -277,10 +279,9 @@ public class PlayerController : MonoBehaviour
 
     public void GiveCannonBall()
     {
-        hasCannonBall = true;
-        
-        pickedUpUI.SetActive(true);
-        Invoke(nameof(HidePickedUpUI), 0.25f);
+        cannonBalls++;
+        cannonBalls = Mathf.Clamp(cannonBalls, 0, 5);
+        cannonsText.text = cannonBalls.ToString();
     }
 
     public void HidePickedUpUI()
@@ -288,7 +289,12 @@ public class PlayerController : MonoBehaviour
         pickedUpUI.SetActive(false);
     }
 
-    public void TakeCannonBall() => hasCannonBall = false;
+    public void TakeCannonBall()
+    {
+        cannonBalls--;
+        cannonBalls = Mathf.Clamp(cannonBalls, 0, 5);
+        cannonsText.text = cannonBalls.ToString();
+    }
 
     public void Reset()
     {

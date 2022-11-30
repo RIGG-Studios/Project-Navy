@@ -158,6 +158,7 @@ public class MusketController : MonoBehaviourPun
             _fireSource.Play();
             _currentSwayAmount = aimedSwayAmount;
             _currentSwaySpeed = aimedSwaySpeed;
+            controller.canDoStuff = false;
         }
 
         if (Input.GetMouseButtonUp(1))
@@ -169,6 +170,7 @@ public class MusketController : MonoBehaviourPun
 
             _currentSwayAmount = swayAmount;
             _currentSwaySpeed = swaySpeed;
+            controller.canDoStuff = true;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
