@@ -185,7 +185,7 @@ MonoBehaviour:
   source: {fileID: 831384075509821677}
   animator: {fileID: 749345909123066443}
   walkSpeed: 5
-  runSpeed: 12
+  runSpeed: 9
   jumpHeight: 300
   footstepSoundLength: 2
   footstepSoundSpeed: 0.2
