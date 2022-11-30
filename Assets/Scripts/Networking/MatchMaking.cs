@@ -87,6 +87,20 @@ public class MatchMaking : MonoBehaviourPunCallbacks
         }
     }
 
+    public void Leave()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            roomCreated = false;
+            roomFull = false;
+            TimeInSeconds = 0;
+            TimeInMinutes = 0;
+            MainMenu.Instance.OpenMenuByName("MainMenu");
+
+        }
+    }
+
     [PunRPC]
     public void AcceptMatchAll()
     {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    public static MainMenu Instance;
+    
     private List<MenuBase> _menus = new List<MenuBase>();
 
     private MenuBase _currentMenu;
@@ -20,8 +22,10 @@ public class MainMenu : MonoBehaviour
                 menus[i].SetupMenu(this);
             }
         }
+        
+        Instance = this;
     }
-
+    
     private void Start()
     {
         OpenMenuByName("ConnectingMenu");
@@ -53,5 +57,10 @@ public class MainMenu : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
