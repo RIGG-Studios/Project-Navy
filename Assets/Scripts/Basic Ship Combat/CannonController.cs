@@ -71,6 +71,11 @@ public class CannonController : MonoBehaviour, IInteractable
         }
     }
 
+    public void OnDie()
+    {
+        needsCannonBallUI.SetActive(false);
+    }
+
     public void Reload()
     {
         if(_isReloading)

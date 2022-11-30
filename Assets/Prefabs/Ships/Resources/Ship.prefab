@@ -4632,7 +4632,7 @@ MonoBehaviour:
   maxHorizontalRotation: 60
   maxVerticalRotation: 20
   firePoint: {fileID: 852170595686497501}
-  cooldown: 2
+  cooldown: 5
   defaultFOV: 89
   aimFOV: 60
   cannonBallVelocity: 100
@@ -5851,7 +5851,7 @@ MonoBehaviour:
   maxHorizontalRotation: 60
   maxVerticalRotation: 20
   firePoint: {fileID: 8396104221799272354}
-  cooldown: 2
+  cooldown: 5
   defaultFOV: 89
   aimFOV: 60
   cannonBallVelocity: 100

@@ -44,6 +44,16 @@ public class Ship : MonoBehaviourPun, IPunObservable
         }
     }
 
+    public void OnDie()
+    {
+        for (int i = 0; i < cannons.Count; i++)
+        {
+            cannons[i].OnDie();
+        }
+    }
+
+
+
     public void AssignShipToPlayer(int actorID)
     {
         OwnerActorNumber = actorID;

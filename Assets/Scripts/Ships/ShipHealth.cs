@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -26,12 +27,21 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         {
             photonView.RPC("RPCDie", RpcTarget.All);
 
+            Ship.OnDie();
             NetworkPlayer owner = PhotonEventsManager.Instance.FindPlayerByActorID(Ship.OwnerActorNumber);
 
             if (owner != null)
             {
                 owner.playerPhotonView.RPC("OnPlayerShipSink", owner.playerPhotonView.Owner);
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Damage(100f);
         }
     }
 
@@ -43,7 +53,6 @@ public class ShipHealth : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < destroyEffects.Length; i++)
         {
             destroyEffects[i].Play();
-
         }
     }
 

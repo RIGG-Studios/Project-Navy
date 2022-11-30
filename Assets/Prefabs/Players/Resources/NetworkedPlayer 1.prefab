@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 7902596052883694757}
   - component: {fileID: 905999448789658511}
   - component: {fileID: 4402857731550299052}
-  - component: {fileID: 2100829201074502008}
   - component: {fileID: 6012068406540939889}
   - component: {fileID: 2455211006609875616}
   m_Layer: 6
@@ -71,7 +70,7 @@ MonoBehaviour:
   - {fileID: 1571874058585844719}
   - {fileID: 7902596052883694757}
   - {fileID: 4402857731550299052}
-  - {fileID: 2100829201074502008}
+  - {fileID: 0}
   gameObjectsToDisable:
   - {fileID: 8548145288746441417}
   localGameObjectsToDisable:
@@ -140,7 +139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dbd966d3feb014ab03034dee788498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipCorrection: 0
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  cannonsText: {fileID: 0}
+  pickedUpUI: {fileID: 0}
   groundCheck: {fileID: 2470501768328136522}
   groundRadius: 0.3
   groundLayer:
@@ -440,23 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4e776b13ea4a54aa642858f12e2101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underwaterChecker: {fileID: 905999448789658511}
---- !u!114 &2100829201074502008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32588379015309455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 270ee874e03795b41ae44cc8abc40e93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxOxygen: 1
-  oxygenDecayRate: 0.045
-  outOfBreathDamageRate: 1.9
-  oxygenSlider: {fileID: 7324089140593272550}
   underwaterChecker: {fileID: 905999448789658511}
 --- !u!114 &6012068406540939889
 MonoBehaviour:
