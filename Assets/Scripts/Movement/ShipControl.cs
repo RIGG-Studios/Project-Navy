@@ -35,51 +35,12 @@ public class ShipControl : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, lookDist))
-        {
-            _looking = hit.collider.CompareTag("WheelTrigger");
-
-            if (_looking && !controlling)
-            {
-                _player.ToggleInteractHelper(true);
-            }
-        }
-        else
-        {
-            _player.ToggleInteractHelper(false);
-            _looking = false;
-        }
-        
-        _y = Input.GetAxis("Vertical");
-        _x = Input.GetAxis("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.F) && _looking && !controlling)
-        {
-            controlling = true;
-            _playerController.canRecieveInput = false;
-            _musketController.canDoAnything = false;
-            playerCamera.gameObject.SetActive(false);
-            _player.PlayerShip.ToggleCamera(true);
-            remoteBody.SetActive(true);
-            _player.ToggleInteractHelper(false);
-            _player.ToggleShipControlUI(true);
-            _playerController.musketController.musketAnimator.gameObject.SetActive(false);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && controlling)
-        {
-            controlling = false;
-            _playerController.canRecieveInput = true;
-            _musketController.canDoAnything = true;
-            playerCamera.gameObject.SetActive(true);
-            _player.PlayerShip.ToggleCamera(false);
-            remoteBody.SetActive(false);
-            _player.ToggleShipControlUI(false);
-            _playerController.musketController.musketAnimator.gameObject.SetActive(true);
-        }
-
         if (controlling)
         {
+            _y = Input.GetAxis("Vertical");
+            _x = Input.GetAxis("Horizontal");
+
+            
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 _isFPCamera = !_isFPCamera;
@@ -95,7 +56,49 @@ public class ShipControl : MonoBehaviour
                     _player.PlayerShip.ToggleCamera(true);
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Disable();
+            }
         }
+        
+    }
+
+    public void Enable()
+    {
+        if (controlling)
+        {
+            return;
+        }
+        
+        controlling = true;
+        _playerController.canRecieveInput = false;
+        _musketController.canDoAnything = false;
+        playerCamera.gameObject.SetActive(false);
+        _player.PlayerShip.ToggleCamera(true);
+        remoteBody.SetActive(true);
+        _player.ToggleInteractHelper(false);
+        _player.ToggleShipControlUI(true);
+        _playerController.musketController.musketAnimator.gameObject.SetActive(false);
+    }
+
+    public void Disable()
+    {
+        if (!controlling)
+        {
+            return;
+        }
+        
+        
+        controlling = false;
+        _playerController.canRecieveInput = true;
+        _musketController.canDoAnything = true;
+        playerCamera.gameObject.SetActive(true);
+        _player.PlayerShip.ToggleCamera(false);
+        remoteBody.SetActive(false);
+        _player.ToggleShipControlUI(false);
+        _playerController.musketController.musketAnimator.gameObject.SetActive(true);
     }
 
     public void Reset()

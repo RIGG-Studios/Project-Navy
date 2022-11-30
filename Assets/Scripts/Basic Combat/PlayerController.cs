@@ -5,7 +5,7 @@ using UnityEngine.Assertions.Must;
 
 public class PlayerController : MonoBehaviour
 {
-    public float shipCorrection;
+    public GameObject pickedUpUI;
     public Transform groundCheck;
     public float groundRadius;
     public LayerMask groundLayer;
@@ -51,16 +51,21 @@ public class PlayerController : MonoBehaviour
     private bool _hasCannonBall;
     private GameObject _instantiatedCannonBall;
     private Player _player;
+    private ShipControl _shipControl;
 
     public bool canRecieveInput;
-
     private Ship _ship;
+    
+    public bool hasCannonBall { get; private set; }
+
+    private IInteractable _currentInteractable;
     
     void Awake()
     {
         _body = GetComponent<Rigidbody>();
         _player = GetComponent<Player>();
         _cameraShake = GetComponentInChildren<CameraShake>();
+        _shipControl = GetComponent<ShipControl>();
         _moveSpeed = walkSpeed;
         canDoAnything = true;
         canRecieveInput = true;
@@ -124,71 +129,76 @@ public class PlayerController : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit))
+        if (Physics.Raycast(musketController.camera.position, musketController.camera.forward, out hit,
+                cannonInteractRange))
         {
-            if (!occupiedCannon)
+            hit.collider.TryGetComponent(out IInteractable interactable);
+
+            if (interactable != null)
             {
-                _player.ToggleInteractHelper(true);
-            }
+                _player.ToggleInteractHelper(!occupiedCannon);
 
-            if (Input.GetKeyDown(KeyCode.F) && !occupiedCannon)
-            {
-                if ((hit.transform.position - transform.position).magnitude > cannonInteractRange) return;
+                interactable.LookAt();
 
-                CannonController controller = null;
-
-                controller = hit.collider.GetComponent<CannonController>();
-                
-                _player.ToggleCannonUI(true);
-
-                if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
-
-                if (hit.transform.CompareTag(cannonBallTag))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    if (_hasCannonBall) return;
+                    interactable.Interact(this);
 
-                    source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
-                    source.Play();
+                    if (interactable.InteractTypes == InteractTypes.Cannon && !occupiedCannon)
+                    {
+                        CannonController controller = null;
 
-                    _hasCannonBall = true;
-                    musketController.canDoAnything = false;
-                    bayonetteController.canDoStuff = false;
-                    musketController.musketAnimator.transform.gameObject.SetActive(false);
-                    _instantiatedCannonBall = Instantiate(cannonBallPrefab);
-                    _instantiatedCannonBall.transform.position = musketController.musketAnimator.transform.position;
-                    _instantiatedCannonBall.transform.parent = musketController.musketAnimator.transform.parent;
+                        controller = hit.collider.GetComponent<CannonController>();
 
-                    return;
+                        _player.ToggleCannonUI(true);
+
+                        if (!controller && !hit.transform.CompareTag(cannonBallTag)) return;
+
+                        if (hit.transform.CompareTag(cannonBallTag))
+                        {
+                            if (_hasCannonBall) return;
+
+                            source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                            source.Play();
+
+                            _hasCannonBall = true;
+                            musketController.canDoAnything = false;
+                            bayonetteController.canDoStuff = false;
+                            musketController.musketAnimator.transform.gameObject.SetActive(false);
+
+                            return;
+                        }
+
+                        if (_hasCannonBall)
+                        {
+                            source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                            source.Play();
+
+                            controller.Reload();
+                            _hasCannonBall = false;
+                            musketController.canDoAnything = true;
+                            bayonetteController.canDoStuff = true;
+                            Destroy(_instantiatedCannonBall);
+                            musketController.musketAnimator.transform.gameObject.SetActive(true);
+
+                            return;
+                        }
+
+                        source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
+                        source.Play();
+                        controller.Occupy(this);
+                        occupiedCannon = controller;
+                    }
                 }
-
-                if (_hasCannonBall)
-                {
-                    source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
-                    source.Play();
-
-                    controller.Reload();
-                    _hasCannonBall = false;
-                    musketController.canDoAnything = true;
-                    bayonetteController.canDoStuff = true;
-                    Destroy(_instantiatedCannonBall);
-                    musketController.musketAnimator.transform.gameObject.SetActive(true);
-
-                    return;
-                }
-
-                source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
-                source.Play();
-                controller.Occupy(this);
-                occupiedCannon = controller;
             }
         }
         else
         {
             _player.ToggleInteractHelper(false);
         }
-        
+
         CheckForShip();
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             UnOccupyCannon();
@@ -196,13 +206,13 @@ public class PlayerController : MonoBehaviour
 
         moveDirection.x = wPressed ? 1 : 0;
         moveDirection.x = sPressed ? -1 : moveDirection.x;
-        
+
         moveDirection.y = dPressed ? 1 : 0;
         moveDirection.y = aPressed ? -1 : moveDirection.y;
-        
-        if(!canDoAnything)
+
+        if (!canDoAnything)
             return;
-        
+
         if (!_playingFootstepSound && _isMoving)
         {
             StartCoroutine("PlayFootstepSounds");
@@ -215,15 +225,15 @@ public class PlayerController : MonoBehaviour
             source.Play();
             _jumpedLastFrame = false;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (musketController.isAiming)
                 return;
-            
+
             source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
             source.Play();
-            
+
             _isSprinting = true;
             bayonetteController.canDoStuff = false;
             musketController.canDoAnything = false;
@@ -233,10 +243,10 @@ public class PlayerController : MonoBehaviour
         {
             if (musketController.isAiming)
                 return;
-            
+
             source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
             source.Play();
-            
+
             _isSprinting = false;
             bayonetteController.canDoStuff = true;
             musketController.canDoAnything = true;
@@ -247,7 +257,7 @@ public class PlayerController : MonoBehaviour
         {
             source.clip = aimingSounds[UnityEngine.Random.Range(0, aimingSounds.Length)];
             source.Play();
-            
+
             StartCoroutine("Jump");
         }
 
@@ -256,14 +266,29 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Walking", false);
             _isMoving = false;
         }
-        else
-        {
+        else 
+        { 
             animator.SetBool("Walking", true);
-            _isMoving = true;
+            _isMoving = true; 
         }
 
         _moveSpeed = _isSprinting ? runSpeed : walkSpeed;
     }
+
+    public void GiveCannonBall()
+    {
+        hasCannonBall = true;
+        
+        pickedUpUI.SetActive(true);
+        Invoke(nameof(HidePickedUpUI), 0.25f);
+    }
+
+    public void HidePickedUpUI()
+    {
+        pickedUpUI.SetActive(false);
+    }
+
+    public void TakeCannonBall() => hasCannonBall = false;
 
     public void Reset()
     {
@@ -295,6 +320,18 @@ public class PlayerController : MonoBehaviour
         occupiedCannon.UnOccupy(this);
         _player.ToggleCannonUI(false);
         occupiedCannon = null;
+    }
+
+    public void ToggleShipControl(bool state)
+    {
+        if (state)
+        {
+            _shipControl.Enable();
+        }
+        else
+        {
+            _shipControl.Disable();
+        }
     }
 
     private IEnumerator Jump()

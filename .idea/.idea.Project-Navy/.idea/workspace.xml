@@ -9,6 +9,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/CameraShake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/CannonBallHolder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/IInteractable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerStairs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Combat/BayonetteController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Combat/DoHitImpacts.cs" root0="FORCE_HIGHLIGHTING" />
@@ -16,6 +18,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Basic Ship Combat/CannonballController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerSpawner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Wheel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -91,7 +94,7 @@
       <workItem from="1669409610222" duration="3654000" />
       <workItem from="1669491676488" duration="15369000" />
       <workItem from="1669681379392" duration="10158000" />
-      <workItem from="1669753790295" duration="6506000" />
+      <workItem from="1669753790295" duration="8847000" />
     </task>
     <servers />
   </component>

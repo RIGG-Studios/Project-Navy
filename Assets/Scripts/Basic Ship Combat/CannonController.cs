@@ -3,8 +3,10 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class CannonController : MonoBehaviour
+public class CannonController : MonoBehaviour, IInteractable
 {
+    public GameObject reloadUI;
+    public GameObject needsCannonBallUI;
     public bool flipAxis;
     public GameObject muzzleFlash;
     public Camera camera;
@@ -48,7 +50,7 @@ public class CannonController : MonoBehaviour
         _ship = ship;
         CannonID = cannonID;
     }
-    
+
     public void Occupy(PlayerController player)
     {
         occupied = true;
@@ -56,11 +58,22 @@ public class CannonController : MonoBehaviour
         _occupier.canDoAnything = false;
         _occupier.bayonetteController.canDoStuff = false;
         _occupier.musketController.canDoAnything = false;
-        
+
+        if (player.hasCannonBall)
+        {
+            player.TakeCannonBall();
+            _currentAmmo = 1;
+        }
+
         _occupier.musketController.camera.gameObject.SetActive(false);
         camera.gameObject.SetActive(true);
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(false);
         _occupier.musketController.stopLooking = true;
+
+        if (_currentAmmo <= 0)
+        {
+            needsCannonBallUI.SetActive(true);
+        }
     }
 
     public void Reload()
@@ -100,18 +113,14 @@ public class CannonController : MonoBehaviour
         camera.fieldOfView = defaultFOV;
         _occupier.musketController.stopLooking = false;
         _occupier.musketController.camera.GetChild(0).gameObject.SetActive(true);
-        
+        needsCannonBallUI.SetActive(false);
+
         _occupier = null;
         occupied = false;
     }
 
     void Update()
     {
-        if (_currentAmmo <= 0)
-        {
-        //    Reload();
-        }
-        
         if(!occupied) return;
 
         if (Input.GetMouseButton(1))
@@ -136,13 +145,14 @@ public class CannonController : MonoBehaviour
         {
             if (_currentAmmo <= 0)
             {
-     //           return;
+                return;
             }
 
             if(_timeSinceLastFired + cooldown > Time.time)
                 return;
             
             _currentAmmo--;
+            needsCannonBallUI.SetActive(true);
             _timeSinceLastFired = Time.time;
             _cameraShake.ShakeCamera("CannonShot");
             cameraAnimator.SetTrigger("Shoot");
@@ -152,5 +162,20 @@ public class CannonController : MonoBehaviour
             GameManager.Instance.SpawnProjectile(velocity, firePoint.position, firePoint.rotation, _ship.OwnerActorNumber);
         }
     }
-    
+
+    public InteractTypes InteractTypes => InteractTypes.Cannon;
+
+    public void LookAt()
+    {
+        
+    }
+
+    public void StopLookAt()
+    {
+    }
+
+    public void Interact(PlayerController player)
+    {
+        Occupy(player);
+    }
 }
